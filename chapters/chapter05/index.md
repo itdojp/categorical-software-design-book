@@ -102,7 +102,7 @@ AIにリファクタを委任する場合は、自然性を満たすための安
 - 契約テスト:
   - Pre/Post/failures が同一であることを検証する
 - 図式由来テスト:
-  - 既存 Diagrams を壊していないことを検証する（第3章の手順）
+  - 既存 Diagrams を壊していないことを検証する（[第3章](../chapter03/)の手順）
 
 レビューでは「差分説明」と「可換チェック（テスト観点）」がセットになっていることを必須とします。
 
@@ -116,7 +116,7 @@ AIにリファクタを委任する場合は、自然性を満たすための安
 2. Before/After テンプレで差分説明を書く
 3. 対象ごとの成分（対応）と、操作ごとの可換チェック（テスト観点）を列挙する
 4. 破綻検知（最低限）:
-   - Context Pack を変更した場合: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
+   - Context Pack を変更した場合: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`（対象: [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)、スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
    - CI（book-formatter checks）でフォーマット破綻が検出されることを確認する
 
 ## まとめ

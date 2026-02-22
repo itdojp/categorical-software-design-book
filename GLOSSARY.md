@@ -1,4 +1,10 @@
-# 用語集（GLOSSARY）
+---
+title: "用語集"
+description: "本書で用いる用語・訳語の単一の真実（SSOT）"
+permalink: /glossary/
+---
+
+# 用語集（Glossary）
 
 本書で用いる用語・訳語の単一の真実（SSOT）です。章側で表記が揺れる場合は、本ファイルに合わせて修正します。
 

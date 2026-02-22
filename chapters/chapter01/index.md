@@ -67,7 +67,7 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 - Objects: ドメイン上の「型/状態」を中心に、実装で表現すべき対象を列挙したもの
 - Morphisms: Objects を入力/出力として持つ操作（API/ユースケース/関数）を列挙したもの
 - Diagrams: 複数の経路（操作の組合せ）で同じ結果になる、という不変条件
-- Context Pack: 上記を含む入力契約（`docs/spec/context-pack-v1.md`）
+- Context Pack: 上記を含む入力契約（[docs/spec/context-pack-v1.md](../../docs/spec/context-pack-v1.md)）
 
 ### 最小Context Pack（例）
 
@@ -144,7 +144,7 @@ graph TD
 
 ### 演習1: Context Pack → AI実装/テストの最小ループ
 
-1. 共通例題（注文処理）の Context Pack を読む: `docs/examples/common-example/context-pack-v1.yaml`
+1. 共通例題（注文処理）の Context Pack を読む: [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)
 2. 次の追加要件を1つだけ定義する（例: CancelOrder を追加し、監査と状態遷移の安全性を維持）
 3. 追加要件に必要な差分を Context Pack v1 として作る（Goals/Non-goals、Objects/Morphisms/Diagrams、Acceptance tests、Forbidden changes を更新）
 4. 更新した Context Pack をAIに渡し、以下を生成させる

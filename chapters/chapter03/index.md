@@ -54,25 +54,27 @@ AIによる実装・改稿・リファクタは、局所最適化が入りやす
 
 共通例題（注文処理）の Diagrams は次にあります。
 
-- `docs/examples/common-example/context-pack-v1.yaml`
+- [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)
 
 ### Diagrams テンプレ（最小）
 
-| 項目 | 内容 |
-| --- | --- |
-| id | 不変条件ID（例: `D2-audit-consistency`） |
-| statement | 自然言語の条件 |
-| verification | 検証方法（受入テスト/プロパティ/チェック観点） |
-| counterexample | 反例（任意） |
+```yaml
+diagrams:
+  - id: <DiagramId>
+    statement: "<invariant statement>"
+    verification: []
+    counterexample: "" # 任意
+```
 
 例（監査整合）:
 
 ```yaml
-id: D2-audit-consistency
-statement: "重要操作は必ず監査証跡を残す"
-verification:
-  - "操作が成功した場合、対応するAuditEventが存在する"
-  - "監査イベントのpayloadHashが改竄検知に使える"
+diagrams:
+  - id: D2-audit-consistency
+    statement: "重要操作は必ず監査証跡を残す"
+    verification:
+      - "操作が成功した場合、対応するAuditEventが存在する"
+      - "監査イベントのpayloadHashが改竄検知に使える"
 ```
 
 ### 図式→テスト観点への変換手順

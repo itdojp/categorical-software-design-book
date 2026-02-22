@@ -46,8 +46,8 @@ graph TD
 
 参照（仕様と例題）:
 
-- Context Pack v1 仕様: `docs/spec/context-pack-v1.md`
-- 共通例題 Context Pack: `docs/examples/common-example/context-pack-v1.yaml`
+- Context Pack v1 仕様: [docs/spec/context-pack-v1.md](../../docs/spec/context-pack-v1.md)
+- 共通例題 Context Pack: [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)
 
 運用で固定する最小セット（DoD）:
 
@@ -111,7 +111,7 @@ CIのレポートはArtifactsに保存され、原因調査を支援します。
 
 1. 共通例題 Context Pack を読み、要件を1つ追加する（例: CancelOrder）
 2. Context Pack を更新し、Diagrams（不変条件）と verification（検証項目）を追加する
-3. `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml` を通す
+3. `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml` を通す（対象: [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)、スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
 4. AIへ委任して、実装スケルトンとテスト観点案を生成させる
 5. Forbidden changes と Diagrams を基準にレビューし、差し戻し条件を明文化する
 

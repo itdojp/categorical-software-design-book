@@ -63,57 +63,61 @@ graph LR
 
 共通例題（注文処理）の Context Pack は次を参照します。
 
-- `docs/examples/common-example/context-pack-v1.yaml`
+- [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)
 
 ここでは、Objects/Morphisms の最小テンプレを示し、例題で一部を埋めます。
 
 ### Objects テンプレ（最小）
 
-| 項目 | 内容 |
-| --- | --- |
-| id | 対象名（例: `Order`） |
-| kind | entity / value / event 等 |
-| states | 状態（任意） |
-| fields | 主要フィールド（任意） |
-| note | 境界/権限/不変条件の補足（任意） |
+```yaml
+objects:
+  - id: <ObjectId>
+    kind: entity # entity | value | event
+    states: []
+    fields: []
+    note: "" # 任意（境界/権限/不変条件の補足など）
+```
 
 例（Order）:
 
-| 項目 | 内容 |
-| --- | --- |
-| id | Order |
-| kind | entity |
-| states | Draft, Placed, Paid, Shipped, Cancelled |
-| fields | orderId, items, totalAmount, state |
-| note | 状態遷移の安全性（禁止遷移）を不変条件として後段で固定する |
+```yaml
+objects:
+  - id: Order
+    kind: entity
+    states: [Draft, Placed, Paid, Shipped, Cancelled]
+    fields: [orderId, items, totalAmount, state]
+    note: "状態遷移の安全性（禁止遷移）を不変条件として後段で固定する"
+```
 
 ### Morphisms テンプレ（最小）
 
-| 項目 | 内容 |
-| --- | --- |
-| id | 操作名（例: `PlaceOrder`） |
-| input | 入力（型/必須/制約） |
-| output | 出力（型/必須） |
-| pre | 前提条件（成立しない場合は失敗） |
-| post | 事後条件（成立しない場合は仕様違反） |
-| failures | 失敗条件（例: NotFound/InvalidState） |
+```yaml
+morphisms:
+  - id: <MorphismId>
+    input: {}
+    output: {}
+    pre: []
+    post: []
+    failures: []
+```
 
 例（PlaceOrder）:
 
 ```yaml
-id: PlaceOrder
-input: { orderId: "OrderId" }
-output: { orderId: "OrderId" }
-pre:
-  - "Order.state == Draft"
-post:
-  - "Order.state == Placed"
-  - "InventoryReservation が作成される（または更新される）"
-  - "AuditEvent(\"PlaceOrder\") が記録される"
-failures:
-  - NotFound
-  - InvalidState
-  - OutOfStock
+morphisms:
+  - id: PlaceOrder
+    input: { orderId: "OrderId" }
+    output: { orderId: "OrderId" }
+    pre:
+      - "Order.state == Draft"
+    post:
+      - "Order.state == Placed"
+      - "InventoryReservation が作成される（または更新される）"
+      - "AuditEvent(\"PlaceOrder\") が記録される"
+    failures:
+      - NotFound
+      - InvalidState
+      - OutOfStock
 ```
 
 ## AIエージェントへの引き渡し
@@ -140,7 +144,7 @@ AIに実装を委任する場合、まず Morphisms を「契約」として固�
 - Post 条件の検証: 正常系で状態/副作用（監査）まで含めて成立すること
 - 合成の安全性: 合成された一連の操作でも、個々の Post が矛盾しないこと
 
-可換図式（Diagrams）をテストへ落とす手順は第3章で扱います。
+可換図式（Diagrams）をテストへ落とす手順は[第3章](../chapter03/)で扱います。
 
 ## 演習
 

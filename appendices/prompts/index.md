@@ -5,7 +5,7 @@ appendix: prompts
 
 # 付録B: AIエージェント用プロンプト集
 
-本書の章末演習で、そのまま利用できるプロンプト例です。前提として、AIに渡す入力契約は Context Pack v1（`docs/spec/context-pack-v1.md`）を想定します。
+本書の章末演習で、そのまま利用できるプロンプト例です。前提として、AIに渡す入力契約は Context Pack v1（[docs/spec/context-pack-v1.md](../../docs/spec/context-pack-v1.md)）を想定します。
 
 ## 共通ルール（先頭に付ける）
 

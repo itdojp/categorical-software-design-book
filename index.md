@@ -42,9 +42,9 @@ description: "仕様・設計・検証を合成可能にする共通言語"
 
 ## クイックスタート
 
-1. Context Pack v1 仕様を読む: `docs/spec/context-pack-v1.md`
-2. 共通例題を読む: `docs/examples/common-example/context-pack-v1.yaml`
-3. Context Packの最小lintを実行する: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
+1. Context Pack v1 仕様を読む: [docs/spec/context-pack-v1.md](docs/spec/context-pack-v1.md)
+2. 共通例題を読む: [docs/examples/common-example/context-pack-v1.yaml](docs/examples/common-example/context-pack-v1.yaml)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)）
+3. Context Packの最小lintを実行する: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`（[scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
 
 ## 目次
 
@@ -85,8 +85,11 @@ graph TD
 
 ## 用語集
 
-- 用語・訳語のSSOT: `GLOSSARY.md`
-- 用語/記法/図式の統一ルール: `docs/style/terminology.md`, `docs/style/notation.md`, `docs/style/diagram-style.md`
+- 用語・訳語のSSOT: [GLOSSARY.md](GLOSSARY.md)（GitHub: [GLOSSARY.md](https://github.com/itdojp/categorical-software-design-book/blob/main/GLOSSARY.md)）
+- 用語/記法/図式の統一ルール:
+  - [docs/style/terminology.md](docs/style/terminology.md)
+  - [docs/style/notation.md](docs/style/notation.md)
+  - [docs/style/diagram-style.md](docs/style/diagram-style.md)
 
 ## ライセンス
 
