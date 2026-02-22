@@ -221,6 +221,18 @@ a:hover {
     font-weight: 600;
 }
 
+.header-title-inner {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.book-version {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
 /* Sidebar */
 .book-sidebar {
     position: fixed;

@@ -66,7 +66,12 @@
                     </svg>
                 </label>
                 <a href="{{ '/' | relative_url }}" class="header-title">
-                    <h1>{{ site.title | escape }}</h1>
+                    <div class="header-title-inner">
+                        <h1>{{ site.title | escape }}</h1>
+                        {% if site.version and site.version != '' %}
+                        <span class="book-version">v{{ site.version | escape }}</span>
+                        {% endif %}
+                    </div>
                 </a>
             </div>
             
