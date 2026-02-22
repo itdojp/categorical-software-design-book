@@ -1,0 +1,66 @@
+name: 技術的指摘・改善提案
+description: 仕様/設計/検証の整合性や、安全柵（Forbidden changes/Diagrams等）に関する指摘
+title: "[Tech] "
+labels:
+  - type/qa
+body:
+  - type: input
+    id: page_url
+    attributes:
+      label: 対象ページURL
+      description: GitHub PagesのURL、またはGitHub上のファイルURLを記載してください
+      placeholder: https://itdojp.github.io/categorical-software-design-book/...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 指摘カテゴリ
+      multiple: false
+      options:
+        - 用語/定義（Glossary/訳語/記法）
+        - 章間整合（前提・参照・依存関係）
+        - 図式（Diagrams）/可換性
+        - テスト/検証（Acceptance tests/検証観点）
+        - AI引き渡し（Context Pack/プロンプト/禁止事項）
+        - 図版（Mermaid/SVG/レイアウト）
+        - その他
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: 現状（問題点）
+      description: 現状の説明（何が不整合/不十分か）を記載してください
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 根拠（引用/参照）
+      description: 関連する章/節/用語集/仕様書への参照や、引用を記載してください
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 提案（修正方針）
+      description: 望ましい変更案（最小差分が望ましい）を記載してください
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: risk
+    attributes:
+      label: 影響範囲/リスク
+      description: 章間参照、図式（Diagrams）、例題（common-example）への影響があれば記載してください（任意）
+      render: text
+    validations:
+      required: false

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: コントリビューションガイド
+    url: https://github.com/itdojp/categorical-software-design-book/blob/main/CONTRIBUTING.md
+    about: 変更提案や報告時の観点（用語/図式/SSOT/Issue first）
+  - name: Context Pack v1 仕様
+    url: https://github.com/itdojp/categorical-software-design-book/blob/main/docs/spec/context-pack-v1.md
+    about: フォーマットや運用の前提（YAML/JSON、必須項目）

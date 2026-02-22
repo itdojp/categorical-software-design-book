@@ -1,0 +1,41 @@
+name: 質問
+description: 読んで分からない箇所、演習の進め方、用語の理解など
+title: "[Q] "
+labels:
+  - type/qa
+body:
+  - type: input
+    id: page_url
+    attributes:
+      label: 対象ページURL
+      description: GitHub PagesのURL、またはGitHub上のファイルURLを記載してください
+      placeholder: https://itdojp.github.io/categorical-software-design-book/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: 質問内容
+      description: 何が分からないかを具体的に記載してください
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 前提（どこまで理解できているか）
+      description: 関連する章/節、理解できている点/できていない点、試したこと等を記載してください
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: desired
+    attributes:
+      label: 期待する回答の形式
+      description: 例）要点のみ/例題ベース/Context Packのサンプル/テスト観点の箇条書き など
+      render: text
+    validations:
+      required: false

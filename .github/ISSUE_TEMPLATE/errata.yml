@@ -1,0 +1,49 @@
+name: 誤植・表記ゆれ（Errata）
+description: 誤植、リンク切れ、表記ゆれ、図の不整合などの報告
+title: "[Errata] "
+labels:
+  - type/qa
+body:
+  - type: input
+    id: page_url
+    attributes:
+      label: 対象ページURL
+      description: GitHub PagesのURL、またはGitHub上のファイルURLを記載してください
+      placeholder: https://itdojp.github.io/categorical-software-design-book/...
+    validations:
+      required: true
+
+  - type: input
+    id: location_hint
+    attributes:
+      label: 該当箇所（章/節/見出し）
+      description: 例）第3章 > 図式→テスト観点への変換手順
+    validations:
+      required: true
+
+  - type: textarea
+    id: quote
+    attributes:
+      label: 原文（引用）
+      description: 該当箇所の原文を貼ってください（短くて構いません）
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 修正案
+      description: 期待する表記/文章（可能なら提案）を記載してください
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足
+      description: スクリーンショット、関連リンク、背景など（任意）
+      render: text
+    validations:
+      required: false
