@@ -17,7 +17,7 @@ chapters:
     path: "/src/chapters/chapter06/"
   - title: "第7章 Pullback/Pushout（統合・移行の設計パターン）"
     path: "/src/chapters/chapter07/"
-  - title: "第8章 モノidal圏とストリング図式（分業と配線）"
+  - title: "第8章 モノイダル圏とストリング図式（分業と配線）"
     path: "/src/chapters/chapter08/"
   - title: "第9章 モナド/Kleisli（効果境界の設計）"
     path: "/src/chapters/chapter09/"
