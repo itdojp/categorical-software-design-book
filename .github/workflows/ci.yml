@@ -43,6 +43,17 @@ jobs:
           npm run check-textlint -- .. --output ../qa-reports/textlint-report.json --fail-on error
           npm run check-textlint -- .. --with-preset --output ../qa-reports/textlint-report-with-preset.json --fail-on none
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Context Pack v1 (minimal lint)
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+          python scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
+
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4

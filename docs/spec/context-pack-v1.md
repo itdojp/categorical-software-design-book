@@ -17,6 +17,15 @@ description: "AIエージェントに設計成果物を引き渡すための入�
 
 Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性のため YAML を推奨します。
 
+機械可読スキーマ:
+- JSON Schema: [context-pack-v1.schema.json](context-pack-v1.schema.json)
+
+簡易lint（必須項目/型チェック）:
+
+```bash
+python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
+```
+
 最小構成（v1）は以下です。
 
 ### 1. Problem statement

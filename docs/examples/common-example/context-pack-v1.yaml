@@ -7,7 +7,7 @@ problem_statement:
     - 監査ログを「後付け」ではなく契約として扱う
   non_goals:
     - 決済事業者・配送事業者の具体実装の詳細化
-    - 高度な最適化（例: 強い整合性を必要としない最適化）
+    - "高度な最適化（例: 強い整合性を必要としない最適化）"
 
 domain_glossary:
   terms:
@@ -127,7 +127,7 @@ diagrams:
       - 各操作が成功した場合、対応する AuditEvent が存在する
       - 監査イベントの payloadHash が改竄検知に使える
   - id: D3-state-transition-safety
-    statement: 状態遷移は単調であり、禁止遷移（例: Shipped → Paid）は起きない
+    statement: "状態遷移は単調であり、禁止遷移（例: Shipped → Paid）は起きない"
     verification:
       - 受入テストで禁止遷移を試みた場合 InvalidState になる
 
