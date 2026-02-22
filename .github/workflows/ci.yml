@@ -1,0 +1,51 @@
+name: Book QA
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout book repo
+        uses: actions/checkout@v4
+
+      - name: Checkout book-formatter
+        uses: actions/checkout@v4
+        with:
+          repository: itdojp/book-formatter
+          path: book-formatter
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: book-formatter/package-lock.json
+
+      - name: Install book-formatter dependencies
+        run: |
+          cd book-formatter
+          npm ci
+
+      - name: Run quality checks (book-formatter)
+        run: |
+          mkdir -p qa-reports
+          cd book-formatter
+
+          npm run check-links -- .. --output ../qa-reports/link-report.json
+          npm run check-unicode -- .. --output ../qa-reports/unicode-report.json
+          npm run check-layout-risk -- .. --output ../qa-reports/layout-risk-report.json
+          npm run check-markdown-structure -- .. --output ../qa-reports/markdown-structure-report.json
+
+          npm run check-textlint -- .. --output ../qa-reports/textlint-report.json --fail-on error
+          npm run check-textlint -- .. --with-preset --output ../qa-reports/textlint-report-with-preset.json --fail-on none
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-reports
+          path: qa-reports/*.json

@@ -1,0 +1,95 @@
+{
+  "title": "圏論によるAIエージェント時代の合成的ソフトウェア設計",
+  "description": "仕様・設計・検証を合成可能にする共通言語",
+  "author": "著者名（要更新）",
+  "version": "1.0.0",
+  "language": "ja",
+  "license": "CC BY-NC-SA 4.0",
+  "repository": {
+    "owner": "itdojp",
+    "name": "categorical-software-design-book",
+    "url": "https://github.com/itdojp/categorical-software-design-book.git",
+    "branch": "main"
+  },
+  "structure": {
+    "chapters": [
+      {
+        "id": "chapter01",
+        "title": "AIエージェント開発の分担モデルと設計成果物",
+        "description": "人間とAIの責任分界と、設計成果物（Context Pack）の位置づけ"
+      },
+      {
+        "id": "chapter02",
+        "title": "合成の最小コア（対象・射・合成）",
+        "description": "合成可能性を設計成果物へ落とすための最小語彙"
+      },
+      {
+        "id": "chapter03",
+        "title": "図式と可換性（仕様をテスト可能にする）",
+        "description": "不変条件と可換性を検証可能な形に固定する"
+      },
+      {
+        "id": "chapter04",
+        "title": "関手（仕様→設計→実装の写像）",
+        "description": "写像としての変換規則で整合性を維持する"
+      },
+      {
+        "id": "chapter05",
+        "title": "自然変換（差分・リファクタを意味保存で扱う）",
+        "description": "差分を意味保存で扱い、改稿/リファクタの安全性を上げる"
+      },
+      {
+        "id": "chapter06",
+        "title": "普遍性（積・余積）で標準化する契約",
+        "description": "普遍性に基づくAPI/モデルの標準化"
+      },
+      {
+        "id": "chapter07",
+        "title": "Pullback/Pushout（統合・移行の設計パターン）",
+        "description": "統合・移行を図式で扱う"
+      },
+      {
+        "id": "chapter08",
+        "title": "モノidal圏とストリング図式（分業と配線）",
+        "description": "並列配線と合成の設計"
+      },
+      {
+        "id": "chapter09",
+        "title": "モナド/Kleisli（効果境界の設計）",
+        "description": "効果と境界の設計原理"
+      },
+      {
+        "id": "chapter10",
+        "title": "ケーススタディ（仕様→設計→検証→AI実装）",
+        "description": "要件からContext Pack、テスト、実装までの通し例"
+      }
+    ],
+    "appendices": [
+      {
+        "id": "templates",
+        "title": "設計成果物テンプレ集"
+      },
+      {
+        "id": "prompts",
+        "title": "AIエージェント用プロンプト集"
+      },
+      {
+        "id": "references",
+        "title": "参考文献"
+      }
+    ]
+  },
+  "ux": {
+    "profile": "A",
+    "modules": {
+      "quickStart": true,
+      "readingGuide": true,
+      "checklistPack": false,
+      "troubleshootingFlow": false,
+      "conceptMap": true,
+      "figureIndex": false,
+      "legalNotice": false,
+      "glossary": true
+    }
+  }
+}

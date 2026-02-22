@@ -1,0 +1,162 @@
+version: 1
+name: common-example-order-processing
+
+problem_statement:
+  goals:
+    - 注文の作成から出荷までの一連の処理を、境界と不変条件（可換性）で記述できる
+    - 監査ログを「後付け」ではなく契約として扱う
+  non_goals:
+    - 決済事業者・配送事業者の具体実装の詳細化
+    - 高度な最適化（例: 強い整合性を必要としない最適化）
+
+domain_glossary:
+  terms:
+    - term: Order
+      ja: 注文
+      note: 注文状態（Draft/Placed/Paid/Shipped/Cancelled）を持つ
+    - term: Payment
+      ja: 決済
+      note: 承認/取消/返金などを含む
+    - term: Inventory
+      ja: 在庫
+      note: 引当（Reservation）を中心に扱う
+    - term: Shipment
+      ja: 出荷
+      note: 出荷指示/出荷完了
+    - term: Audit
+      ja: 監査
+      note: 重要操作の追跡可能性（監査証跡）
+
+objects:
+  - id: Order
+    kind: entity
+    states: [Draft, Placed, Paid, Shipped, Cancelled]
+    fields:
+      - orderId
+      - items
+      - totalAmount
+      - state
+  - id: Payment
+    kind: entity
+    fields:
+      - paymentId
+      - orderId
+      - amount
+      - status
+  - id: InventoryReservation
+    kind: entity
+    fields:
+      - reservationId
+      - orderId
+      - items
+      - status
+  - id: Shipment
+    kind: entity
+    fields:
+      - shipmentId
+      - orderId
+      - status
+  - id: AuditEvent
+    kind: event
+    fields:
+      - eventId
+      - occurredAt
+      - actor
+      - action
+      - target
+      - payloadHash
+
+morphisms:
+  - id: CreateOrder
+    input: { items: "OrderItem[]", paymentMethod: "PaymentMethod" }
+    output: { orderId: "OrderId" }
+    pre:
+      - items が空でない
+    post:
+      - Order が Draft で作成される
+      - AuditEvent("CreateOrder") が記録される
+    failures:
+      - ValidationError
+  - id: PlaceOrder
+    input: { orderId: "OrderId" }
+    output: { orderId: "OrderId" }
+    pre:
+      - Order.state == Draft
+    post:
+      - Order.state == Placed
+      - InventoryReservation が作成される（または更新される）
+      - AuditEvent("PlaceOrder") が記録される
+    failures:
+      - NotFound
+      - InvalidState
+      - OutOfStock
+  - id: AuthorizePayment
+    input: { orderId: "OrderId" }
+    output: { paymentId: "PaymentId" }
+    pre:
+      - Order.state == Placed
+      - InventoryReservation.status == Reserved
+    post:
+      - Payment.status == Authorized
+      - Order.state == Paid
+      - AuditEvent("AuthorizePayment") が記録される
+    failures:
+      - PaymentDeclined
+      - InvalidState
+  - id: ShipOrder
+    input: { orderId: "OrderId" }
+    output: { shipmentId: "ShipmentId" }
+    pre:
+      - Order.state == Paid
+    post:
+      - Shipment.status == Shipped
+      - Order.state == Shipped
+      - AuditEvent("ShipOrder") が記録される
+    failures:
+      - InvalidState
+
+diagrams:
+  - id: D1-idempotency-place-order
+    statement: PlaceOrder は同一 orderId に対して冪等である（重複実行で在庫引当や監査が二重計上されない）
+    verification:
+      - 同一リクエストID（または同一 orderId + idempotency key）で2回実行しても InventoryReservation が1つに収束する
+      - AuditEvent が重複記録されない（または重複が識別可能で後段集計が二重化しない）
+  - id: D2-audit-consistency
+    statement: 重要操作（CreateOrder/PlaceOrder/AuthorizePayment/ShipOrder）は必ず監査証跡を残す
+    verification:
+      - 各操作が成功した場合、対応する AuditEvent が存在する
+      - 監査イベントの payloadHash が改竄検知に使える
+  - id: D3-state-transition-safety
+    statement: 状態遷移は単調であり、禁止遷移（例: Shipped → Paid）は起きない
+    verification:
+      - 受入テストで禁止遷移を試みた場合 InvalidState になる
+
+constraints:
+  security:
+    - 監査イベントは削除不可（論理削除も禁止、訂正は追記で行う）
+    - actor（操作者）を必須にする（匿名操作は不可）
+  operations:
+    - 監査イベントの検索・エクスポート経路を用意する（後続タスクで具体化）
+
+acceptance_tests:
+  - id: AT1-happy-path
+    scenario: CreateOrder → PlaceOrder → AuthorizePayment → ShipOrder が成功する
+    expected:
+      - Order.state == Shipped
+      - 各操作に対応する AuditEvent が存在する
+  - id: AT2-invalid-transition
+    scenario: Draft の Order に対して ShipOrder を呼ぶ
+    expected:
+      - InvalidState
+
+coding_conventions:
+  language: TBD
+  directory:
+    - "src/ (book contents)"
+    - "docs/ (specs/examples)"
+  dependencies:
+    policy: "追加前にIssueで合意する"
+
+forbidden_changes:
+  - D2-audit-consistency を満たさない実装変更
+  - Order の状態モデル（states）を合意なく変更

@@ -1,0 +1,56 @@
+title: "圏論によるAIエージェント時代の合成的ソフトウェア設計"
+description: "仕様・設計・検証を合成可能にする共通言語"
+author: "著者名（要更新）"
+version: "1.0.0"
+lang: "ja"
+
+# GitHub Pages（Project Pages）
+url: "https://itdojp.github.io"
+baseurl: "/categorical-software-design-book"
+repository: "itdojp/categorical-software-design-book"
+repository_branch: "main"
+
+# Jekyll設定
+markdown: kramdown
+highlighter: rouge
+theme: minima
+permalink: pretty
+
+# プラグイン
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# 除外ファイル
+exclude:
+  - node_modules/
+  - vendor/
+  - _site/
+  - package.json
+  - package-lock.json
+  - Gemfile
+  - Gemfile.lock
+  - scripts/
+  - tests/
+  - templates/
+  - shared/
+  - book-config.json
+  - mobile-config.json
+  - README.md
+  - AI_USAGE_POLICY.md
+  - UPDATE_POLICY.md
+  - CONTRIBUTING.md
+  - GLOSSARY.md
+
+# 日本語対応
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  
+# Front Matter defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: book

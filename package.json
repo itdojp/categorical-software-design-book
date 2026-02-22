@@ -1,0 +1,21 @@
+{
+  "name": "categorical-software-design-book",
+  "version": "1.0.0",
+  "description": "仕様・設計・検証を合成可能にする共通言語",
+  "author": "著者名（要更新）",
+  "license": "CC BY-NC-SA 4.0",
+  "scripts": {
+    "build": "bundle exec jekyll build",
+    "serve": "bundle exec jekyll serve --livereload --baseurl \"\"",
+    "serve:pages": "bundle exec jekyll serve --livereload",
+    "gen:navigation": "node scripts/generate-navigation.js",
+    "validate-deploy": "node scripts/validate-github-pages.js",
+    "pages-status": "node scripts/check-pages-status.js"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itdojp/categorical-software-design-book.git"
+  },
+  "homepage": "https://itdojp.github.io/categorical-software-design-book"
+}
