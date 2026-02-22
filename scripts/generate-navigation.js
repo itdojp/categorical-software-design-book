@@ -48,7 +48,7 @@ chapters.forEach((chapter, index) => {
   const title = String(chapter?.title ?? '').trim();
   if (!id || !title) return;
   lines.push(`  - title: ${yamlQuote(`第${index + 1}章 ${title}`)}`);
-  lines.push(`    path: ${yamlQuote(`/src/chapters/${id}/`)}`);
+  lines.push(`    path: ${yamlQuote(`/chapters/${id}/`)}`);
 });
 
 lines.push('');
@@ -59,7 +59,7 @@ appendices.forEach((appendix, index) => {
   if (!id || !title) return;
   const label = appendixLabel(index);
   lines.push(`  - title: ${yamlQuote(`付録${label} ${title}`)}`);
-  lines.push(`    path: ${yamlQuote(`/src/appendices/${id}/`)}`);
+  lines.push(`    path: ${yamlQuote(`/appendices/${id}/`)}`);
 });
 
 fs.mkdirSync(path.dirname(outPath), { recursive: true });

@@ -48,22 +48,22 @@ description: "仕様・設計・検証を合成可能にする共通言語"
 
 ## 目次
 
-- [第1章 AIエージェント開発の分担モデルと設計成果物](src/chapters/chapter01/)
-- [第2章 合成の最小コア（対象・射・合成）](src/chapters/chapter02/)
-- [第3章 図式と可換性（仕様をテスト可能にする）](src/chapters/chapter03/)
-- [第4章 関手（仕様→設計→実装の写像）](src/chapters/chapter04/)
-- [第5章 自然変換（差分・リファクタを意味保存で扱う）](src/chapters/chapter05/)
-- [第6章 普遍性（積・余積）で標準化する契約](src/chapters/chapter06/)
-- [第7章 Pullback/Pushout（統合・移行の設計パターン）](src/chapters/chapter07/)
-- [第8章 モノイダル圏とストリング図式（分業と配線）](src/chapters/chapter08/)
-- [第9章 モナド/クライスリ（効果境界の設計）](src/chapters/chapter09/)
-- [第10章 ケーススタディ（仕様→設計→検証→AI実装）](src/chapters/chapter10/)
+- [第1章 AIエージェント開発の分担モデルと設計成果物](chapters/chapter01/)
+- [第2章 合成の最小コア（対象・射・合成）](chapters/chapter02/)
+- [第3章 図式と可換性（仕様をテスト可能にする）](chapters/chapter03/)
+- [第4章 関手（仕様→設計→実装の写像）](chapters/chapter04/)
+- [第5章 自然変換（差分・リファクタを意味保存で扱う）](chapters/chapter05/)
+- [第6章 普遍性（積・余積）で標準化する契約](chapters/chapter06/)
+- [第7章 Pullback/Pushout（統合・移行の設計パターン）](chapters/chapter07/)
+- [第8章 モノイダル圏とストリング図式（分業と配線）](chapters/chapter08/)
+- [第9章 モナド/クライスリ（効果境界の設計）](chapters/chapter09/)
+- [第10章 ケーススタディ（仕様→設計→検証→AI実装）](chapters/chapter10/)
 
 ## 付録
 
-- [付録A: 設計成果物テンプレ集](src/appendices/templates/)
-- [付録B: AIエージェント用プロンプト集](src/appendices/prompts/)
-- [付録C: 参考文献](src/appendices/references/)
+- [付録A: 設計成果物テンプレ集](appendices/templates/)
+- [付録B: AIエージェント用プロンプト集](appendices/prompts/)
+- [付録C: 参考文献](appendices/references/)
 
 ## 概念マップ
 

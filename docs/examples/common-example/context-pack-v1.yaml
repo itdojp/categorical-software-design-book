@@ -152,7 +152,8 @@ acceptance_tests:
 coding_conventions:
   language: language-agnostic
   directory:
-    - "src/ (book contents)"
+    - "chapters/ (book contents)"
+    - "appendices/ (book contents)"
     - "docs/ (specs/examples)"
   dependencies:
     policy: "追加前にIssueで合意する"

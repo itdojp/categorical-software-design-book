@@ -24,9 +24,9 @@
 
 - Context Pack v1 仕様: `docs/spec/context-pack-v1.md`
 - 共通例題 Context Pack: `docs/examples/common-example/context-pack-v1.yaml`
-- 付録A（テンプレ集）: `src/appendices/templates/index.md`
-- 付録B（プロンプト集）: `src/appendices/prompts/index.md`
-- 付録C（学習マップ・参考文献）: `src/appendices/references/index.md`
+- 付録A（テンプレ集）: `appendices/templates/index.md`
+- 付録B（プロンプト集）: `appendices/prompts/index.md`
+- 付録C（学習マップ・参考文献）: `appendices/references/index.md`
 
 ## フィードバック
 

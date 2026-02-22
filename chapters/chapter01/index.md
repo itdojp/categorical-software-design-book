@@ -53,7 +53,7 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 
 ## 設計成果物（テンプレ：表/図式/チェックリスト）
 
-本書の共通例題（注文処理）は [Context Pack v1（共通例題）](../../../docs/examples/common-example/context-pack-v1.yaml) を参照。
+本書の共通例題（注文処理）は [Context Pack v1（共通例題）](../../docs/examples/common-example/context-pack-v1.yaml) を参照。
 
 本書でいう「設計成果物」は、AIへ引き渡せる入力契約（Context Pack）として構造化したものです。
 
@@ -106,8 +106,8 @@ forbidden_changes:
 
 ## AIエージェントへの引き渡し（Context Pack/プロンプト/禁止事項）
 
-- Context Pack v1 仕様: [docs/spec/context-pack-v1.md](../../../docs/spec/context-pack-v1.md)
-- 共通例題 Context Pack: [docs/examples/common-example/context-pack-v1.yaml](../../../docs/examples/common-example/context-pack-v1.yaml)
+- Context Pack v1 仕様: [docs/spec/context-pack-v1.md](../../docs/spec/context-pack-v1.md)
+- 共通例題 Context Pack: [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)
 - 禁止事項: 不変条件（Diagrams）と権限境界を無断変更しない
 
 ### 最小ループ（Context Pack → AI → 検証）
@@ -132,7 +132,7 @@ graph TD
 ## 検証（テスト観点・可換性チェック）
 
 - 不変条件（Diagrams）がテスト観点へ落ちていることを確認する
-- 例: 監査ログ一貫性（D2）が必ず満たされる（[共通例題 Context Pack](../../../docs/examples/common-example/context-pack-v1.yaml)）
+- 例: 監査ログ一貫性（D2）が必ず満たされる（[共通例題 Context Pack](../../docs/examples/common-example/context-pack-v1.yaml)）
 
 検証の観点は次の順で固定します。
 

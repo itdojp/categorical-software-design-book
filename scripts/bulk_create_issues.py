@@ -247,8 +247,8 @@ ISSUES = [
             章構成を物理ファイルとして固定し、以後は「章を埋める」作業に集中できる状態にする。
 
             ## 作業
-            - [ ] `src/chapters/chapter01..chapter10/index.md` を作成（front matter含む）
-            - [ ] `src/appendices/templates/index.md` 等を作成
+            - [ ] `chapters/chapter01..chapter10/index.md` を作成（front matter含む）
+            - [ ] `appendices/templates/index.md` 等を作成
             - [ ] 章タイトル・番号・ナビゲーションの整合性を確認
             - [ ] 空の状態でもビルドできることを確認
 
