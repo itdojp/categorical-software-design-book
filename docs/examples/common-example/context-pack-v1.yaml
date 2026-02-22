@@ -150,7 +150,7 @@ acceptance_tests:
       - InvalidState
 
 coding_conventions:
-  language: TBD
+  language: language-agnostic
   directory:
     - "src/ (book contents)"
     - "docs/ (specs/examples)"
