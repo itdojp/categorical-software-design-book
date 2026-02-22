@@ -11,7 +11,9 @@ description: "図式の表現方式、画像配置、命名規約"
 - 圏論の可換図式: まずは **テキスト＋最小の図版**（SVG）で表現し、必要に応じて表現方式を拡張する
 
 補足:
-- GitHub では Mermaid が標準表示されるが、GitHub Pages 側は追加設定が必要な場合があるため、公開サイト要件に応じて後続タスクで確定する。
+- GitHub Pages ではクライアント側で Mermaid をレンダリングする（`assets/js/mermaid-init.js`）。現状は Mermaid `10.9.1` をCDNから読み込み、` ```mermaid ` ブロックを図として表示する。
+- dark/light 切替では図のテーマが焼き付くため、テーマ切替時に再レンダリングする（`assets/js/mermaid-init.js`）。
+- Mermaid で表現力が不足する可換図式/ストリング図式は、SVG（`assets/images/`）を利用する。
 
 ## 画像配置
 
@@ -27,7 +29,7 @@ description: "図式の表現方式、画像配置、命名規約"
 ## 参照方法（Markdown）
 
 ```md
-![図: Context Packの全体像](assets/images/chapter01/context-pack-overview.svg)
+![図: Context Packの全体像](../../assets/images/chapter01/context-pack-overview.svg)
 ```
 
 ## 作図の最小要件

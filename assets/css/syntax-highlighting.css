@@ -65,6 +65,26 @@ pre[data-lang]::before {
     letter-spacing: 0.5px;
 }
 
+/* Mermaid diagrams */
+.mermaid-wrapper {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.mermaid-wrapper .mermaid {
+    display: flex;
+    justify-content: center;
+}
+
+.mermaid-wrapper svg {
+    max-width: 100%;
+    height: auto;
+}
+
 /* GitHub Light Theme (default) */
 .highlight .c { color: #6a737d; } /* Comment */
 .highlight .err { color: #b31d28; background-color: #ffeef0; } /* Error */

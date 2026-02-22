@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="260" viewBox="0 0 960 260" role="img" aria-label="Context Packの全体像（最小ループ）">
+  <defs>
+    <style>
+      .box { fill: #ffffff; stroke: #0f172a; stroke-width: 2; rx: 10; }
+      .label { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif; font-size: 16px; fill: #0f172a; }
+      .muted { font-size: 13px; fill: #334155; }
+      .arrow { stroke: #0f172a; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0f172a"/>
+    </marker>
+  </defs>
+
+  <!-- Boxes -->
+  <rect class="box" x="40" y="70" width="200" height="120"/>
+  <rect class="box" x="290" y="70" width="200" height="120"/>
+  <rect class="box" x="540" y="70" width="200" height="120"/>
+  <rect class="box" x="790" y="70" width="130" height="120"/>
+
+  <!-- Labels -->
+  <text class="label" x="60" y="105">Context Pack</text>
+  <text class="muted" x="60" y="130">Goals / Non-goals</text>
+  <text class="muted" x="60" y="150">Objects / Morphisms</text>
+  <text class="muted" x="60" y="170">Diagrams / Constraints</text>
+
+  <text class="label" x="310" y="105">AI</text>
+  <text class="muted" x="310" y="130">実装スケルトン</text>
+  <text class="muted" x="310" y="150">テスト案</text>
+  <text class="muted" x="310" y="170">差分出力（PR）</text>
+
+  <text class="label" x="560" y="105">Review / CI</text>
+  <text class="muted" x="560" y="130">Forbidden changes</text>
+  <text class="muted" x="560" y="150">Diagrams（不変条件）</text>
+  <text class="muted" x="560" y="170">Acceptance tests</text>
+
+  <text class="label" x="810" y="105">Done</text>
+  <text class="muted" x="810" y="130">Merge</text>
+  <text class="muted" x="810" y="150">Release</text>
+
+  <!-- Arrows -->
+  <path class="arrow" d="M240 130 H290"/>
+  <path class="arrow" d="M490 130 H540"/>
+  <path class="arrow" d="M740 130 H790"/>
+
+  <!-- Feedback arrow (CI fail) -->
+  <path class="arrow" d="M640 70 C640 20, 140 20, 140 70"/>
+  <text class="muted" x="430" y="30">fail → Context Packを修正</text>
+</svg>
+

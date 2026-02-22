@@ -29,6 +29,17 @@ chapter: chapter10
 4. 人間がレビュー（Forbidden changes と Diagrams が基準）
 5. CIで破綻検知（リンク/Unicode/構造/textlint + Context Pack lint）
 
+```mermaid
+graph TD
+  IS["Issue（目的/非目的/DoD）"] --> CP["Context Pack（Objects/Morphisms/Diagrams）"]
+  CP --> AI["AI: 実装/テスト案生成"]
+  AI --> PR["PR（差分）"]
+  PR --> RV["レビュー（Forbidden changes / Diagrams）"]
+  RV --> CI["CI（品質ゲート + Context Pack lint）"]
+  CI -->|pass| MG["Merge"]
+  CI -->|fail| CP
+```
+
 このリポジトリでは、book-formatter による品質ゲートと、Context Pack の簡易lintをCIへ組み込み済みです（`.github/workflows/ci.yml`）。
 
 ## 設計成果物（テンプレ：表/図式/チェックリスト）

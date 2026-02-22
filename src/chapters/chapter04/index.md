@@ -38,6 +38,27 @@ chapter: chapter04
   - 対象: 実装上の型/データ構造/モジュール境界
   - 射: 関数/メソッド/APIハンドラ/ジョブ
 
+```mermaid
+graph LR
+  subgraph Spec["仕様圏（Spec）"]
+    O["Objects"]
+    M["Morphisms"]
+    D["Diagrams"]
+    O --> M --> D
+  end
+
+  subgraph Code["実装圏（Code）"]
+    T["Types / Modules"]
+    F["Functions / APIs"]
+    X["Tests / Checks"]
+    T --> F --> X
+  end
+
+  O -. "F" .-> T
+  M -. "F" .-> F
+  D -. "F" .-> X
+```
+
 AI委任を関手として捉えると、次の設計判断がしやすくなります。
 
 - モジュール境界の固定: 仕様圏の Objects を実装圏のモジュールへ写す（勝手に混ぜない）

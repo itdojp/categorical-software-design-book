@@ -42,6 +42,13 @@ AI委任が難しいのは、効果が絡む領域です。
   - DB/外部API/監査/リトライなどの効果をここへ閉じ込める
   - 失敗モデル（failures）と再試行規則を Context Pack として固定する
 
+```mermaid
+graph LR
+  IN["Command / Input"] --> CORE["pure core（判断/状態遷移）"]
+  CORE --> SHELL["impure shell（DB/外部API/監査/リトライ）"]
+  SHELL --> OUT["Result / Output"]
+```
+
 共通例題（注文処理）の観点:
 
 - `PlaceOrder` は在庫引当、監査、状態遷移を含む。ここで効果を増やすと、冪等（D1）や監査整合（D2）が壊れやすい。

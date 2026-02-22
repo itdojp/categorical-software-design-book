@@ -34,6 +34,14 @@ chapter: chapter02
 - 結合律が成立していれば、実装上の構造として `(authorizePayment ∘ reserveInventory) ∘ validate` と `authorizePayment ∘ (reserveInventory ∘ validate)` を入れ替えても、結果（状態・副作用の意味）が一致する。
 - 恒等射は「何もしない段階」を許し、共通処理・条件分岐の組み立てを単純化する（例: ある条件では `id` を挟んでパイプラインの形を揃える）。
 
+```mermaid
+graph LR
+  I["Input（Command）"] -->|validate| V["Validated"]
+  V -->|reserveInventory| R["Reserved"]
+  R -->|authorizePayment| P["Authorized"]
+  P -->|appendAudit| O["Order（Placed）"]
+```
+
 ## ソフトウェア設計への射影（どこに効くか）
 
 本書では次の対応で設計成果物を作ります。

@@ -24,6 +24,19 @@ chapter: chapter06
   - 直観: OR（どちらか一方の分岐、識別子付きUnion）
   - 例: 結果が「成功」または「エラー」なら、それは余積として表現できる（`Result<Success, Error>`）
 
+```mermaid
+graph LR
+  subgraph Product["積（Product）: A × B"]
+    P["A × B"] -->|π1| A1["A"]
+    P -->|π2| B1["B"]
+  end
+
+  subgraph Coproduct["余積（Coproduct）: A + B"]
+    A2["A"] -->|ι1| S["A + B"]
+    B2["B"] -->|ι2| S
+  end
+```
+
 ミニ例（直観）:
 
 「必要な情報」を積で組み立て、「分岐（成功/失敗、複数ケース）」を余積で表現する。これにより、巨大なDTO（多数の optional を含む）を避け、AIが実装/テストを生成しやすい契約になる。

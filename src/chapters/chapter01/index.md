@@ -118,6 +118,17 @@ forbidden_changes:
 4. テスト実行（受入テスト＋可換性に対応する検証）
 5. 不一致があれば、まず Context Pack を修正してから再生成する（コードを先に直さない）
 
+```mermaid
+graph TD
+  CP["Context Pack（SSOT）"] --> AI["AI: 実装/テスト案生成"]
+  AI --> PR["差分（PR）"]
+  PR --> RV["人間レビュー（Forbidden changes / Diagrams）"]
+  RV --> CI["CI（受入テスト / 可換性チェック）"]
+  CI -->|pass| DONE["Done"]
+  CI -->|fail| FIX["Context Pack修正"]
+  FIX --> CP
+```
+
 ## 検証（テスト観点・可換性チェック）
 
 - 不変条件（Diagrams）がテスト観点へ落ちていることを確認する
