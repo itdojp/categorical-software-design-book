@@ -2,7 +2,7 @@
   "name": "categorical-software-design-book",
   "version": "1.0.0",
   "description": "仕様・設計・検証を合成可能にする共通言語",
-  "author": "著者名（要更新）",
+  "author": "株式会社アイティードゥ",
   "license": "CC BY-NC-SA 4.0",
   "scripts": {
     "build": "bundle exec jekyll build",
