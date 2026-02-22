@@ -22,10 +22,10 @@ chapter: chapter05
 
 ```mermaid
 graph TD
-  FA["F(A)"] -->|F(f)| FB["F(B)"]
+  FA["F(A)"] -->|"F(f)"| FB["F(B)"]
   FA -->|η_A| GA["G(A)"]
   FB -->|η_B| GB["G(B)"]
-  GA -->|G(f)| GB
+  GA -->|"G(f)"| GB
 ```
 
 直観:
