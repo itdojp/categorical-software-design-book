@@ -60,4 +60,6 @@ appendix: references
 | 第4〜5章 | Milewski（関手/自然変換の実装直観）、Fong & Spivak（合成的設計） |
 | 第6章 | Fong & Spivak（普遍性の応用）、型システム入門（合併型/直積型） |
 | 第7章 | Spivak / Fong & Spivak（統合の図式化） |
+| 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、実務の並列/合流設計資料 |
 | 第9章 | FP文献（モナド/効果）、形式手法（不変条件の固定） |
+| 第10章 | GitHub Actions / テスト戦略 / レビュー運用の実務資料（再現可能性を優先） |

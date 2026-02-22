@@ -63,7 +63,7 @@ version: "1.0.0"
 
 - [第8章 モノイダル圏とストリング図式（分業と配線）](src/chapters/chapter08/)
 
-- [第9章 モナド/Kleisli（効果境界の設計）](src/chapters/chapter09/)
+- [第9章 モナド/クライスリ（効果境界の設計）](src/chapters/chapter09/)
 
 - [第10章 ケーススタディ（仕様→設計→検証→AI実装）](src/chapters/chapter10/)
 
