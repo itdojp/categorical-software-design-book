@@ -18,7 +18,7 @@ description: "AIエージェントに設計成果物を引き渡すための入�
 Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性のため YAML を推奨します。
 
 機械可読スキーマ:
-- JSON Schema: [context-pack-v1.schema.json](context-pack-v1.schema.json)
+- JSON Schema: [context-pack-v1.schema.json](context-pack-v1.schema.json)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)）
 
 簡易lint（必須項目/型チェック）:
 
@@ -89,6 +89,60 @@ AIが勝手に変更してはいけない事項を明示します。
 - 不変条件（Diagrams）
 - 権限境界（ACL/RBAC）
 
+## 最小の有効例（Minimal valid example）
+
+以下は「必須キー＋最小要素」だけで成立する例です（章末演習の叩き台）。
+
+```yaml
+version: 1
+name: minimal-example
+
+problem_statement:
+  goals: ["最小の例として成立させる"]
+  non_goals: ["仕様追加をしない"]
+
+domain_glossary:
+  terms:
+    - term: Order
+      ja: 注文
+
+objects:
+  - id: Order
+    kind: entity
+
+morphisms:
+  - id: PlaceOrder
+    input: { orderId: "OrderId" }
+    output: { orderId: "OrderId" }
+    pre: ["Order.state == Draft"]
+    post: ["Order.state == Placed"]
+    failures: ["InvalidState"]
+
+diagrams:
+  - id: D1-order-state
+    statement: "PlaceOrder は Draft のみに適用できる"
+    verification: ["Draft 以外では InvalidState になる"]
+
+constraints: {}
+
+acceptance_tests:
+  - id: AT1-happy-path
+    scenario: Draft の Order に PlaceOrder を適用する
+    expected: ["Order.state == Placed"]
+
+coding_conventions:
+  language: language-agnostic
+  directory: []
+  dependencies: {}
+
+forbidden_changes:
+  - "Diagrams を満たさない変更"
+```
+
 ## 例（共通例題）
 
-共通例題の Context Pack（最小版）は [context-pack-v1.yaml](../examples/common-example/context-pack-v1.yaml) に配置します。
+共通例題（注文処理）の Context Pack v1 は次を参照します。
+
+- 共通例題ページ（HTML）: [docs/examples/common-example/](../examples/common-example/)
+- YAML（raw）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)
+- YAML（GitHub）: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/common-example/context-pack-v1.yaml)
