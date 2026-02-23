@@ -13,7 +13,7 @@ description: "全章で参照する共通例題（Order/Payment/Inventory/Shipme
 - 例題 Context Pack（YAML）:
   - raw（推奨）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)
   - GitHub: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/common-example/context-pack-v1.yaml)
-  - GitHub Pages: [context-pack-v1.yaml](context-pack-v1.yaml)
+  - サイト内で読む: [YAML（全文）](#yaml-full)
 
 ## 最小lint（ローカル）
 
@@ -21,7 +21,7 @@ description: "全章で参照する共通例題（Order/Payment/Inventory/Shipme
 python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
 ```
 
-## YAML（全文）
+## YAML（全文） {#yaml-full}
 
 ```yaml
 {% include_relative context-pack-v1.yaml %}

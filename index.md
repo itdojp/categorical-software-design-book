@@ -85,7 +85,7 @@ graph TD
 
 ## 用語集
 
-- 用語・訳語のSSOT: [GLOSSARY.md](GLOSSARY.md)（GitHub: [GLOSSARY.md](https://github.com/itdojp/categorical-software-design-book/blob/main/GLOSSARY.md)）
+- 用語・訳語のSSOT: [/glossary/](GLOSSARY.md)（GitHub: [GLOSSARY.md](https://github.com/itdojp/categorical-software-design-book/blob/main/GLOSSARY.md)）
 - 用語/記法/図式の統一ルール:
   - [docs/style/terminology.md](docs/style/terminology.md)
   - [docs/style/notation.md](docs/style/notation.md)
