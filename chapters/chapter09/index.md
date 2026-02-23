@@ -57,7 +57,7 @@ graph LR
 
 参照:
 
-- 共通例題 Context Pack: [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)
+- 共通例題（Context Pack v1）: [docs/examples/common-example/](../../docs/examples/common-example/)
 
 ### 効果境界テンプレ（最小）
 

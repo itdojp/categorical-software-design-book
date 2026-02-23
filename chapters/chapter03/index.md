@@ -54,7 +54,7 @@ AIによる実装・改稿・リファクタは、局所最適化が入りやす
 
 共通例題（注文処理）の Diagrams は次にあります。
 
-- [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)
+- [docs/examples/common-example/](../../docs/examples/common-example/)
 
 ### Diagrams テンプレ（最小）
 
