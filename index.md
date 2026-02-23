@@ -43,7 +43,7 @@ description: "仕様・設計・検証を合成可能にする共通言語"
 ## クイックスタート
 
 1. Context Pack v1 仕様を読む: [docs/spec/context-pack-v1.md](docs/spec/context-pack-v1.md)
-2. 共通例題を読む: [docs/examples/common-example/context-pack-v1.yaml](docs/examples/common-example/context-pack-v1.yaml)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)）
+2. 共通例題を読む: [docs/examples/common-example/](docs/examples/common-example/)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)）
 3. Context Packの最小lintを実行する: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`（[scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
 
 ## 目次
