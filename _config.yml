@@ -50,7 +50,6 @@ exclude:
   - AI_USAGE_POLICY.md
   - UPDATE_POLICY.md
   - CONTRIBUTING.md
-  - GLOSSARY.md
 
 # 日本語対応
 kramdown:

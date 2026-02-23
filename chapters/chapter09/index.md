@@ -57,19 +57,21 @@ graph LR
 
 参照:
 
-- 共通例題 Context Pack: `docs/examples/common-example/context-pack-v1.yaml`
+- 共通例題 Context Pack: [docs/examples/common-example/context-pack-v1.yaml](../../docs/examples/common-example/context-pack-v1.yaml)
 
 ### 効果境界テンプレ（最小）
 
-| 要素 | 内容 |
-| --- | --- |
-| pure core | 純粋にできる判断（状態遷移、計算、検証） |
-| impure shell | 効果（DB/外部API/監査/リトライ） |
-| failures | 失敗モデル（variant列挙） |
-| retry | 再試行方針（条件、回数、バックオフ、タイムアウト） |
-| idempotency | 冪等性の鍵（キー、スコープ、保持期間） |
-| audit | 監査イベント（必須項目、改竄検知） |
-| diagrams | 効果境界に関する不変条件（例: D1, D2） |
+```yaml
+constraints:
+  effect_boundary:
+    pure_core: [] # 純粋にできる判断（状態遷移、計算、検証）
+    impure_shell: [] # 効果（DB/外部API/監査/リトライ）
+    failures: [] # 失敗モデル（variant列挙）
+    retry: {} # 再試行方針（条件、回数、バックオフ、タイムアウト）
+    idempotency: {} # 冪等性の鍵（キー、スコープ、保持期間）
+    audit: {} # 監査イベント（必須項目、改竄検知）
+    diagrams: [] # 効果境界に関する不変条件（例: D1, D2）
+```
 
 例（方針イメージ）:
 
