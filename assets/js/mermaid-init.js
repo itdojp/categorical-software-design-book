@@ -11,7 +11,10 @@
     'use strict';
 
     const MERMAID_VERSION = '10.9.1';
-    const MERMAID_CDN_URL = `https://cdn.jsdelivr.net/npm/mermaid@${MERMAID_VERSION}/dist/mermaid.min.js`;
+    const MERMAID_SCRIPT_URLS = [
+        `https://cdn.jsdelivr.net/npm/mermaid@${MERMAID_VERSION}/dist/mermaid.min.js`,
+        `https://unpkg.com/mermaid@${MERMAID_VERSION}/dist/mermaid.min.js`,
+    ];
 
     function findMermaidCodeBlocks() {
         return Array.from(
@@ -21,21 +24,54 @@
         );
     }
 
+    function looksLikeMermaid(source) {
+        const s = String(source || '').trim();
+        if (!s) return false;
+
+        const firstLine = s.split('\n', 1)[0].trim();
+        if (/^(graph|flowchart)\s+(TD|LR|RL|TB)\b/.test(firstLine)) return true;
+        if (/^(sequenceDiagram|classDiagram|stateDiagram|erDiagram|gantt|journey|mindmap|timeline)\b/.test(firstLine))
+            return true;
+        return false;
+    }
+
+    function findMermaidLikeCodeBlocks() {
+        const codeBlocks = Array.from(document.querySelectorAll('pre > code'));
+        return codeBlocks.filter((codeEl) => {
+            const cls = String(codeEl.className || '');
+            if (cls.includes('language-mermaid') || cls.includes('lang-mermaid')) return false;
+            return looksLikeMermaid(codeEl.textContent || '');
+        });
+    }
+
     function getTheme() {
         const t = document.documentElement.getAttribute('data-theme');
         return t === 'dark' ? 'dark' : 'default';
     }
 
+    function loadScript(url) {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = url;
+            script.async = true;
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error(`Failed to load script: ${url}`));
+            document.head.appendChild(script);
+        });
+    }
+
     function loadMermaidIfNeeded() {
         if (window.mermaid) return Promise.resolve(window.mermaid);
 
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = MERMAID_CDN_URL;
-            script.async = true;
-            script.onload = () => resolve(window.mermaid);
-            script.onerror = () => reject(new Error('Failed to load Mermaid from CDN'));
-            document.head.appendChild(script);
+        // Try multiple CDN endpoints for better reachability.
+        let p = Promise.reject(new Error('Mermaid is not loaded yet'));
+        MERMAID_SCRIPT_URLS.forEach((url) => {
+            p = p.catch(() => loadScript(url));
+        });
+
+        return p.then(() => {
+            if (!window.mermaid) throw new Error('Mermaid loaded, but window.mermaid is missing');
+            return window.mermaid;
         });
     }
 
@@ -98,9 +134,15 @@
 
         try {
             if (typeof window.mermaid.run === 'function') {
-                window.mermaid.run({ nodes });
+                const r = window.mermaid.run({ nodes });
+                if (r && typeof r.then === 'function') {
+                    r.catch((e) => console.warn('Mermaid render failed:', e));
+                }
             } else if (typeof window.mermaid.init === 'function') {
-                window.mermaid.init(undefined, nodes);
+                const r = window.mermaid.init(undefined, nodes);
+                if (r && typeof r.then === 'function') {
+                    r.catch((e) => console.warn('Mermaid render failed:', e));
+                }
             }
         } catch (e) {
             console.warn('Mermaid render failed:', e);
@@ -108,7 +150,9 @@
     }
 
     function init() {
-        const codeBlocks = findMermaidCodeBlocks();
+        const codeBlocks = Array.from(
+            new Set([...findMermaidCodeBlocks(), ...findMermaidLikeCodeBlocks()])
+        );
         if (codeBlocks.length === 0) return;
 
         // Replace code blocks before loading Mermaid so the DOM is ready for rendering.
@@ -133,4 +177,3 @@
         init();
     }
 })();
-
