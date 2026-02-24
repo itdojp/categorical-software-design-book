@@ -1,0 +1,43 @@
+version: 1
+name: minimal-example
+
+problem_statement:
+  goals: ["最小の例として成立させる"]
+  non_goals: ["仕様追加をしない"]
+
+domain_glossary:
+  terms:
+    - term: Order
+      ja: 注文
+
+objects:
+  - id: Order
+    kind: entity
+
+morphisms:
+  - id: PlaceOrder
+    input: { orderId: "OrderId" }
+    output: { orderId: "OrderId" }
+    pre: ["Order.state == Draft"]
+    post: ["Order.state == Placed"]
+    failures: ["InvalidState"]
+
+diagrams:
+  - id: D1-order-state
+    statement: "PlaceOrder は Draft のみに適用できる"
+    verification: ["Draft 以外では InvalidState になる"]
+
+constraints: {}
+
+acceptance_tests:
+  - id: AT1-happy-path
+    scenario: Draft の Order に PlaceOrder を適用する
+    expected: ["Order.state == Placed"]
+
+coding_conventions:
+  language: language-agnostic
+  directory: []
+  dependencies: {}
+
+forbidden_changes:
+  - "Diagrams を満たさない変更"

@@ -93,6 +93,12 @@ AIが勝手に変更してはいけない事項を明示します。
 
 以下は「必須キー＋最小要素」だけで成立する例です（章末演習の叩き台）。
 
+“コピペして使う最小例” の SSOT はファイルとして管理します。
+
+- YAML（raw）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/minimal-example/context-pack-v1.yaml)
+- YAML（GitHub）: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/minimal-example/context-pack-v1.yaml)
+- YAML（リポジトリ内）: [docs/examples/minimal-example/context-pack-v1.yaml](../examples/minimal-example/context-pack-v1.yaml)
+
 ```yaml
 version: 1
 name: minimal-example
