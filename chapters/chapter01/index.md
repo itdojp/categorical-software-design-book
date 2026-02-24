@@ -100,6 +100,21 @@ diagrams:
     statement: "重要操作は必ず監査証跡を残す"
     verification:
       - "操作が成功した場合、対応するAuditEventが存在する"
+
+constraints: {}
+
+acceptance_tests:
+  - id: AT1-happy-path
+    scenario: Draft の Order に PlaceOrder を適用する
+    expected:
+      - "Order.state == Placed"
+      - "AuditEvent(\"PlaceOrder\") が記録される"
+
+coding_conventions:
+  language: language-agnostic
+  directory: []
+  dependencies: {}
+
 forbidden_changes:
   - "Diagrams（不変条件）を満たさない変更"
 ```

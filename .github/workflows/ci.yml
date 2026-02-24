@@ -53,6 +53,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml
           python scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
+          python scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml
 
       - name: Upload reports
         if: always()

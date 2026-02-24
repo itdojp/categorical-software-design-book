@@ -9,6 +9,8 @@ appendix: templates
 
 ## Context Pack（最小スケルトン）
 
+このスケルトンは `scripts/validate-context-pack.py` を通る（Schema-valid）形です。
+
 ```yaml
 version: 1
 name: <project-or-example-name>
@@ -25,9 +27,19 @@ morphisms: []
 diagrams: []
 
 constraints: {}
-acceptance_tests: []
-coding_conventions: {}
-forbidden_changes: []
+
+acceptance_tests:
+  - id: AT1-happy-path
+    scenario: "<scenario>"
+    expected: ["<expected>"]
+
+coding_conventions:
+  language: language-agnostic
+  directory: []
+  dependencies: {}
+
+forbidden_changes:
+  - "<forbidden change>"
 ```
 
 ## Objects テンプレ（型/状態/不変条件/権限/エラー）
