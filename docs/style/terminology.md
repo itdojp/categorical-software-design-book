@@ -9,7 +9,7 @@ description: "訳語・表記ゆれを抑制するための用語方針"
 
 - 初出では **日本語（英語）** を併記する（例: 関手（Functor））
 - 以後は原則として日本語を用いる（必要に応じて英語を括弧書き）
-- 章を跨ぐ概念は [用語集（GLOSSARY.md）](../../GLOSSARY.md) を正とし、章側は参照する（GitHub Pagesでは `/glossary/` として公開）
+- 章を跨ぐ概念は [用語集（Glossary）]({{ '/glossary/' | relative_url }}) を正とし、章側は参照する
 - 略語は初出で展開する（例: Context Pack v1）
 
 ## 主要概念（推奨訳語）
@@ -32,4 +32,4 @@ description: "訳語・表記ゆれを抑制するための用語方針"
 ## 本書固有の用語
 
 - **Design Artifacts（設計成果物）**: Objects/Morphisms/Diagrams を中心に、AIへ引き渡せる形に固定した成果物一式
-- **Context Pack**: AIエージェントへの入力契約（[Context Pack v1 仕様](../spec/context-pack-v1.md)）
+- **Context Pack**: AIエージェントへの入力契約（[Context Pack v1 仕様]({{ '/docs/spec/context-pack-v1/' | relative_url }})）
