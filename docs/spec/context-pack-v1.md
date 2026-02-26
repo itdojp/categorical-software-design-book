@@ -23,6 +23,7 @@ Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性�
 簡易lint（必須項目/型チェック）:
 
 ```bash
+python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml
 python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
 ```
 
@@ -95,6 +96,7 @@ AIが勝手に変更してはいけない事項を明示します。
 
 “コピペして使う最小例” の SSOT はファイルとして管理します。
 
+- 最小例ページ: [最小例: minimal-example]({{ '/docs/examples/minimal-example/' | relative_url }})
 - YAML（raw）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/minimal-example/context-pack-v1.yaml)
 - YAML（GitHub）: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/minimal-example/context-pack-v1.yaml)
 
