@@ -12,4 +12,4 @@ description: "全章で参照する共通ドメイン例（Order/Payment/Invento
 
 ## 成果物
 
-- Context Pack v1（最小版）: [context-pack-v1.yaml](context-pack-v1.yaml)
+- Context Pack v1（最小版）: [context-pack-v1.yaml](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/common-example/context-pack-v1.yaml)
