@@ -5,6 +5,7 @@
   "author": "株式会社アイティードゥ",
   "license": "CC BY-NC-SA 4.0",
   "scripts": {
+    "qa": "bash scripts/qa.sh",
     "build": "bundle exec jekyll build",
     "serve": "bundle exec jekyll serve --livereload --baseurl \"\"",
     "serve:pages": "bundle exec jekyll serve --livereload",

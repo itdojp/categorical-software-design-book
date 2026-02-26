@@ -13,6 +13,23 @@
 - 用語/記法は `docs/style/terminology.md`, `docs/style/notation.md` と `GLOSSARY.md` に従う
 - 図式・図版は `docs/style/diagram-style.md` に従う
 
+## ローカルQA（CI相当）
+
+前提:
+- Node.js（CIは Node 20）
+- Python 3（CIは Python 3.12）
+- Git
+- Bash
+
+実行:
+
+```bash
+npm run qa
+```
+
+出力:
+- `qa-reports/*.json`
+
 ## レビュー観点（最低限）
 
 - 章間の参照が壊れていない（リンク/アンカー/用語）

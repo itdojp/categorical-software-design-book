@@ -9,4 +9,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+book-formatter/
+qa-reports/
+
 .DS_Store
