@@ -1,0 +1,5 @@
+# Placeholder allowlist for scripts/check-placeholders.py
+#
+# - One path per line, relative to repo root.
+# - Lines starting with # are ignored.
+# - Keep this file minimal; prefer removing placeholders from published content.
