@@ -23,6 +23,7 @@ Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性�
 簡易lint（必須項目/型チェック）:
 
 ```bash
+python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml
 python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
 ```
 
@@ -95,9 +96,9 @@ AIが勝手に変更してはいけない事項を明示します。
 
 “コピペして使う最小例” の SSOT はファイルとして管理します。
 
+- 最小例ページ（HTML）: [docs/examples/minimal-example/index.md](../examples/minimal-example/index.md)
 - YAML（raw）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/minimal-example/context-pack-v1.yaml)
 - YAML（GitHub）: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/minimal-example/context-pack-v1.yaml)
-- YAML（リポジトリ内）: [docs/examples/minimal-example/context-pack-v1.yaml](../examples/minimal-example/context-pack-v1.yaml)
 
 ```yaml
 version: 1
@@ -149,6 +150,6 @@ forbidden_changes:
 
 共通例題（注文処理）の Context Pack v1 は次を参照します。
 
-- 共通例題ページ（HTML）: [docs/examples/common-example/](../examples/common-example/)
+- 共通例題ページ（HTML）: [docs/examples/common-example/index.md](../examples/common-example/index.md)
 - YAML（raw）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)
 - YAML（GitHub）: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/common-example/context-pack-v1.yaml)
