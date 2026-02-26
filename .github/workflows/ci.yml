@@ -55,6 +55,7 @@ jobs:
           python scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
           python scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml
           python scripts/check-context-pack-minimal-example-sync.py
+          python scripts/check-placeholders.py
 
       - name: Upload reports
         if: always()
