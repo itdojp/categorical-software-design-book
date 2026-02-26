@@ -136,7 +136,9 @@ constraints:
     - 監査イベントは削除不可（論理削除も禁止、訂正は追記で行う）
     - actor（操作者）を必須にする（匿名操作は不可）
   operations:
-    - 監査イベントの検索・エクスポート経路を用意する（後続タスクで具体化）
+    - 監査イベントの検索・エクスポート経路を用意する
+    - 検索は occurredAt の期間、actor/action/target でフィルタできる
+    - エクスポートは CSV または JSON を提供し、権限によりアクセス制御される
 
 acceptance_tests:
   - id: AT1-happy-path
@@ -148,6 +150,11 @@ acceptance_tests:
     scenario: Draft の Order に対して ShipOrder を呼ぶ
     expected:
       - InvalidState
+  - id: AT3-audit-search-export
+    scenario: 監査イベントを actor/action/target/期間 で検索し、CSV または JSON でエクスポートする
+    expected:
+      - 検索結果に CreateOrder/PlaceOrder/AuthorizePayment/ShipOrder の監査イベントが含まれる
+      - 権限のない actor は検索・エクスポートできない
 
 coding_conventions:
   language: language-agnostic
