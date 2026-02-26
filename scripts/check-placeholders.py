@@ -12,6 +12,11 @@ from typing import Iterable
 ROOT = Path(__file__).resolve().parent.parent
 
 TARGETS = [
+    ROOT / "README.md",
+    ROOT / "CHANGELOG.md",
+    ROOT / "CONTRIBUTING.md",
+    ROOT / "UPDATE_POLICY.md",
+    ROOT / "AI_USAGE_POLICY.md",
     ROOT / "index.md",
     ROOT / "GLOSSARY.md",
 ]
@@ -95,4 +100,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
