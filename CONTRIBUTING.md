@@ -18,6 +18,7 @@
 前提:
 - Node.js（CIは Node 20）
 - Python 3（CIは Python 3.12）
+- Python仮想環境（venv/conda）（推奨）
 - Git
 - Bash
 
