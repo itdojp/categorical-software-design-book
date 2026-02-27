@@ -9,7 +9,7 @@ appendix: templates
 
 ## Context Pack（最小スケルトン）
 
-このスケルトンは `scripts/validate-context-pack.py` を通る（Schema-valid）形です。
+このスケルトンは `scripts/validate-context-pack.py` の minimal lint（必須フィールド/型/ID重複/参照整合の簡易検証）を通る形です。
 
 ```yaml
 version: 1
