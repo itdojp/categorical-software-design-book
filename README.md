@@ -60,6 +60,23 @@ bundle exec jekyll serve --livereload --baseurl ""
 bundle exec jekyll build
 ```
 
-## 品質チェック（book-formatter）
+## 品質チェック（ローカルQA）
 
-CIでは `itdojp/book-formatter` のチェッカー（リンク/Unicode/構造/textlint等）を実行します。ローカルで同等のチェックを行う場合は、book-formatter を取得して実行してください（詳細は `.github/workflows/ci.yml` を参照）。
+CIでは `itdojp/book-formatter` のチェッカー（リンク/Unicode/構造/textlint等）と、Context Pack 検証スクリプトを実行します。ローカルでは `npm run qa` で主要チェックを一括実行できます（`book-formatter/` は自動取得/更新）。
+
+前提:
+- Node.js（CIは Node 20）
+- Python 3（CIは Python 3.12）
+- Git / Bash
+- （推奨）Python仮想環境（venv/conda）
+
+実行:
+
+```bash
+npm run qa
+```
+
+出力:
+- `qa-reports/*.json`
+
+詳細は `scripts/qa.sh` と `.github/workflows/ci.yml` を参照してください。
