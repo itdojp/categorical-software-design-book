@@ -27,7 +27,7 @@ chapter: chapter10
 2. Context Pack（設計成果物）を作る
 3. AIへ委任して実装/テスト案を生成する
 4. 人間がレビュー（Forbidden changes と Diagrams が基準）
-5. CIで破綻検知（リンク/Unicode/構造/textlint + Context Pack lint）
+5. CIで破綻検知（リンク/Unicode/構造/textlint + Context Pack 検証）
 
 ```mermaid
 graph TD
@@ -35,12 +35,12 @@ graph TD
   CP --> AI["AI: 実装/テスト案生成"]
   AI --> PR["PR（差分）"]
   PR --> RV["レビュー（Forbidden changes / Diagrams）"]
-  RV --> CI["CI（品質ゲート + Context Pack lint）"]
+  RV --> CI["CI（品質ゲート + Context Pack 検証）"]
   CI -->|pass| MG["Merge"]
   CI -->|fail| CP
 ```
 
-このリポジトリでは、book-formatter による品質ゲートと、Context Pack の簡易lintをCIへ組み込み済みです（`.github/workflows/ci.yml`）。
+このリポジトリでは、book-formatter による品質ゲートと、Context Pack の検証（minimal lint + schema validation）をCIへ組み込み済みです（`.github/workflows/ci.yml`）。
 
 ## 設計成果物（テンプレ：表/図式/チェックリスト）
 
@@ -101,9 +101,9 @@ AIに渡すときは「入力契約を守らせる」ことが最優先です。
   - `.github/PULL_REQUEST_TEMPLATE.md` のチェックリストで確認
 - CI:
   - book-formatter checks（リンク/Unicode/構造/textlint等）
-  - Context Pack lint（`scripts/validate-context-pack.py`）
+  - Context Pack 検証（minimal lint + schema validation）
 
-CIのレポートはArtifactsに保存され、原因調査を支援します。
+ローカルで CI 相当の主要チェックを再現する場合は `npm run qa` を実行します（レポート: `qa-reports/*.json`）。CIでも Artifacts（qa-reports）に同等レポートが保存され、原因調査を支援します。
 
 ## 演習
 

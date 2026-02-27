@@ -49,6 +49,9 @@ description: "仕様・設計・検証を合成可能にする共通言語"
    - `python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml`
    - `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
    （[scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
+5. （任意）CI相当の主要チェックを一括実行する: `npm run qa`
+   - ローカル: `qa-reports/*.json` が生成される
+   - CI: Artifacts（qa-reports）に同等レポートが保存される（詳細: [第10章](chapters/chapter10/)）
 
 ## 目次
 
@@ -91,6 +94,7 @@ graph TD
 
 - 用語・訳語のSSOT: [/glossary/](GLOSSARY.md)（GitHub: [GLOSSARY.md](https://github.com/itdojp/categorical-software-design-book/blob/main/GLOSSARY.md)）
 - 用語/記法/図式の統一ルール:
+  - [docs/style/chapter-template.md](docs/style/chapter-template.md)
   - [docs/style/terminology.md](docs/style/terminology.md)
   - [docs/style/notation.md](docs/style/notation.md)
   - [docs/style/diagram-style.md](docs/style/diagram-style.md)

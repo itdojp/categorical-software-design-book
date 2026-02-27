@@ -61,17 +61,31 @@ echo "==> Running quality checks (book-formatter)"
 )
 
 echo "==> Running Context Pack checks (Python)"
+missing_py_deps=false
 if ! python3 -c "import yaml" >/dev/null 2>&1; then
+  missing_py_deps=true
+fi
+if ! python3 -c "import jsonschema" >/dev/null 2>&1; then
+  missing_py_deps=true
+fi
+
+if [[ "$missing_py_deps" == "true" ]]; then
+  req_file="$ROOT/scripts/requirements-qa.txt"
+  if [[ ! -f "$req_file" ]]; then
+    die "Python requirements file not found: $req_file"
+  fi
+
   if [[ -n "${VIRTUAL_ENV:-}" || -n "${CONDA_PREFIX:-}" ]]; then
-    python3 -m pip install --upgrade pip
-    python3 -m pip install pyyaml
+    python3 -m pip install -r "$req_file"
   else
-    python3 -m pip install --user pyyaml
+    python3 -m pip install --user -r "$req_file"
   fi
 fi
 
 python3 "$ROOT/scripts/validate-context-pack.py" "$ROOT/docs/examples/common-example/context-pack-v1.yaml"
 python3 "$ROOT/scripts/validate-context-pack.py" "$ROOT/docs/examples/minimal-example/context-pack-v1.yaml"
+python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/common-example/context-pack-v1.yaml"
+python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/minimal-example/context-pack-v1.yaml"
 python3 "$ROOT/scripts/check-context-pack-minimal-example-sync.py"
 python3 "$ROOT/scripts/check-placeholders.py"
 
