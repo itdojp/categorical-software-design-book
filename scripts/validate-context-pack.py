@@ -10,7 +10,12 @@ import sys
 from dataclasses import dataclass
 from typing import Any
 
-import yaml
+try:
+    import yaml
+except ImportError:
+    print("❌ Missing dependency: pyyaml", file=sys.stderr)
+    print("   Install: python3 -m pip install -r scripts/requirements-qa.txt", file=sys.stderr)
+    raise SystemExit(2)
 
 
 @dataclass(frozen=True)

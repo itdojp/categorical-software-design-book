@@ -22,6 +22,12 @@ Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性�
 
 検証コマンド:
 
+依存導入（初回のみ）:
+
+```bash
+python3 -m pip install -r scripts/requirements-qa.txt
+```
+
 minimal lint（必須項目/型/ID重複/参照整合の簡易検証）:
 
 ```bash

@@ -57,6 +57,7 @@ jobs:
           python scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v1.yaml
           python scripts/check-context-pack-minimal-example-sync.py
           python scripts/check-placeholders.py
+          python scripts/check-invalid-markdown-links.py
 
       - name: Upload reports
         if: always()
