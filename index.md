@@ -46,6 +46,7 @@ description: "仕様・設計・検証を合成可能にする共通言語"
 2. 最小例（minimal-example）を読む: [docs/examples/minimal-example/](docs/examples/minimal-example/)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/minimal-example/context-pack-v1.yaml)）
 3. 次に共通例題（注文処理）を読む: [docs/examples/common-example/](docs/examples/common-example/)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)）
 4. Context Packの最小lintを実行する:
+   - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
    - `python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml`
    - `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
    （[scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）

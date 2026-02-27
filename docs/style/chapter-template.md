@@ -59,7 +59,7 @@ chapter: chapterNN
 ## PRレビュー観点（章テンプレ遵守）
 
 - 見出し構造がテンプレに沿っている
-- 用語・記法がスタイルガイド（[用語ガイド]({{ '/docs/style/terminology/' | relative_url }}）、[記法ガイド]({{ '/docs/style/notation/' | relative_url }}）に沿っている
-- 共通例題（[共通例題（注文処理）]({{ '/docs/examples/common-example/' | relative_url }}））への参照が一貫している
+- 用語・記法がスタイルガイド（[用語ガイド]({{ '/docs/style/terminology/' | relative_url }})、[記法ガイド]({{ '/docs/style/notation/' | relative_url }})）に沿っている
+- 共通例題（[共通例題（注文処理）]({{ '/docs/examples/common-example/' | relative_url }})）への参照が一貫している
 - 可換性（不変条件）が「検証可能な形」で記述されている（テスト観点/受入条件に落ちている）
 - AI引き渡しが Context Pack v1 形式で再現できる（[Context Pack v1 仕様]({{ '/docs/spec/context-pack-v1/' | relative_url }})）

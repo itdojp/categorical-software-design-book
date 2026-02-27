@@ -9,8 +9,19 @@ import sys
 from pathlib import Path
 from typing import Any, Iterable
 
-import yaml
-from jsonschema import Draft202012Validator
+try:
+    import yaml
+except ImportError:
+    print("❌ Missing dependency: pyyaml", file=sys.stderr)
+    print("   Install: python3 -m pip install -r scripts/requirements-qa.txt", file=sys.stderr)
+    raise SystemExit(2)
+
+try:
+    from jsonschema import Draft202012Validator
+except ImportError:
+    print("❌ Missing dependency: jsonschema", file=sys.stderr)
+    print("   Install: python3 -m pip install -r scripts/requirements-qa.txt", file=sys.stderr)
+    raise SystemExit(2)
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -101,4 +112,3 @@ def main(argv: list[str]) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main(sys.argv[1:]))
-
