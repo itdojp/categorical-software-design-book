@@ -48,12 +48,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Validate Context Pack v1 (minimal lint)
+      - name: Validate Context Pack v1 (minimal lint + schema)
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml
+          pip install pyyaml jsonschema
           python scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
           python scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml
+          python scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml
+          python scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v1.yaml
           python scripts/check-context-pack-minimal-example-sync.py
           python scripts/check-placeholders.py
 

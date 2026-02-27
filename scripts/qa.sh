@@ -61,17 +61,27 @@ echo "==> Running quality checks (book-formatter)"
 )
 
 echo "==> Running Context Pack checks (Python)"
+missing_pkgs=()
 if ! python3 -c "import yaml" >/dev/null 2>&1; then
+  missing_pkgs+=("pyyaml")
+fi
+if ! python3 -c "import jsonschema" >/dev/null 2>&1; then
+  missing_pkgs+=("jsonschema")
+fi
+
+if ((${#missing_pkgs[@]})); then
   if [[ -n "${VIRTUAL_ENV:-}" || -n "${CONDA_PREFIX:-}" ]]; then
     python3 -m pip install --upgrade pip
-    python3 -m pip install pyyaml
+    python3 -m pip install "${missing_pkgs[@]}"
   else
-    python3 -m pip install --user pyyaml
+    python3 -m pip install --user "${missing_pkgs[@]}"
   fi
 fi
 
 python3 "$ROOT/scripts/validate-context-pack.py" "$ROOT/docs/examples/common-example/context-pack-v1.yaml"
 python3 "$ROOT/scripts/validate-context-pack.py" "$ROOT/docs/examples/minimal-example/context-pack-v1.yaml"
+python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/common-example/context-pack-v1.yaml"
+python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/minimal-example/context-pack-v1.yaml"
 python3 "$ROOT/scripts/check-context-pack-minimal-example-sync.py"
 python3 "$ROOT/scripts/check-placeholders.py"
 
