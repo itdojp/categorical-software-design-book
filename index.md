@@ -45,11 +45,13 @@ description: "仕様・設計・検証を合成可能にする共通言語"
 1. Context Pack v1 仕様を読む: [docs/spec/context-pack-v1.md](docs/spec/context-pack-v1.md)
 2. 最小例（minimal-example）を読む: [docs/examples/minimal-example/](docs/examples/minimal-example/)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/minimal-example/context-pack-v1.yaml)）
 3. 次に共通例題（注文処理）を読む: [docs/examples/common-example/](docs/examples/common-example/)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)）
-4. Context Packの最小lintを実行する:
+4. Context Pack を検証する（minimal lint + schema validation）:
    - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
-   - `python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml`
-   - `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
-   （[scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
+   - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml`
+   - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
+   - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v1.yaml`
+   - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
+   （スクリプト一覧: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py), [scripts/validate-context-pack-schema.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack-schema.py)）
 5. （任意）CI相当の主要チェックを一括実行する: `npm run qa`
    - ローカル: `qa-reports/*.json` が生成される
    - CI: Artifacts（qa-reports）に同等レポートが保存される（詳細: [第10章](chapters/chapter10/)）
