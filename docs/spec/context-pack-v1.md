@@ -20,7 +20,7 @@ Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性�
 機械可読スキーマ:
 - JSON Schema: [context-pack-v1.schema.json]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)）
 
-検証コマンド:
+### 検証コマンド {#validation-commands}
 
 依存導入（初回のみ）:
 
