@@ -142,8 +142,14 @@ AIへ引き渡す際は「保存すべき構造」を禁止事項として具体
 1. 「Morphismの追加」と「Object境界の変更」を1つずつ想定し、AIに任せる範囲を線引きする
    - 例（追加）: `CancelOrder` を追加（既存 Diagrams を維持）
    - 例（変更）: `Payment` 境界を `Order` へ統合（境界変更）
-2. それぞれについて、Context Pack の Forbidden changes と Constraints をどう書くべきか整理する
-3. AIに実装を委任する場合のレビュー観点（関手性チェックリスト）を列挙する
+2. それぞれについて、Context Pack の Forbidden changes と Constraints をどう書くべきか整理し、Context Pack を更新する
+3. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
+   - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
+   - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
+   - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
+   - （任意）CI相当の一括チェック: `npm run qa`
+   - 検証コマンドのSSOT: `docs/spec/context-pack-v1.md` の「検証コマンド」
+4. AIに実装を委任する場合のレビュー観点（関手性チェックリスト）を列挙する
 
 ## まとめ
 

@@ -112,8 +112,14 @@ graph TD
 
 1. 統合ケースを1つ選ぶ（例: `Payment` を外部サービスに切り出す/統合する）
 2. 共通基準 `C`（正規形または共通インターフェース）を定義する
-3. 図式（Pullback/Pushout）の統合条件を Diagrams として記述する
-4. 図式→テスト項目（差分/互換）へ変換し、検証項目リストとして残す
+3. 図式（Pullback/Pushout）の統合条件を Context Pack の Diagrams として記述する
+4. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
+   - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
+   - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
+   - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
+   - （任意）CI相当の一括チェック: `npm run qa`
+   - 検証コマンドのSSOT: `docs/spec/context-pack-v1.md` の「検証コマンド」
+5. 図式→テスト項目（差分/互換）へ変換し、検証項目リストとして残す
 
 ## まとめ
 
