@@ -111,7 +111,10 @@ AIに渡すときは「入力契約を守らせる」ことが最優先です。
 
 1. 共通例題 Context Pack を読み、要件を1つ追加する（例: CancelOrder）
 2. Context Pack を更新し、Diagrams（不変条件）と verification（検証項目）を追加する
-3. `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml` を通す（対象: [docs/examples/common-example/](../../docs/examples/common-example/)、スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
+3. Context Pack の検証を通す（minimal lint + schema validation）:
+   - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`（対象: [docs/examples/common-example/](../../docs/examples/common-example/)、スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
+   - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
+   - （任意）`npm run qa` で CI 相当の主要チェックを一括実行できる
 4. AIへ委任して、実装スケルトンとテスト観点案を生成させる
 5. Forbidden changes と Diagrams を基準にレビューし、差し戻し条件を明文化する
 

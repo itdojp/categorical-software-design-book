@@ -155,7 +155,10 @@ AIに「最小の契約」を設計させる場合、普遍性の観点（積/�
 1. `PlaceOrder` の入力/出力/エラーを、積/余積として再設計する（テンプレに落とす）
 2. エラーvariantごとのテスト観点を列挙する（最低1ケースずつ）
 3. AIに「最小の契約」を再設計させ、万能DTOに逃げていないかレビューする
-4. Context Pack を更新した場合は `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml` を通す（対象: [docs/examples/common-example/](../../docs/examples/common-example/)、スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
+4. Context Pack を更新した場合は検証を通す:
+   - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`（対象: [docs/examples/common-example/](../../docs/examples/common-example/)、スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
+   - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
+   - （任意）`npm run qa` で CI 相当の主要チェックを一括実行できる
 
 ## まとめ
 

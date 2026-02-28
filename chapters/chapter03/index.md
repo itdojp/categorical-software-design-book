@@ -130,8 +130,10 @@ AIプロンプト例（抜粋）:
 2. 追加した図式の verification を「検証項目リスト」として書く
 3. AIに、図式 id ごとのテスト観点案を生成させる（仕様追加は禁止）
 4. 追加内容がフォーマットとして破綻していないか、機械的に検出する
-   - `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
-   - CI（book-formatter checks）で構造/Unicode/リンク等の破綻が検出されることを確認する
+   - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
+   - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
+   - CI（book-formatter checks + Context Pack 検証: minimal lint + schema validation）で破綻が検出されることを確認する
+   - （任意）ローカルでは `npm run qa` で CI 相当を一括実行できる
 
 ## まとめ
 
