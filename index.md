@@ -51,7 +51,7 @@ description: "仕様・設計・検証を合成可能にする共通言語"
    - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
    - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v1.yaml`
    - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
-   （[scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
+   （スクリプト一覧: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py), [scripts/validate-context-pack-schema.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack-schema.py)）
 5. （任意）CI相当の主要チェックを一括実行する: `npm run qa`
    - ローカル: `qa-reports/*.json` が生成される
    - CI: Artifacts（qa-reports）に同等レポートが保存される（詳細: [第10章](chapters/chapter10/)）
