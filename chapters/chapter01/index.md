@@ -162,11 +162,17 @@ graph TD
 1. 共通例題（注文処理）の Context Pack を読む: [docs/examples/common-example/](../../docs/examples/common-example/)
 2. 次の追加要件を1つだけ定義する（例: CancelOrder を追加し、監査と状態遷移の安全性を維持）
 3. 追加要件に必要な差分を Context Pack v1 として作る（Goals/Non-goals、Objects/Morphisms/Diagrams、Acceptance tests、Forbidden changes を更新）
-4. 更新した Context Pack をAIに渡し、以下を生成させる
+4. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
+   - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
+   - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
+   - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
+   - （任意）CI相当の一括チェック: `npm run qa`
+   - 検証コマンドのSSOT: `docs/spec/context-pack-v1.md` の「検証コマンド」
+5. 更新した Context Pack をAIに渡し、以下を生成させる
    - 実装スケルトン（モジュール境界を意識）
    - 受入テスト（Acceptance tests）
    - Diagrams を壊さない検証（プロパティ/チェック観点）
-5. 人間がレビューし、Forbidden changes と Diagrams を基準に差し戻す
+6. 人間がレビューし、Forbidden changes と Diagrams を基準に差し戻す
 
 提出物（最小）:
 - 更新した Context Pack v1（YAML/JSON）
