@@ -146,9 +146,9 @@ AIへ引き渡す際は「保存すべき構造」を禁止事項として具体
 3. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
    - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
    - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
-   - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
+   - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
    - （任意）CI相当の一括チェック: `npm run qa`
-   - 検証コマンドのSSOT: `docs/spec/context-pack-v1.md` の「検証コマンド」
+   - 検証コマンドのSSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/docs/spec/context-pack-v1/#validation-commands' | relative_url }})
 4. AIに実装を委任する場合のレビュー観点（関手性チェックリスト）を列挙する
 
 ## まとめ
