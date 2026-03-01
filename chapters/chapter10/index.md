@@ -46,8 +46,8 @@ graph TD
 
 参照（仕様と例題）:
 
-- Context Pack v1 仕様: [docs/spec/context-pack-v1.md](../../docs/spec/context-pack-v1.md)
-- 共通例題（Context Pack v1）: [docs/examples/common-example/](../../docs/examples/common-example/)
+- Context Pack v1 仕様: [Context Pack v1 仕様](../../docs/spec/context-pack-v1.md)
+- 共通例題（Context Pack v1）: [共通例題: 注文処理](../../docs/examples/common-example/)
 
 運用で固定する最小セット（DoD）:
 
@@ -81,7 +81,7 @@ AIに渡すときは「入力契約を守らせる」ことが最優先です。
 
 1. 破綻検知:
   - 受入テストが落ちる
-  - 図式由来の検証（冪等、監査整合、状態遷移安全性等）が落ちる
+  - 図式由来の検証（冪等、監査整合、状態遷移の安全性等）が落ちる
 2. 原因切り分け:
   - Context Pack の不備（仕様が曖昧/不足/矛盾）
   - 実装の逸脱（Forbidden changes、契約違反、境界破壊）
@@ -112,7 +112,7 @@ AIに渡すときは「入力契約を守らせる」ことが最優先です。
 1. 共通例題 Context Pack を読み、要件を1つ追加する（例: CancelOrder）
 2. Context Pack を更新し、Diagrams（不変条件）と verification（検証項目）を追加する
 3. Context Pack の検証を通す（minimal lint + schema validation）:
-   - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`（対象: [docs/examples/common-example/](../../docs/examples/common-example/)、スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
+   - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`（対象: [共通例題: 注文処理](../../docs/examples/common-example/)、スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
    - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
    - （任意）`npm run qa` で CI 相当の主要チェックを一括実行できる
 4. AIへ委任して、実装スケルトンとテスト観点案を生成させる
@@ -133,5 +133,5 @@ AIに渡すときは「入力契約を守らせる」ことが最優先です。
 
 - 設計成果物（Context Pack）をSSOTとして固定し、AI委任の入力契約にする
 - レビューは Forbidden changes と Diagrams（不変条件）を基準に行う
-- 破綻時は「Context Packの修正→実装修正」の順序で運用する
+- 破綻時は「Context Pack の修正→実装修正」の順序で運用する
 - Issue→PR→CI→レビューのループを作ると、自プロジェクトへ移植可能な運用形になる

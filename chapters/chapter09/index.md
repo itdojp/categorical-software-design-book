@@ -57,7 +57,7 @@ graph LR
 
 参照:
 
-- 共通例題（Context Pack v1）: [docs/examples/common-example/](../../docs/examples/common-example/)
+- 共通例題（Context Pack v1）: [共通例題: 注文処理](../../docs/examples/common-example/)
 
 ### 効果境界テンプレ（最小）
 
@@ -120,7 +120,7 @@ impure shell:
    - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
    - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
    - （任意）CI相当の一括チェック: `npm run qa`
-   - 検証コマンドのSSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/docs/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - 検証コマンドのSSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
 
 ## まとめ
 
