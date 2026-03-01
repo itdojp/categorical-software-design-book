@@ -1,6 +1,7 @@
 ---
 title: "記法ガイド"
 description: "対象/射/合成/図式などの記法統一ルール"
+permalink: /style/notation/
 ---
 
 # 記法ガイド

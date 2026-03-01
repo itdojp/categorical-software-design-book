@@ -1,6 +1,7 @@
 ---
 title: "章テンプレート"
 description: "章ごとの品質と粒度を揃えるための標準テンプレート"
+permalink: /style/chapter-template/
 ---
 
 # 章テンプレート

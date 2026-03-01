@@ -1,6 +1,7 @@
 ---
 title: "Context Pack v1 仕様"
 description: "AIエージェントに設計成果物を引き渡すための入出力契約"
+permalink: /spec/context-pack-v1/
 ---
 
 # Context Pack v1 仕様
@@ -18,7 +19,7 @@ description: "AIエージェントに設計成果物を引き渡すための入�
 Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性のため YAML を推奨します。
 
 機械可読スキーマ:
-- JSON Schema: [context-pack-v1.schema.json]({{ '/spec/context-pack-v1.schema.json' | relative_url }})（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)）
+- JSON Schema: [context-pack-v1.schema.json]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)）
 
 ### 検証コマンド {#validation-commands}
 

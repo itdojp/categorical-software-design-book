@@ -1,6 +1,7 @@
 ---
 title: "用語ガイド"
 description: "訳語・表記ゆれを抑制するための用語方針"
+permalink: /style/terminology/
 ---
 
 # 用語ガイド

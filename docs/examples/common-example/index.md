@@ -1,6 +1,7 @@
 ---
 title: "共通例題: 注文処理（Context Pack v1）"
 description: "全章で参照する共通例題（Order/Payment/Inventory/Shipment/Audit）"
+permalink: /examples/common-example/
 ---
 
 # 共通例題: 注文処理（Context Pack v1）

@@ -1,6 +1,7 @@
 ---
 title: "最小例: minimal-example（Context Pack v1）"
 description: "Context Pack v1 の最小の有効例（minimal lint + schema validation）"
+permalink: /examples/minimal-example/
 ---
 
 # 最小例: minimal-example（Context Pack v1）
