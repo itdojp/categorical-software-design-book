@@ -1,16 +1,11 @@
 ---
-title: "用語ガイド"
-description: "訳語・表記ゆれを抑制するための用語方針"
+title: "用語集（Glossary）"
+description: "本書で用いる主要概念・訳語・固有用語の参照先（SSOT）"
 ---
 
-# 用語ガイド
+# 用語集（Glossary）
 
-## 基本方針
-
-- 初出では **日本語（英語）** を併記する（例: 関手（Functor））
-- 以後は原則として日本語を用いる（必要に応じて英語を括弧書き）
-- 章を跨ぐ概念は [用語集（Glossary）]({{ '/glossary/' | relative_url }}) を正とし、章側は参照する
-- 略語は初出で展開する（例: Context Pack v1）
+章を跨いで参照される用語の正（SSOT）です。表記ゆれ抑制の方針は [用語ガイド]({{ '/style/terminology/' | relative_url }}) を参照してください。
 
 ## 主要概念（推奨訳語）
 
@@ -31,5 +26,8 @@ description: "訳語・表記ゆれを抑制するための用語方針"
 
 ## 本書固有の用語
 
-- **Design Artifacts（設計成果物）**: Objects/Morphisms/Diagrams を中心に、AIへ引き渡せる形に固定した成果物一式
-- **Context Pack**: AIエージェントへの入力契約（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})）
+| 用語 | 英語/表記 | 定義 |
+| --- | --- | --- |
+| 設計成果物 | Design Artifacts | Objects/Morphisms/Diagrams を中心に、AIへ引き渡せる形に固定した成果物一式 |
+| Context Pack | Context Pack | AIエージェントへ設計成果物を引き渡すための入力契約。仕様は [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) を参照 |
+

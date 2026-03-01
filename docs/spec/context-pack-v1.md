@@ -18,7 +18,7 @@ description: "AIエージェントに設計成果物を引き渡すための入�
 Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性のため YAML を推奨します。
 
 機械可読スキーマ:
-- JSON Schema: [context-pack-v1.schema.json]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)）
+- JSON Schema: [context-pack-v1.schema.json]({{ '/spec/context-pack-v1.schema.json' | relative_url }})（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)）
 
 ### 検証コマンド {#validation-commands}
 
@@ -113,7 +113,7 @@ AIが勝手に変更してはいけない事項を明示します。
 
 “コピペして使う最小例” の SSOT はファイルとして管理します。
 
-- 最小例ページ: [最小例: minimal-example]({{ '/docs/examples/minimal-example/' | relative_url }})
+- 最小例ページ: [最小例: minimal-example]({{ '/examples/minimal-example/' | relative_url }})
 - YAML（raw）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/minimal-example/context-pack-v1.yaml)
 - YAML（GitHub）: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/minimal-example/context-pack-v1.yaml)
 
@@ -167,6 +167,6 @@ forbidden_changes:
 
 共通例題（注文処理）の Context Pack v1 は次を参照します。
 
-- 共通例題ページ: [共通例題: 注文処理]({{ '/docs/examples/common-example/' | relative_url }})
+- 共通例題ページ: [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }})
 - YAML（raw）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)
 - YAML（GitHub）: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/common-example/context-pack-v1.yaml)

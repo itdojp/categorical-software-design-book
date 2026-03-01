@@ -11,7 +11,7 @@ appendix: templates
 
 このスケルトンは「着手用」の最小形です。まずは `scripts/validate-context-pack.py` の minimal lint（必須フィールド/型/ID重複/参照整合の簡易検証）で破綻を早期検知し、内容が具体化した段階で schema validation（JSON Schema による仕様準拠チェック）も通します。
 
-検証コマンドの詳細は [Context Pack v1 仕様（検証コマンド）]({{ '/docs/spec/context-pack-v1/' | relative_url }}#validation-commands) を参照してください。
+検証コマンドの詳細は [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands) を参照してください。
 
 注意: schema validation はプレースホルダ（例: `name: <project-or-example-name>`）を具体値へ置換した段階で通す想定です。
 
