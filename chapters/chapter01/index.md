@@ -167,7 +167,7 @@ graph TD
    - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
    - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
    - （任意）CI相当の一括チェック: `npm run qa`
-   - 検証コマンドのSSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/docs/spec/context-pack-v1/#validation-commands' | relative_url }})
+   - 検証コマンドのSSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/docs/spec/context-pack-v1/' | relative_url }}#validation-commands)
 5. 更新した Context Pack をAIに渡し、以下を生成させる
    - 実装スケルトン（モジュール境界を意識）
    - 受入テスト（Acceptance tests）
