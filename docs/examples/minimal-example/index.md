@@ -1,6 +1,7 @@
 ---
 title: "最小例: minimal-example（Context Pack v1）"
 description: "Context Pack v1 の最小の有効例（minimal lint + schema validation）"
+permalink: /examples/minimal-example/
 ---
 
 # 最小例: minimal-example（Context Pack v1）
@@ -35,7 +36,7 @@ schema validation（JSON Schema）:
 python3 scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v1.yaml
 ```
 
-位置づけ/差分は [Context Pack v1 仕様（検証コマンド）]({{ '/docs/spec/context-pack-v1/' | relative_url }}#validation-commands) を参照してください。
+位置づけ/差分は [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands) を参照してください。
 
 （任意）CI相当の一括チェック: `npm run qa`（レポート: `qa-reports/*.json`）
 

@@ -1,6 +1,7 @@
 ---
 title: "用語ガイド"
 description: "訳語・表記ゆれを抑制するための用語方針"
+permalink: /style/terminology/
 ---
 
 # 用語ガイド
@@ -32,4 +33,4 @@ description: "訳語・表記ゆれを抑制するための用語方針"
 ## 本書固有の用語
 
 - **Design Artifacts（設計成果物）**: Objects/Morphisms/Diagrams を中心に、AIへ引き渡せる形に固定した成果物一式
-- **Context Pack**: AIエージェントへの入力契約（[Context Pack v1 仕様]({{ '/docs/spec/context-pack-v1/' | relative_url }})）
+- **Context Pack**: AIエージェントへの入力契約（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})）
