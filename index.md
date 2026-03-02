@@ -7,7 +7,7 @@ description: "仕様・設計・検証を合成可能にする共通言語"
 
 仕様・設計・検証を合成可能にする共通言語。
 
-本書は、圏論を「AIに委任可能な実装作業」を安定化させるための共通言語として用い、設計成果物（Context Pack）と検証条件（Diagrams/Acceptance tests）をSSOTとして運用できる形へ落とします。
+本書は、圏論を「AIに委任可能な実装作業」を安定化させるための共通言語として用います。設計成果物（Context Pack）と検証条件（Diagrams/Acceptance tests）を SSOT（Single Source of Truth）として運用できる形へ落とします。
 
 ## 学習成果
 
@@ -42,16 +42,16 @@ description: "仕様・設計・検証を合成可能にする共通言語"
 
 ## クイックスタート
 
-1. Context Pack v1 仕様を読む: [docs/spec/context-pack-v1.md](docs/spec/context-pack-v1.md)
-2. 最小例（minimal-example）を読む: [docs/examples/minimal-example/](docs/examples/minimal-example/)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/minimal-example/context-pack-v1.yaml)）
-3. 次に共通例題（注文処理）を読む: [docs/examples/common-example/](docs/examples/common-example/)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)）
+1. Context Pack v1 仕様を読む: [Context Pack v1 仕様](docs/spec/context-pack-v1.md)
+2. 最小例（minimal-example）を読む: [最小例: minimal-example](docs/examples/minimal-example/)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/minimal-example/context-pack-v1.yaml)）
+3. 次に共通例題（注文処理）を読む: [共通例題: 注文処理](docs/examples/common-example/)（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)）
 4. Context Pack を検証する（minimal lint + schema validation）:
    - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
    - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml`
    - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
    - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v1.yaml`
    - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
-   （スクリプト一覧: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py), [scripts/validate-context-pack-schema.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack-schema.py)）
+   - 検証スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py), [scripts/validate-context-pack-schema.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack-schema.py)
 5. （任意）CI相当の主要チェックを一括実行する: `npm run qa`
    - ローカル: `qa-reports/*.json` が生成される
    - CI: Artifacts（qa-reports）に同等レポートが保存される（詳細: [第10章](chapters/chapter10/)）
@@ -95,12 +95,12 @@ graph TD
 
 ## 用語集
 
-- 用語・訳語のSSOT: [/glossary/](GLOSSARY.md)（GitHub: [GLOSSARY.md](https://github.com/itdojp/categorical-software-design-book/blob/main/GLOSSARY.md)）
+- 用語・訳語の SSOT: [用語集（Glossary）](GLOSSARY.md)（GitHub: [GLOSSARY.md](https://github.com/itdojp/categorical-software-design-book/blob/main/GLOSSARY.md)）
 - 用語/記法/図式の統一ルール:
-  - [docs/style/chapter-template.md](docs/style/chapter-template.md)
-  - [docs/style/terminology.md](docs/style/terminology.md)
-  - [docs/style/notation.md](docs/style/notation.md)
-  - [docs/style/diagram-style.md](docs/style/diagram-style.md)
+  - [章テンプレート](docs/style/chapter-template.md)
+  - [用語ガイド](docs/style/terminology.md)
+  - [記法ガイド](docs/style/notation.md)
+  - [図式・図版スタイル](docs/style/diagram-style.md)
 
 ## ライセンス
 

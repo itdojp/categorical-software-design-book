@@ -12,7 +12,7 @@ permalink: /glossary/
 
 ### Adjunction（随伴）
 
-二つの構成のあいだに成り立つ「最良の対応」を表す関係。本書では厳密な証明よりも、仕様と実装（あるいは抽象と具体）の対応を設計判断として扱う直観を重視します。
+2つの構成のあいだに成り立つ「最良の対応」を表す関係。本書では厳密な証明よりも、仕様と実装（あるいは抽象と具体）の対応を設計判断として扱う直観を重視します。
 
 本書での使い方: 仕様→設計→実装の写像で、過不足（情報の落ち/過剰）を議論する枠組みとして参照する。
 
@@ -26,7 +26,7 @@ permalink: /glossary/
 
 ### Context Pack
 
-AIエージェントへ引き渡す入力契約。最低限、Problem statement / Glossary / Objects / Morphisms / Diagrams / Constraints / Acceptance tests / Coding conventions / Forbidden changes を含む（[docs/spec/context-pack-v1.md](docs/spec/context-pack-v1.md)）。
+AIエージェントへ引き渡す入力契約。最低限、Problem statement / Glossary / Objects / Morphisms / Diagrams / Constraints / Acceptance tests / Coding conventions / Forbidden changes を含む（[Context Pack v1 仕様](docs/spec/context-pack-v1.md)）。
 
 本書での使い方: SSOTとして扱い、Issue→PR→CI の差分レビューと検証の基準を固定する。
 
@@ -84,6 +84,12 @@ AIエージェントへ引き渡す入力契約。最低限、Problem statement 
 
 ## M
 
+### Minimal lint（簡易検証）
+
+Context Pack の必須キー/型、ID重複、参照整合など、運用上の破綻を早期に検知する軽量チェック。本書では `scripts/validate-context-pack.py` を指す。
+
+本書での使い方: Context Pack を更新したら必ず実行し、PR作成前に破綻を潰す。
+
 ### Morphism（射）
 
 対象間の写像。ソフトウェア設計では操作/API/変換として表現し、Pre/Post・失敗条件を持つ。
@@ -106,7 +112,7 @@ AIエージェントへ引き渡す入力契約。最低限、Problem statement 
 
 ### Natural transformation（自然変換）
 
-二つの関手のあいだの「対応（対象ごとの成分）」で、操作との整合（可換条件）を要求するもの。
+2つの関手のあいだの「対応（対象ごとの成分）」で、操作との整合（可換条件）を要求するもの。
 
 本書での使い方: リファクタ/差分を意味保存として扱い、Before/After と可換チェック（テスト観点）をセットでレビューする。
 
@@ -128,7 +134,7 @@ AIエージェントへ引き渡す入力契約。最低限、Problem statement 
 
 ### Pullback（プルバック）
 
-二つの写像の整合を取るための構造。本書では「統合点（整合条件）」を図式として扱う直観を重視します。
+2つの写像の整合を取るための構造。本書では「統合点（整合条件）」を図式として扱う直観を重視します。
 
 本書での使い方: データ統合・ID対応・参照整合の要件を図式化し、結合条件の破綻を検証可能にする。
 
@@ -139,6 +145,12 @@ AIエージェントへ引き渡す入力契約。最低限、Problem statement 
 本書での使い方: 旧/新の境界・互換層・移行手順を図式化し、破壊的変更を差分とテストへ落とす。
 
 ## S
+
+### Schema validation（スキーマ検証）
+
+JSON Schema に基づき、Context Pack が Context Pack v1 仕様に準拠していることを検証する。本書では `scripts/validate-context-pack-schema.py` を指す。
+
+本書での使い方: minimal lint と併用し、CIで仕様ドリフトを機械検知する。
 
 ### SSOT（Single Source of Truth）
 

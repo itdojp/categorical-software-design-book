@@ -18,32 +18,35 @@ permalink: /spec/context-pack-v1/
 
 Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性のため YAML を推奨します。
 
-機械可読スキーマ:
+機械可読スキーマ（JSON Schema）は次を参照してください。
 - JSON Schema: [context-pack-v1.schema.json]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)）
 
 ### 検証コマンド {#validation-commands}
 
-依存導入（初回のみ）:
+依存導入（初回のみ）は次のとおりです。
 
 ```bash
 python3 -m pip install -r scripts/requirements-qa.txt
 ```
 
-minimal lint（必須項目/型/ID重複/参照整合の簡易検証）:
+minimal lint（必須項目/型/ID重複/参照整合の簡易検証）を実行します。
 
 ```bash
 python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml
 python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
 ```
 
-schema validation（JSON Schema）:
+schema validation（JSON Schema）を実行します。
 
 ```bash
 python3 scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v1.yaml
 python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml
 ```
 
-minimal lint は「書きやすさ・レビュー容易性」を優先し、必須キー/型、ID重複、`diagrams[].involved` の参照整合など、運用上の破綻を早期に検知します。一方 schema validation は「仕様として公開している JSON Schema と、例題/成果物のドリフト」を機械的に検知します（参照整合や重複などの横断チェックは対象外）。目的が異なるため併用を推奨します。
+minimal lint と schema validation は目的が異なるため、併用を推奨します。
+
+- minimal lint: 書きやすさ・レビュー容易性を優先し、必須キー/型、ID重複、参照整合など運用上の破綻を早期に検知する
+- schema validation: 公開している JSON Schema と成果物のドリフト（仕様準拠）を機械的に検知する（参照整合や重複などの横断チェックは対象外）
 
 最小構成（v1）は以下です。
 

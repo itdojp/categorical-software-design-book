@@ -63,7 +63,7 @@ graph LR
 
 共通例題（注文処理）の Context Pack は次を参照します。
 
-- [docs/examples/common-example/](../../docs/examples/common-example/)
+- [共通例題: 注文処理](../../docs/examples/common-example/)
 
 ここでは、Objects/Morphisms の最小テンプレを示し、例題で一部を埋めます。
 

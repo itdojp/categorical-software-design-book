@@ -8,10 +8,10 @@ permalink: /style/terminology/
 
 ## 基本方針
 
-- 初出では **日本語（英語）** を併記する（例: 関手（Functor））
+- 初出では **日本語（英語）** を併記する。例: 関手（Functor）
 - 以後は原則として日本語を用いる（必要に応じて英語を括弧書き）
 - 章を跨ぐ概念は [用語集（Glossary）]({{ '/glossary/' | relative_url }}) を正とし、章側は参照する
-- 略語は初出で展開する（例: Context Pack v1）
+- 略語は初出で展開する。例: SSOT（Single Source of Truth）、DoD（Definition of Done）
 
 ## 主要概念（推奨訳語）
 

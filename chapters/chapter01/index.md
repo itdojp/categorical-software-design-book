@@ -37,7 +37,7 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
   - 不変条件（Diagrams）と受入条件（Acceptance tests）
   - 制約（Constraints）と禁止事項（Forbidden changes）
 - AIに委任しやすい:
-  - 実装スケルトン生成（ディレクトリ/インタフェース/雛形）
+  - 実装スケルトン生成（ディレクトリ/インターフェース/雛形）
   - 受入テストの具体化、テストデータ生成
   - リファクタ（意味保存が前提）
 
@@ -60,14 +60,14 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 - Objects: 型/状態/権限/エラー（設計上の対象）
 - Morphisms: 操作/API、Pre/Post、失敗条件（設計上の変換）
 - Diagrams: 可換図式（不変条件、意味が壊れていないことの判定基準）
-- Acceptance tests: 最小の受入テスト（DoD）
+- Acceptance tests: 最小の受入テスト（DoD: Definition of Done）
 
 ### 本書の用語（最小定義）
 
 - Objects: ドメイン上の「型/状態」を中心に、実装で表現すべき対象を列挙したもの
 - Morphisms: Objects を入力/出力として持つ操作（API/ユースケース/関数）を列挙したもの
 - Diagrams: 複数の経路（操作の組合せ）で同じ結果になる、という不変条件
-- Context Pack: 上記を含む入力契約（[docs/spec/context-pack-v1.md](../../docs/spec/context-pack-v1.md)）
+- Context Pack: 上記を含む入力契約（[Context Pack v1 仕様](../../docs/spec/context-pack-v1.md)）
 
 ### 最小Context Pack（例）
 
@@ -121,8 +121,8 @@ forbidden_changes:
 
 ## AIエージェントへの引き渡し（Context Pack/プロンプト/禁止事項）
 
-- Context Pack v1 仕様: [docs/spec/context-pack-v1.md](../../docs/spec/context-pack-v1.md)
-- 共通例題（Context Pack v1）: [docs/examples/common-example/](../../docs/examples/common-example/)
+- Context Pack v1 仕様: [Context Pack v1 仕様](../../docs/spec/context-pack-v1.md)
+- 共通例題（注文処理）: [共通例題: 注文処理](../../docs/examples/common-example/)
 - 禁止事項: 不変条件（Diagrams）と権限境界を無断変更しない
 
 ### 最小ループ（Context Pack → AI → 検証）
@@ -159,7 +159,7 @@ graph TD
 
 ### 演習1: Context Pack → AI実装/テストの最小ループ
 
-1. 共通例題（注文処理）の Context Pack を読む: [docs/examples/common-example/](../../docs/examples/common-example/)
+1. 共通例題（注文処理）の Context Pack を読む: [共通例題: 注文処理](../../docs/examples/common-example/)
 2. 次の追加要件を1つだけ定義する（例: CancelOrder を追加し、監査と状態遷移の安全性を維持）
 3. 追加要件に必要な差分を Context Pack v1 として作る（Goals/Non-goals、Objects/Morphisms/Diagrams、Acceptance tests、Forbidden changes を更新）
 4. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
@@ -167,7 +167,7 @@ graph TD
    - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
    - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
    - （任意）CI相当の一括チェック: `npm run qa`
-   - 検証コマンドのSSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/docs/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - 検証コマンドのSSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
 5. 更新した Context Pack をAIに渡し、以下を生成させる
    - 実装スケルトン（モジュール境界を意識）
    - 受入テスト（Acceptance tests）
