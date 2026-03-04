@@ -131,7 +131,7 @@ AIに渡すときは「入力契約を守らせる」ことが最優先です。
 
 ## まとめ
 
-- 設計成果物（Context Pack）を SSOTとして固定し、AI委任の入力契約にする
+- 設計成果物（Context Pack）を SSOT として固定し、AI委任の入力契約にする
 - レビューは Forbidden changes と Diagrams（不変条件）を基準に行う
 - 破綻時は「Context Pack の修正→実装修正」の順序で運用する
 - Issue→PR→CI→レビューのループを作ると、自プロジェクトへ移植可能な運用形になる
