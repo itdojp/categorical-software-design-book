@@ -167,7 +167,7 @@ graph TD
    - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
    - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
    - （任意）CI相当の一括チェック: `npm run qa`
-   - 検証コマンドのSSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - 検証コマンドの SSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
 5. 更新した Context Pack をAIに渡し、以下を生成させる
    - 実装スケルトン（モジュール境界を意識）
    - 受入テスト（Acceptance tests）
@@ -183,4 +183,4 @@ graph TD
 
 - AIに委任する前に、入力契約（Context Pack）を固定する
 - 不変条件（Diagrams）は「検証可能な形」で定義する
-- 用語・記法・成果物テンプレをSSOTで管理し、章間の揺れを抑制する
+- 用語・記法・成果物テンプレを SSOTで管理し、章間の揺れを抑制する
