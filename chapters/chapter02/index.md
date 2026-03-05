@@ -23,6 +23,15 @@ chapter: chapter02
   - 結合律（Associativity）: `h ∘ (g ∘ f) = (h ∘ g) ∘ f`
   - 恒等射（Identity）: 任意の `f: A → B` に対して `f ∘ id_A = f` かつ `id_B ∘ f = f`
 
+型シグネチャの最小例:
+
+- `validate: Command → Validated`
+- `reserveInventory: Validated → Reserved`
+- `authorizePayment: Reserved → Authorized`
+- `authorizePayment ∘ reserveInventory ∘ validate: Command → Authorized`
+
+注: `g ∘ f` は「まず `f` を適用し、その結果に `g` を適用する」。実装で左→右に書く場合は `pipe(f, g)` のような表記で補足する。
+
 直観:
 
 合成律は「実装の括弧の付け替え（リファクタ）をしても意味が変わらない」ための条件です。ソフトウェアでは、パイプライン/ユースケースの分割や統合、処理段階の抽象化を繰り返すため、合成律が成立する形で契約を固定すると保守性が上がります。
