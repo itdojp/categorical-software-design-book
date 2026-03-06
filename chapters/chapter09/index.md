@@ -27,7 +27,7 @@ chapter: chapter09
 - `g: B → Result<C, E>`
 - `h: A → Result<C, E>`（`h = g ∘ f` に相当）
 
-`h` は次のように「失敗を伝播し、成功なら次の変換へ進む」形になる（`flatMap`/`andThen`/`bind` 等、API 名は実装により異なる）。
+`h` は次のように「失敗を伝播し、成功なら次の変換へ進む」形になる（`flatMap`/`andThen`/`bind` 等、API 名は実装により異なる）。ここで `kleisliCompose(f, g)` は「先に `f`、次に `g`」を意味し、圏論の記法では `g ∘ f` に対応する。
 
 ```ts
 type Result<A, E> = { ok: true; value: A } | { ok: false; error: E };

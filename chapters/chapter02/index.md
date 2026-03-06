@@ -29,8 +29,9 @@ chapter: chapter02
 - `reserveInventory: Validated → Reserved`
 - `authorizePayment: Reserved → Authorized`
 - `authorizePayment ∘ reserveInventory ∘ validate: Command → Authorized`
+- `pipe(validate, reserveInventory, authorizePayment): Command → Authorized`
 
-注: `g ∘ f` は「まず `f` を適用し、その結果に `g` を適用する」。実装で左→右に書く場合は `pipe(f, g)` のような表記で補足する。
+注: `g ∘ f` は「まず `f` を適用し、その結果に `g` を適用する」。実装で左→右に書く場合は、たとえば `pipe(validate, reserveInventory, authorizePayment)` のように「入力から出力へ読む」表記で補足すると混乱しにくい。
 
 直観:
 
