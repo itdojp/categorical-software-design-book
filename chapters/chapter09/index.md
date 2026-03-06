@@ -21,6 +21,27 @@ chapter: chapter09
 - 効果付きの射（クライスリ射）: `A → M B`
 - 合成: `A → M B` と `B → M C` を合成して `A → M C` を作る（エラー伝播や副作用の順序を含む）
 
+ミニ例（型シグネチャと変換の形）:
+
+- `f: A → Result<B, E>`
+- `g: B → Result<C, E>`
+- `h: A → Result<C, E>`（`h = kleisliCompose(f, g)`、圏論の記法では `h = g ∘ f` に相当）
+
+`h` は次のように「失敗を伝播し、成功なら次の変換へ進む」形になる（`flatMap`/`andThen`/`bind` 等、API 名は実装により異なる）。ここで `kleisliCompose(f, g)` は「先に `f`、次に `g`」を意味し、圏論の記法では `g ∘ f` に対応する。
+
+```ts
+type Result<A, E> = { ok: true; value: A } | { ok: false; error: E };
+
+const kleisliCompose =
+  <A, B, C, E>(f: (a: A) => Result<B, E>, g: (b: B) => Result<C, E>) =>
+  (a: A): Result<C, E> => {
+    const rb = f(a);
+    return rb.ok ? g(rb.value) : rb;
+  };
+
+// h = kleisliCompose(f, g) （= g ∘ f）
+```
+
 直観:
 
 「効果を型に押し上げ、合成規則を明示する」と、AIに委任しても境界が崩れにくい。逆に、効果が暗黙（グローバル状態、隠れDBアクセス、暗黙リトライ）だと、合成や検証が破綻します。
