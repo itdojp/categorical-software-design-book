@@ -44,6 +44,7 @@ exclude:
   - tests/
   - templates/
   - shared/
+  - book-formatter/
   - book-config.json
   - mobile-config.json
   - README.md

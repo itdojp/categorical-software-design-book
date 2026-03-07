@@ -43,13 +43,42 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 
 ### 失敗パターン（AI任せで壊れるポイント）
 
-| 失敗パターン | 典型症状 | 予防策（設計成果物） |
-| --- | --- | --- |
-| 仕様が曖昧 | 期待しない挙動の実装が「それらしく」出来上がる | Problem statement（Goals/Non-goals）＋Glossary |
-| 境界が不明 | モジュール分割や責務がぶれる | Objects/Morphisms（境界ごとに列挙） |
-| 不変条件が未定義 | リファクタや最適化で意味が壊れる | Diagrams（可換性）＋Acceptance tests |
-| 失敗条件/権限が欠落 | 例外系・監査・権限制御が抜ける | Morphisms の failures/権限、Constraints |
-| 禁止事項がない | 勝手に依存追加・API変更・要件追加が起きる | Forbidden changes（明文化） |
+<table>
+  <thead>
+    <tr>
+      <th>失敗パターン</th>
+      <th>典型症状</th>
+      <th>予防策（設計成果物）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>仕様が曖昧</td>
+      <td>期待しない挙動の実装が「それらしく」出来上がる</td>
+      <td>Problem statement（Goals/Non-goals）＋Glossary</td>
+    </tr>
+    <tr>
+      <td>境界が不明</td>
+      <td>モジュール分割や責務がぶれる</td>
+      <td>Objects/Morphisms（境界ごとに列挙）</td>
+    </tr>
+    <tr>
+      <td>不変条件が未定義</td>
+      <td>リファクタや最適化で意味が壊れる</td>
+      <td>Diagrams（可換性）＋Acceptance tests</td>
+    </tr>
+    <tr>
+      <td>失敗条件/権限が欠落</td>
+      <td>例外系・監査・権限制御が抜ける</td>
+      <td>Morphisms の failures/権限、Constraints</td>
+    </tr>
+    <tr>
+      <td>禁止事項がない</td>
+      <td>勝手に依存追加・API変更・要件追加が起きる</td>
+      <td>Forbidden changes（明文化）</td>
+    </tr>
+  </tbody>
+</table>
 
 ## 設計成果物（テンプレ：表/図式/チェックリスト）
 
