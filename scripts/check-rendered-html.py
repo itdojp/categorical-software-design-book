@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 from __future__ import annotations
 
 import argparse
@@ -16,7 +17,10 @@ def has_table(html: str) -> bool:
 
 
 def has_table_headers(html: str, headers: list[str]) -> bool:
-    return all(re.search(rf"<th>\s*{re.escape(header)}\s*</th>", html) for header in headers)
+    return all(
+        re.search(rf"<th\b[^>]*>\s*{re.escape(header)}\s*</th>", html, re.IGNORECASE)
+        for header in headers
+    )
 
 
 def has_link_fragment(html: str, fragment: str) -> bool:

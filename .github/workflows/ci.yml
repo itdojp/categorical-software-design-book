@@ -12,15 +12,6 @@ jobs:
       - name: Checkout book repo
         uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Build rendered HTML (Jekyll)
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
-
       - name: Checkout book-formatter
         uses: actions/checkout@v4
         with:
@@ -67,6 +58,15 @@ jobs:
           python scripts/check-context-pack-minimal-example-sync.py
           python scripts/check-placeholders.py
           python scripts/check-invalid-markdown-links.py
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build rendered HTML (Jekyll)
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
 
       - name: Check rendered HTML regressions
         run: python scripts/check-rendered-html.py --site-root _site
