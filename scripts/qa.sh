@@ -89,5 +89,16 @@ python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/min
 python3 "$ROOT/scripts/check-context-pack-minimal-example-sync.py"
 python3 "$ROOT/scripts/check-placeholders.py"
 python3 "$ROOT/scripts/check-invalid-markdown-links.py"
+echo "==> Building rendered HTML (Jekyll)"
+if ! command -v bundle >/dev/null 2>&1; then
+  die "Bundler is required for rendered HTML checks. Install Ruby/Bundler and run bundle install first."
+fi
+
+(
+  cd "$ROOT"
+  bundle exec jekyll build
+)
+
+python3 "$ROOT/scripts/check-rendered-html.py" --site-root "$ROOT/_site"
 
 echo "✅ QA complete. Reports: $REPORT_DIR"

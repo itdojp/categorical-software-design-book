@@ -16,6 +16,7 @@
 ## ローカルQA（CI相当）
 
 前提:
+- Ruby / Bundler（Jekyll build + rendered HTML 回帰チェック用）
 - Node.js（CIは Node 20）
 - Python 3（CIは Python 3.12）
 - Python仮想環境（venv/conda）（推奨）
