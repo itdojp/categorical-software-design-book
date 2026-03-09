@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+  <title id="title">Pushout</title>
+  <desc id="desc">共通対象 C から A と B へ入り、A と B が P へ接着される Pushout の図。</desc>
+  <defs>
+    <style>
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 2; rx: 10; ry: 10; }
+      .label { fill: #0f172a; font: 600 22px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor: middle; dominant-baseline: middle; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .small { font-size: 18px; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect x="270" y="20" width="220" height="60" class="box"/>
+  <text x="380" y="50" class="label">C</text>
+  <rect x="90" y="110" width="170" height="70" class="box"/>
+  <text x="175" y="145" class="label">A</text>
+  <rect x="500" y="110" width="170" height="70" class="box"/>
+  <text x="585" y="145" class="label">B</text>
+  <rect x="270" y="220" width="220" height="60" class="box"/>
+  <text x="380" y="250" class="label">P</text>
+
+  <path d="M325 80 L215 110" class="arrow"/>
+  <path d="M435 80 L545 110" class="arrow"/>
+  <path d="M215 180 L325 220" class="arrow"/>
+  <path d="M545 180 L435 220" class="arrow"/>
+
+  <text x="270" y="100" class="label small">i₁</text>
+  <text x="490" y="100" class="label small">i₂</text>
+  <text x="278" y="205" class="label small">j₁</text>
+  <text x="480" y="205" class="label small">j₂</text>
+</svg>

@@ -21,13 +21,23 @@ chapter: chapter07
 
 二つの対象 `A`, `B` を、共通の対象 `C` への対応（写像）を揃えたまま結合する構造です。
 
-```mermaid
+<figure class="diagram-with-fallback">
+  <div class="mermaid-live">
+    <div class="mermaid-wrapper">
+      <div class="mermaid">
 graph TD
   P["P = A ×_C B"] -->|p1| A
   P -->|p2| B
   A -->|f| C
   B -->|g| C
-```
+      </div>
+    </div>
+  </div>
+  <div class="mermaid-fallback">
+    <img src="{{ '/assets/images/chapter07/pullback.svg' | relative_url }}" alt="Pullback の fallback SVG。P から A と B へ射が出て、A と B はそれぞれ C へ写る。">
+  </div>
+  <figcaption>図: Pullback。結合対象 P は A と B を同時に満たし、A と B は共通対象 C への整合条件を保ちます。</figcaption>
+</figure>
 
 直観:
 
@@ -37,13 +47,23 @@ graph TD
 
 共通部分 `C` を介して、`A` と `B` を貼り合わせて新しい対象 `P` を作る構造です。
 
-```mermaid
+<figure class="diagram-with-fallback">
+  <div class="mermaid-live">
+    <div class="mermaid-wrapper">
+      <div class="mermaid">
 graph TD
   C -->|i1| A
   C -->|i2| B
   A -->|j1| P
   B -->|j2| P
-```
+      </div>
+    </div>
+  </div>
+  <div class="mermaid-fallback">
+    <img src="{{ '/assets/images/chapter07/pushout.svg' | relative_url }}" alt="Pushout の fallback SVG。共通対象 C から A と B へ射があり、A と B は貼り合わせ先 P へ写る。">
+  </div>
+  <figcaption>図: Pushout。共通対象 C を基準に A と B を貼り合わせ、統合先 P で共通インターフェースを成立させます。</figcaption>
+</figure>
 
 直観:
 

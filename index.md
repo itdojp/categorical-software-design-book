@@ -77,7 +77,10 @@ description: "仕様・設計・検証を合成可能にする共通言語"
 
 ## 概念マップ
 
-```mermaid
+<figure class="diagram-with-fallback">
+  <div class="mermaid-live">
+    <div class="mermaid-wrapper">
+      <div class="mermaid">
 graph TD
   PS["Problem statement（Goals/Non-goals）"] --> CP["Context Pack（SSOT）"]
   GL["Glossary"] --> CP
@@ -91,7 +94,14 @@ graph TD
   AI --> PR["PR（差分）"]
   PR --> RV["レビュー（Forbidden changes / Diagrams）"]
   RV --> CI["CI（品質ゲート）"]
-```
+      </div>
+    </div>
+  </div>
+  <div class="mermaid-fallback">
+    <img src="{{ '/assets/images/shared/context-pack-concept-map.svg' | relative_url }}" alt="概念マップの fallback SVG。Problem statement、Glossary、Objects、Morphisms、Diagrams、Acceptance tests、Forbidden changes が Context Pack に集約され、AI、PR、レビュー、CI へ接続する。">
+  </div>
+  <figcaption>図: 概念マップ。Problem statement / Glossary / Objects / Morphisms / Diagrams / Acceptance tests / Forbidden changes が Context Pack に集約され、AI→PR→レビュー→CI へ接続します。</figcaption>
+</figure>
 
 ## 用語集
 

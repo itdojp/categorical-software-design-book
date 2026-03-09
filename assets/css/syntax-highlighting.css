@@ -85,6 +85,46 @@ pre[data-lang]::before {
     height: auto;
 }
 
+.diagram-with-fallback {
+    margin: 1.5rem 0;
+}
+
+.diagram-with-fallback .mermaid-live {
+    display: block;
+}
+
+.diagram-with-fallback .mermaid-fallback {
+    display: none;
+}
+
+.no-js .diagram-with-fallback .mermaid-live,
+.mermaid-fallback-mode .diagram-with-fallback .mermaid-live {
+    display: none;
+}
+
+.no-js .diagram-with-fallback .mermaid-fallback,
+.mermaid-fallback-mode .diagram-with-fallback .mermaid-fallback {
+    display: block;
+}
+
+.diagram-with-fallback .mermaid-fallback img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.diagram-with-fallback figcaption {
+    margin-top: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
 /* GitHub Light Theme (default) */
 .highlight .c { color: #6a737d; } /* Comment */
 .highlight .err { color: #b31d28; background-color: #ffeef0; } /* Error */
