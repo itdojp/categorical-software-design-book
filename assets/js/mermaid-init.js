@@ -133,6 +133,8 @@
         const nodes = collectMermaidNodes();
         if (nodes.length === 0) return;
 
+        setFallbackMode(true);
+
         // Restore original source so re-render is deterministic across theme changes.
         restoreSources(nodes);
 
@@ -184,6 +186,8 @@
 
         const mermaidNodes = collectMermaidNodes();
         if (mermaidNodes.length === 0) return;
+
+        setFallbackMode(true);
 
         loadMermaidIfNeeded()
             .then(() => renderAll())

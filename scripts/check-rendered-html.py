@@ -11,10 +11,17 @@ from pathlib import Path
 TABLE_RE = re.compile(r"<table\b", re.IGNORECASE)
 LINK_HREF_RE = re.compile(r"<a\b[^>]*href=[\"']([^\"']+)[\"']", re.IGNORECASE)
 IMG_SRC_RE = re.compile(r"<img\b[^>]*src=[\"']([^\"']+)[\"']", re.IGNORECASE)
+CLASS_ATTR_RE = re.compile(r"class=[\"']([^\"']*)[\"']", re.IGNORECASE)
 
 
 def class_count(html: str, class_name: str) -> int:
-    return len(re.findall(rf"class=[\"'][^\"']*\b{re.escape(class_name)}\b[^\"']*[\"']", html, re.IGNORECASE))
+    count = 0
+    target = class_name.casefold()
+    for match in CLASS_ATTR_RE.finditer(html):
+        tokens = match.group(1).split()
+        if any(token.casefold() == target for token in tokens):
+            count += 1
+    return count
 
 
 def has_table(html: str) -> bool:
