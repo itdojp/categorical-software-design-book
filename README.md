@@ -2,6 +2,17 @@
 
 仕様・設計・検証を合成可能にする共通言語。
 
+## 関連書と位置づけ
+
+- 本 repo は `categorical-software-design-book` として公開する独立した日本語書籍です。
+- `Compositional Software Design for Agentic Systems`（`composable-software-design-book`）は、同じ主題圏を扱う関連する独立した英語書籍です。
+- 両書は問題意識と語彙を一部共有しますが、旧版/新版や単純翻訳の関係ではありません。
+- 日本語で AI エージェント時代の設計成果物、Context Pack、GitHub/CI 運用まで追いたい読者は本書から読むことを推奨します。
+- 英語で compositional design / verifiable engineering の全体像を通読したい読者は、関連英語書籍から始めてください。
+- 関連英語書籍:
+  - 公開サイト: https://itdojp.github.io/composable-software-design-book/
+  - リポジトリ: https://github.com/itdojp/composable-software-design-book
+
 ## 公開URL
 
 - https://itdojp.github.io/categorical-software-design-book/
