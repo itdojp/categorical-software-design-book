@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 300" role="img" aria-labelledby="title desc">
+  <title id="title">Context Pack 最小ループ</title>
+  <desc id="desc">Context Pack から AI、PR、人間レビュー、CI を経て、失敗時は Context Pack 修正へ戻る最小ループ図。</desc>
+  <defs>
+    <style>
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 2; rx: 10; ry: 10; }
+      .core { fill: #e0f2fe; stroke: #0369a1; }
+      .done { fill: #dcfce7; stroke: #15803d; }
+      .label { fill: #0f172a; font: 600 20px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor: middle; dominant-baseline: middle; }
+      .small { font-size: 18px; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="90" width="180" height="72" class="box core"/>
+  <text x="130" y="118" class="label">Context Pack</text>
+  <text x="130" y="146" class="label small">SSOT</text>
+
+  <rect x="270" y="90" width="170" height="72" class="box"/>
+  <text x="355" y="126" class="label small">AI 実装 / テスト案</text>
+
+  <rect x="490" y="90" width="120" height="72" class="box"/>
+  <text x="550" y="126" class="label small">PR</text>
+
+  <rect x="660" y="90" width="150" height="72" class="box"/>
+  <text x="735" y="126" class="label small">人間レビュー</text>
+
+  <rect x="840" y="90" width="110" height="72" class="box"/>
+  <text x="895" y="126" class="label small">CI</text>
+
+  <rect x="840" y="210" width="110" height="56" class="box done"/>
+  <text x="895" y="238" class="label small">Done</text>
+
+  <path d="M220 126 H260" class="arrow"/>
+  <path d="M440 126 H480" class="arrow"/>
+  <path d="M610 126 H650" class="arrow"/>
+  <path d="M810 126 H830" class="arrow"/>
+  <path d="M895 162 V200" class="arrow"/>
+  <path d="M840 238 H130 V172" class="arrow"/>
+  <text x="770" y="184" class="label small">pass</text>
+  <text x="470" y="260" class="label small">fail → Context Pack 修正へ戻る</text>
+</svg>

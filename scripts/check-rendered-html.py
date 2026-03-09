@@ -10,6 +10,11 @@ from pathlib import Path
 
 TABLE_RE = re.compile(r"<table\b", re.IGNORECASE)
 LINK_HREF_RE = re.compile(r"<a\b[^>]*href=[\"']([^\"']+)[\"']", re.IGNORECASE)
+IMG_SRC_RE = re.compile(r"<img\b[^>]*src=[\"']([^\"']+)[\"']", re.IGNORECASE)
+
+
+def class_count(html: str, class_name: str) -> int:
+    return len(re.findall(rf"class=[\"'][^\"']*\b{re.escape(class_name)}\b[^\"']*[\"']", html, re.IGNORECASE))
 
 
 def has_table(html: str) -> bool:
@@ -25,6 +30,10 @@ def has_table_headers(html: str, headers: list[str]) -> bool:
 
 def has_link_fragment(html: str, fragment: str) -> bool:
     return any(fragment in href for href in LINK_HREF_RE.findall(html))
+
+
+def has_img_fragment(html: str, fragment: str) -> bool:
+    return any(fragment in src for src in IMG_SRC_RE.findall(html))
 
 
 def main() -> int:
@@ -56,6 +65,42 @@ def main() -> int:
                     "missing rendered internal link to /style/notation/",
                     lambda html: has_link_fragment(html, "/style/notation/"),
                 ),
+            ],
+        ),
+        (
+            Path("index.html"),
+            [
+                ("missing Mermaid live wrapper for concept map", lambda html: class_count(html, "mermaid-live") >= 1 and class_count(html, "mermaid-wrapper") >= 1),
+                ("missing Mermaid fallback for concept map", lambda html: class_count(html, "mermaid-fallback") >= 1 and has_img_fragment(html, "/assets/images/shared/context-pack-concept-map.svg")),
+            ],
+        ),
+        (
+            Path("chapters/chapter01/index.html"),
+            [
+                ("missing Mermaid live wrapper for chapter01 loop", lambda html: class_count(html, "mermaid-live") >= 1 and class_count(html, "mermaid-wrapper") >= 1),
+                ("missing Mermaid fallback for chapter01 loop", lambda html: class_count(html, "mermaid-fallback") >= 1 and has_img_fragment(html, "/assets/images/chapter01/context-pack-loop.svg")),
+            ],
+        ),
+        (
+            Path("chapters/chapter04/index.html"),
+            [
+                ("missing Mermaid live wrapper for chapter04 functor diagram", lambda html: class_count(html, "mermaid-live") >= 1 and class_count(html, "mermaid-wrapper") >= 1),
+                ("missing Mermaid fallback for chapter04 functor diagram", lambda html: class_count(html, "mermaid-fallback") >= 1 and has_img_fragment(html, "/assets/images/chapter04/spec-code-functor.svg")),
+            ],
+        ),
+        (
+            Path("chapters/chapter07/index.html"),
+            [
+                ("missing Mermaid live wrappers for chapter07 diagrams", lambda html: class_count(html, "mermaid-live") >= 2 and class_count(html, "mermaid-wrapper") >= 2),
+                ("missing Pullback fallback SVG", lambda html: has_img_fragment(html, "/assets/images/chapter07/pullback.svg")),
+                ("missing Pushout fallback SVG", lambda html: has_img_fragment(html, "/assets/images/chapter07/pushout.svg")),
+            ],
+        ),
+        (
+            Path("chapters/chapter09/index.html"),
+            [
+                ("missing Mermaid live wrapper for chapter09 effect-boundary diagram", lambda html: class_count(html, "mermaid-live") >= 1 and class_count(html, "mermaid-wrapper") >= 1),
+                ("missing Mermaid fallback for chapter09 effect-boundary diagram", lambda html: class_count(html, "mermaid-fallback") >= 1 and has_img_fragment(html, "/assets/images/chapter09/pure-core-impure-shell.svg")),
             ],
         ),
     ]

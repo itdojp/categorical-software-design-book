@@ -38,7 +38,10 @@ chapter: chapter04
   - 対象: 実装上の型/データ構造/モジュール境界
   - 射: 関数/メソッド/APIハンドラ/ジョブ
 
-```mermaid
+<figure class="diagram-with-fallback">
+  <div class="mermaid-live">
+    <div class="mermaid-wrapper">
+      <div class="mermaid">
 graph LR
   subgraph Spec["仕様圏（Spec）"]
     O["Objects"]
@@ -57,7 +60,14 @@ graph LR
   O -. "F" .-> T
   M -. "F" .-> F
   D -. "F" .-> X
-```
+      </div>
+    </div>
+  </div>
+  <div class="mermaid-fallback">
+    <img src="{{ '/assets/images/chapter04/spec-code-functor.svg' | relative_url }}" alt="Spec から Code への写像図の fallback SVG。Objects は Types/Modules、Morphisms は Functions/APIs、Diagrams は Tests/Checks へ対応する。">
+  </div>
+  <figcaption>図: Spec から Code への写像。Objects / Morphisms / Diagrams を、それぞれ Types/Modules / Functions/APIs / Tests/Checks へ対応づけて関手性を保ちます。</figcaption>
+</figure>
 
 AI委任を関手として捉えると、次の設計判断がしやすくなります。
 

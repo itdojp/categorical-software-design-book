@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">概念マップ</title>
+  <desc id="desc">Problem statement、Glossary、Objects、Morphisms、Diagrams、Acceptance tests、Forbidden changes が Context Pack に集約され、AI、PR、レビュー、CI へ接続する図。</desc>
+  <defs>
+    <style>
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 2; rx: 10; ry: 10; }
+      .core { fill: #e0f2fe; stroke: #0369a1; }
+      .flow { fill: #ecfccb; stroke: #4d7c0f; }
+      .label { fill: #0f172a; font: 600 20px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor: middle; dominant-baseline: middle; }
+      .small { font-size: 18px; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect x="420" y="180" width="360" height="90" class="box core"/>
+  <text x="600" y="212" class="label">Context Pack</text>
+  <text x="600" y="244" class="label small">SSOT / 入力契約</text>
+
+  <rect x="40" y="24" width="260" height="50" class="box"/>
+  <text x="170" y="49" class="label small">Problem statement</text>
+  <rect x="40" y="92" width="260" height="50" class="box"/>
+  <text x="170" y="117" class="label small">Glossary</text>
+  <rect x="40" y="160" width="260" height="50" class="box"/>
+  <text x="170" y="185" class="label small">Objects</text>
+  <rect x="40" y="228" width="260" height="50" class="box"/>
+  <text x="170" y="253" class="label small">Morphisms</text>
+  <rect x="40" y="296" width="260" height="50" class="box"/>
+  <text x="170" y="321" class="label small">Diagrams</text>
+  <rect x="40" y="364" width="260" height="50" class="box"/>
+  <text x="170" y="389" class="label small">Acceptance tests</text>
+  <rect x="40" y="432" width="260" height="50" class="box"/>
+  <text x="170" y="457" class="label small">Forbidden changes</text>
+
+  <path d="M300 49 H390" class="arrow"/>
+  <path d="M300 117 H390" class="arrow"/>
+  <path d="M300 185 H390" class="arrow"/>
+  <path d="M300 253 H390" class="arrow"/>
+  <path d="M300 321 H390" class="arrow"/>
+  <path d="M300 389 H390" class="arrow"/>
+  <path d="M300 457 H390" class="arrow"/>
+
+  <rect x="860" y="70" width="260" height="60" class="box flow"/>
+  <text x="990" y="100" class="label small">AI 実装 / テスト案</text>
+  <rect x="860" y="168" width="260" height="60" class="box flow"/>
+  <text x="990" y="198" class="label small">PR（差分）</text>
+  <rect x="860" y="266" width="260" height="60" class="box flow"/>
+  <text x="990" y="296" class="label small">レビュー</text>
+  <rect x="860" y="364" width="260" height="60" class="box flow"/>
+  <text x="990" y="394" class="label small">CI（品質ゲート）</text>
+
+  <path d="M780 225 H840 V100 H860" class="arrow"/>
+  <path d="M990 130 V158" class="arrow"/>
+  <path d="M990 228 V256" class="arrow"/>
+  <path d="M990 326 V354" class="arrow"/>
+</svg>

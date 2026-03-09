@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 340" role="img" aria-labelledby="title desc">
+  <title id="title">Spec から Code への写像</title>
+  <desc id="desc">Objects、Morphisms、Diagrams が Types/Modules、Functions/APIs、Tests/Checks へ関手 F で写る図。</desc>
+  <defs>
+    <style>
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 2; rx: 10; ry: 10; }
+      .spec { fill: #ede9fe; stroke: #6d28d9; }
+      .code { fill: #e0f2fe; stroke: #0369a1; }
+      .label { fill: #0f172a; font: 600 20px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor: middle; dominant-baseline: middle; }
+      .small { font-size: 18px; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .dashed { stroke-dasharray: 8 6; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect x="70" y="40" width="280" height="70" class="box spec"/>
+  <text x="210" y="75" class="label">Objects</text>
+  <rect x="70" y="135" width="280" height="70" class="box spec"/>
+  <text x="210" y="170" class="label">Morphisms</text>
+  <rect x="70" y="230" width="280" height="70" class="box spec"/>
+  <text x="210" y="265" class="label">Diagrams</text>
+  <text x="210" y="20" class="label small">仕様圏（Spec）</text>
+
+  <rect x="690" y="40" width="280" height="70" class="box code"/>
+  <text x="830" y="75" class="label small">Types / Modules</text>
+  <rect x="690" y="135" width="280" height="70" class="box code"/>
+  <text x="830" y="170" class="label small">Functions / APIs</text>
+  <rect x="690" y="230" width="280" height="70" class="box code"/>
+  <text x="830" y="265" class="label small">Tests / Checks</text>
+  <text x="830" y="20" class="label small">実装圏（Code）</text>
+
+  <path d="M350 75 H680" class="arrow dashed"/>
+  <path d="M350 170 H680" class="arrow dashed"/>
+  <path d="M350 265 H680" class="arrow dashed"/>
+  <text x="520" y="55" class="label small">F</text>
+  <text x="520" y="150" class="label small">F</text>
+  <text x="520" y="245" class="label small">F</text>
+</svg>

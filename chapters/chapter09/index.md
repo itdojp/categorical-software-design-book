@@ -63,12 +63,22 @@ AI委任が難しいのは、効果が絡む領域です。
   - DB/外部API/監査/リトライなどの効果をここへ閉じ込める
   - 失敗モデル（failures）と再試行規則を Context Pack として固定する
 
-```mermaid
+<figure class="diagram-with-fallback">
+  <div class="mermaid-live">
+    <div class="mermaid-wrapper">
+      <div class="mermaid">
 graph LR
   IN["Command / Input"] --> CORE["pure core（判断/状態遷移）"]
   CORE --> SHELL["impure shell（DB/外部API/監査/リトライ）"]
   SHELL --> OUT["Result / Output"]
-```
+      </div>
+    </div>
+  </div>
+  <div class="mermaid-fallback">
+    <img src="{{ '/assets/images/chapter09/pure-core-impure-shell.svg' | relative_url }}" alt="pure core / impure shell 図の fallback SVG。入力が pure core に入り、その結果が impure shell を経て出力になる。">
+  </div>
+  <figcaption>図: pure core / impure shell。入力は純粋な判断ロジックに入り、その結果だけを効果境界へ渡して DB・外部 API・監査・再試行を処理します。</figcaption>
+</figure>
 
 共通例題（注文処理）の観点:
 

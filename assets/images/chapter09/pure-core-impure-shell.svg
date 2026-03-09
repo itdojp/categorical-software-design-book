@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 260" role="img" aria-labelledby="title desc">
+  <title id="title">pure core / impure shell</title>
+  <desc id="desc">入力が pure core に入り、その結果が impure shell を経て出力になる pure core / impure shell の図。</desc>
+  <defs>
+    <style>
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 2; rx: 10; ry: 10; }
+      .core { fill: #dcfce7; stroke: #15803d; }
+      .shell { fill: #fee2e2; stroke: #b91c1c; }
+      .label { fill: #0f172a; font: 600 20px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor: middle; dominant-baseline: middle; }
+      .small { font-size: 18px; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect x="30" y="95" width="170" height="70" class="box"/>
+  <text x="115" y="130" class="label small">Command / Input</text>
+
+  <rect x="270" y="70" width="230" height="120" class="box core"/>
+  <text x="385" y="110" class="label">pure core</text>
+  <text x="385" y="145" class="label small">判断 / 状態遷移</text>
+
+  <rect x="560" y="50" width="270" height="160" class="box shell"/>
+  <text x="695" y="88" class="label">impure shell</text>
+  <text x="695" y="124" class="label small">DB / 外部 API</text>
+  <text x="695" y="154" class="label small">監査 / リトライ</text>
+
+  <rect x="870" y="95" width="80" height="70" class="box"/>
+  <text x="910" y="130" class="label small">Output</text>
+
+  <path d="M200 130 H260" class="arrow"/>
+  <path d="M500 130 H550" class="arrow"/>
+  <path d="M830 130 H860" class="arrow"/>
+</svg>

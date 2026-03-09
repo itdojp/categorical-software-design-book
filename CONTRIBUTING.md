@@ -15,6 +15,8 @@
 
 ## ローカルQA（CI相当）
 
+Mermaid の重要図は fallback SVG を含めて QA 対象とします。
+
 前提:
 - Ruby / Bundler（Jekyll build + rendered HTML 回帰チェック用）
 - Node.js（CIは Node 20）
@@ -31,6 +33,9 @@ npm run qa
 
 出力:
 - `qa-reports/*.json`
+
+補足:
+- 重要な Mermaid 図は fallback SVG を含めて QA 対象とする
 
 ## レビュー観点（最低限）
 

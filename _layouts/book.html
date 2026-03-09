@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: 'ja' }}" data-theme="light">
+<html lang="{{ page.lang | default: site.lang | default: 'ja' }}" data-theme="light" class="no-js">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,6 +35,8 @@
     <script>
         (function() {
             try {
+                document.documentElement.classList.remove('no-js');
+                document.documentElement.classList.add('js');
                 const k = 'book-theme';
                 const t = localStorage.getItem(k) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                 document.documentElement.setAttribute('data-theme', t);

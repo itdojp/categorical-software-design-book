@@ -162,7 +162,10 @@ forbidden_changes:
 4. テスト実行（受入テスト＋可換性に対応する検証）
 5. 不一致があれば、まず Context Pack を修正してから再生成する（コードを先に直さない）
 
-```mermaid
+<figure class="diagram-with-fallback">
+  <div class="mermaid-live">
+    <div class="mermaid-wrapper">
+      <div class="mermaid">
 graph TD
   CP["Context Pack（SSOT）"] --> AI["AI: 実装/テスト案生成"]
   AI --> PR["差分（PR）"]
@@ -171,7 +174,14 @@ graph TD
   CI -->|pass| DONE["Done"]
   CI -->|fail| FIX["Context Pack修正"]
   FIX --> CP
-```
+      </div>
+    </div>
+  </div>
+  <div class="mermaid-fallback">
+    <img src="{{ '/assets/images/chapter01/context-pack-loop.svg' | relative_url }}" alt="最小ループの fallback SVG。Context Pack から AI、PR、人間レビュー、CI を経て、失敗時は Context Pack 修正へ戻る。">
+  </div>
+  <figcaption>図: 最小ループ。Context Pack を SSOT とし、AI 生成物を PR・レビュー・CI で検証し、失敗時はコードではなく Context Pack 修正へ戻します。</figcaption>
+</figure>
 
 ## 検証（テスト観点・可換性チェック）
 

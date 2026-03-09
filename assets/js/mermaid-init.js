@@ -16,6 +16,10 @@
         `https://unpkg.com/mermaid@${MERMAID_VERSION}/dist/mermaid.min.js`,
     ];
 
+    function setFallbackMode(enabled) {
+        document.documentElement.classList.toggle('mermaid-fallback-mode', Boolean(enabled));
+    }
+
     function findMermaidCodeBlocks() {
         return Array.from(
             document.querySelectorAll(
@@ -103,6 +107,18 @@
         return mermaidEl;
     }
 
+    function collectMermaidNodes() {
+        const nodes = Array.from(document.querySelectorAll('.mermaid'));
+        return nodes.filter((node) => {
+            const source = (node.getAttribute('data-mermaid-source') || node.textContent || '').trim();
+            if (!source) return false;
+            if (!node.getAttribute('data-mermaid-source')) {
+                node.setAttribute('data-mermaid-source', source);
+            }
+            return true;
+        });
+    }
+
     function restoreSources(nodes) {
         nodes.forEach((node) => {
             const src = node.getAttribute('data-mermaid-source') || '';
@@ -114,7 +130,7 @@
     function renderAll() {
         if (!window.mermaid) return;
 
-        const nodes = Array.from(document.querySelectorAll('.mermaid[data-mermaid-source]'));
+        const nodes = collectMermaidNodes();
         if (nodes.length === 0) return;
 
         // Restore original source so re-render is deterministic across theme changes.
@@ -136,31 +152,45 @@
             if (typeof window.mermaid.run === 'function') {
                 const r = window.mermaid.run({ nodes });
                 if (r && typeof r.then === 'function') {
-                    r.catch((e) => console.warn('Mermaid render failed:', e));
+                    r.then(() => setFallbackMode(false)).catch((e) => {
+                        setFallbackMode(true);
+                        console.warn('Mermaid render failed:', e);
+                    });
+                } else {
+                    setFallbackMode(false);
                 }
             } else if (typeof window.mermaid.init === 'function') {
                 const r = window.mermaid.init(undefined, nodes);
                 if (r && typeof r.then === 'function') {
-                    r.catch((e) => console.warn('Mermaid render failed:', e));
+                    r.then(() => setFallbackMode(false)).catch((e) => {
+                        setFallbackMode(true);
+                        console.warn('Mermaid render failed:', e);
+                    });
+                } else {
+                    setFallbackMode(false);
                 }
             }
         } catch (e) {
+            setFallbackMode(true);
             console.warn('Mermaid render failed:', e);
         }
     }
 
     function init() {
-        const codeBlocks = Array.from(
-            new Set([...findMermaidCodeBlocks(), ...findMermaidLikeCodeBlocks()])
-        );
-        if (codeBlocks.length === 0) return;
+        const codeBlocks = Array.from(new Set([...findMermaidCodeBlocks(), ...findMermaidLikeCodeBlocks()]));
 
         // Replace code blocks before loading Mermaid so the DOM is ready for rendering.
         codeBlocks.forEach(replaceCodeBlock);
 
+        const mermaidNodes = collectMermaidNodes();
+        if (mermaidNodes.length === 0) return;
+
         loadMermaidIfNeeded()
             .then(() => renderAll())
-            .catch((e) => console.warn(String(e && e.message ? e.message : e)));
+            .catch((e) => {
+                setFallbackMode(true);
+                console.warn(String(e && e.message ? e.message : e));
+            });
 
         // Re-render on theme toggle (diagram theme is baked into SVG).
         const themeToggle = document.querySelector('.theme-toggle');
