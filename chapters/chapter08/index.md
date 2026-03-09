@@ -56,6 +56,9 @@ AIエージェントを複数使うと、並列化はできるが破綻しやす
 
 CIの例（概念図）:
 
+図8-1 は、`Lint` と `Unit tests` が並列で走り、
+`Merge gate` が合流点になる最小の配線を示しています。
+
 ```mermaid
 graph LR
   S[Source] --> L[Lint]
@@ -65,6 +68,9 @@ graph LR
   M --> B[Build]
   B --> I[Integration tests]
 ```
+
+図8-1: 左側の 2 本の枝が並列作業です。
+`Merge gate` が合流点で、ここを通過した成果物だけが `Build` と `Integration tests` へ進みます。
 
 同じ構造をマルチエージェントに適用する場合は、`Lint/Unit tests` を「独立な作業（⊗）」として割り当て、合流点（Merge gate）で品質ゲートを満たした成果物のみを次へ渡します。
 

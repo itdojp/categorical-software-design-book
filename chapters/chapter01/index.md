@@ -86,6 +86,48 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 
 本書でいう「設計成果物」は、AIへ引き渡せる入力契約（Context Pack）として構造化したものです。
 
+### 共通例題の一枚要約
+
+<table>
+  <thead>
+    <tr>
+      <th>欄</th>
+      <th>注文処理で固定している内容</th>
+      <th>この章での意味</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>problem_statement</code></td>
+      <td>注文の作成から出荷までを扱い、監査を後付けにしない</td>
+      <td>AI が勝手に目的を補完しないようにする</td>
+    </tr>
+    <tr>
+      <td><code>objects</code></td>
+      <td><code>Order / Payment / InventoryReservation / Shipment / AuditEvent</code></td>
+      <td>どこに境界を引くかを固定する</td>
+    </tr>
+    <tr>
+      <td><code>morphisms</code></td>
+      <td><code>CreateOrder / PlaceOrder / AuthorizePayment / ShipOrder</code></td>
+      <td>AI に守らせる操作契約を固定する</td>
+    </tr>
+    <tr>
+      <td><code>diagrams</code></td>
+      <td><code>D1</code> 冪等、<code>D2</code> 監査整合、<code>D3</code> 状態遷移安全</td>
+      <td>レビューとテストの判定基準を固定する</td>
+    </tr>
+    <tr>
+      <td><code>acceptance_tests</code></td>
+      <td><code>AT1</code> 正常系、<code>AT2</code> 禁止遷移、<code>AT3</code> 監査検索</td>
+      <td>最低限の Done を固定する</td>
+    </tr>
+  </tbody>
+</table>
+
+この表を見てから下の最小テンプレを見ると、
+`Context Pack` の各欄が何を固定するために存在するかを追いやすくなります。
+
 - Objects: 型/状態/権限/エラー（設計上の対象）
 - Morphisms: 操作/API、Pre/Post、失敗条件（設計上の変換）
 - Diagrams: 可換図式（不変条件、意味が壊れていないことの判定基準）

@@ -38,6 +38,10 @@ chapter: chapter04
   - 対象: 実装上の型/データ構造/モジュール境界
   - 射: 関数/メソッド/APIハンドラ/ジョブ
 
+図4-1 は、仕様圏のどの要素を実装圏のどこへ写すかをまとめた対応図です。
+左側の `Objects / Morphisms / Diagrams` が、
+右側の `Types / Modules / Functions / APIs / Tests / Checks` へ対応します。
+
 <figure class="diagram-with-fallback">
   <div class="mermaid-live">
     <div class="mermaid-wrapper">
@@ -66,8 +70,11 @@ graph LR
   <div class="mermaid-fallback">
     <img src="{{ '/assets/images/chapter04/spec-code-functor.svg' | relative_url }}" alt="Spec から Code への写像図の fallback SVG。Objects は Types/Modules、Morphisms は Functions/APIs、Diagrams は Tests/Checks へ対応する。">
   </div>
-  <figcaption>図: Spec から Code への写像。Objects / Morphisms / Diagrams を、それぞれ Types/Modules / Functions/APIs / Tests/Checks へ対応づけて関手性を保ちます。</figcaption>
+  <figcaption>図4-1: Spec から Code への写像。Objects は Types / Modules、Morphisms は Functions / APIs、Diagrams は Tests / Checks へ対応し、仕様の構造を実装へ保ったまま写します。</figcaption>
 </figure>
+
+図4-1 の読み方は単純です。左側が仕様、右側が実装です。
+点線の `F` は「どの仕様要素を、どの実装要素へ写すか」を示します。
 
 AI委任を関手として捉えると、次の設計判断がしやすくなります。
 

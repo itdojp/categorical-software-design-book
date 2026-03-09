@@ -44,6 +44,9 @@ chapter: chapter02
 - 結合律が成立していれば、実装上の構造として `(authorizePayment ∘ reserveInventory) ∘ validate` と `authorizePayment ∘ (reserveInventory ∘ validate)` を入れ替えても、結果（状態・副作用の意味）が一致する。
 - 恒等射は「何もしない段階」を許し、共通処理・条件分岐の組み立てを単純化する（例: ある条件では `id` を挟んでパイプラインの形を揃える）。
 
+図2-1 は、本章で使う最小の合成図です。
+左から右へ読むと、入力検証、在庫引当、決済承認、監査追記の順に流れます。
+
 ```mermaid
 graph LR
   I["Input（Command）"] -->|validate| V["Validated"]
@@ -51,6 +54,9 @@ graph LR
   R -->|authorizePayment| P["Authorized"]
   P -->|appendAudit| O["Order（Placed）"]
 ```
+
+図2-1: 合成の読み方。`appendAudit` まで含めておくと、
+「状態だけ合っていて監査が抜ける」実装を契約違反として扱えます。
 
 ## ソフトウェア設計への射影（どこに効くか）
 
@@ -76,6 +82,30 @@ graph LR
 - [共通例題: 注文処理](../../docs/examples/common-example/)
 
 ここでは、Objects/Morphisms の最小テンプレを示し、例題で一部を埋めます。
+
+### 本章で使う断片
+
+```yaml
+objects:
+  - id: Order
+    states: [Draft, Placed, Paid, Shipped, Cancelled]
+
+morphisms:
+  - id: PlaceOrder
+    pre:
+      - Order.state == Draft
+    post:
+      - Order.state == Placed
+      - InventoryReservation が作成される（または更新される）
+      - AuditEvent("PlaceOrder") が記録される
+    failures:
+      - NotFound
+      - InvalidState
+      - OutOfStock
+```
+
+この断片だけで、
+`Order` が Object であり、`PlaceOrder` が契約付きの Morphism であることを読めます。
 
 ### Objects テンプレ（最小）
 

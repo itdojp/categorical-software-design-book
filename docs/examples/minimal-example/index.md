@@ -6,7 +6,49 @@ permalink: /examples/minimal-example/
 
 # 最小例: minimal-example（Context Pack v1）
 
-本ページは、本文・仕様ページから「最小例の Context Pack」に確実に到達するためのハブです。
+本ページは、本文理解を補助するための最小例サマリです。章本文の代替ではなく、
+「最低限どこまで書けば Context Pack v1 として成立するか」を先に把握し、
+必要なら YAML 全文へ降りるための導線として使います。
+
+## 最小例の見どころ
+
+次の断片だけで、`problem_statement`、`objects`、`morphisms`、`diagrams`、
+`acceptance_tests`、`forbidden_changes` が揃っていることを確認できます。
+
+```yaml
+problem_statement:
+  goals: ["最小の例として成立させる"]
+objects:
+  - id: Order
+morphisms:
+  - id: PlaceOrder
+    pre: ["Order.state == Draft"]
+diagrams:
+  - id: D1-order-state
+acceptance_tests:
+  - id: AT1-happy-path
+```
+
+## 省けないもの / 省いてよいもの
+
+<table>
+  <thead>
+    <tr>
+      <th>省けないもの</th>
+      <th>省いてよいもの</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>problem_statement</code>、<code>objects</code>、<code>morphisms</code>、<code>diagrams</code>、<code>acceptance_tests</code>、<code>forbidden_changes</code></td>
+      <td>複数 Object、詳細な field 一覧、複数 Morphism、詳細な <code>constraints</code>、詳細なディレクトリ規約</td>
+    </tr>
+    <tr>
+      <td>最低 1 つの操作契約と 1 つの不変条件</td>
+      <td>運用要件の拡張、監査や権限制御の詳細、複数テストシナリオ</td>
+    </tr>
+  </tbody>
+</table>
 
 ## 導線
 
