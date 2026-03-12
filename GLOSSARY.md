@@ -116,7 +116,7 @@ Coding conventions / Forbidden changes も含みます（[Context Pack v1 仕様
 
 ### Impure shell（効果を持つ外側） {#impure-shell}
 
-DB、外部 API、監査、再試行などの副作用を引き受ける境界。pure core の判断結果を受けて、実世界への書き込みや通信を実行します。
+DB、外部 API、監査、再試行などの副作用を引き受ける境界。pure core の判断結果を受けて、実世界への書き込みや通信をします。
 
 本書での使い方: 効果境界を明示し、監査や冪等性をどこで観測・検証するかを固定するための語彙として使う。
 

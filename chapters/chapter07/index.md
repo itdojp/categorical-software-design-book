@@ -88,7 +88,8 @@ graph TD
 - サービス統合:
   - 旧APIと新APIを共通インターフェースで接着し、クライアント互換を保つ（Pushout）
 - 認証統合:
-  - 複数[IdP]({{ '/glossary/' | relative_url }}#idp) の subject を共通の主体（[Principal]({{ '/glossary/' | relative_url }}#principal)）へ写して整合させる（Pullback）
+  - 複数[IdP]({{ '/glossary/' | relative_url }}#idp) の subject を整合させる
+  - 共通の主体（[Principal]({{ '/glossary/' | relative_url }}#principal)）へ写す（Pullback）
 - 移行（旧→新）:
   - 旧データと新データが共通の正規形（Canonical）へ写したとき一致する（Pullback）
 

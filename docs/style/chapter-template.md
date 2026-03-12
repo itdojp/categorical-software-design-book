@@ -71,11 +71,7 @@ chapter: chapterNN
 - 記法が [記法ガイド]({{ '/style/notation/' | relative_url }}) に沿っている
 - 共通例題（[共通例題（注文処理）]({{ '/examples/common-example/' | relative_url }})）への参照が一貫している
 - 可換性（不変条件）が「検証可能な形」で記述されている（テスト観点/受入条件に落ちている）
-- AI 引き渡しが Context Pack v1 形式で再現できる
+- AI引き渡しが [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) で再現できる
 - 参照先が [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) と一致している
 - opener と key exhibit が章固有の読みどころを示している
-- `まとめ` から次章または付録への reader-facing な導線（読者が次に読む箇所と理由が分かる案内）がある
-- AI引き渡しが Context Pack v1 形式で再現できる（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})）
-- 参照先が [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) と一致している
-- opener と key exhibit が章固有の読みどころを示している
-- `まとめ` から次章または付録への reader-facing な導線（読者が次に読む箇所と理由が分かる案内）がある
+- `まとめ` に reader-facing な導線があり、次に読む箇所と理由が分かる
