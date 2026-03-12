@@ -21,7 +21,7 @@ chapter: chapter09
 - 効果付きの射（クライスリ射）: `A → M B`
 - 合成: `A → M B` と `B → M C` を合成して `A → M C` を作る（エラー伝播や副作用の順序を含む）
 
-ミニ例（型シグネチャと変換の形）:
+ミニ例（型シグネチャと変換の形）は次のとおりです。
 
 - `f: A → Result<B, E>`
 - `g: B → Result<C, E>`
@@ -42,7 +42,7 @@ const kleisliCompose =
 // h = kleisliCompose(f, g) （= g ∘ f）
 ```
 
-直観:
+直観は次のとおりです。
 
 「効果を型に押し上げ、合成規則を明示する」と、AIに委任しても境界が崩れにくい。逆に、効果が暗黙（グローバル状態、隠れDBアクセス、暗黙リトライ）だと、合成や検証が破綻します。
 
@@ -80,13 +80,13 @@ graph LR
   <figcaption>図: pure core / impure shell。入力は純粋な判断ロジックに入り、その結果だけを効果境界へ渡して DB・外部 API・監査・再試行を処理します。</figcaption>
 </figure>
 
-共通例題（注文処理）の観点:
+共通例題（注文処理）の観点は次のとおりです。
 
 - `PlaceOrder` は在庫引当、監査、状態遷移を含む。ここで効果を増やすと、冪等（D1）や監査整合（D2）が壊れやすい。
 
 ## 設計成果物（テンプレ：表/図式/チェックリスト）
 
-参照:
+参照先は次のとおりです。
 
 - 共通例題（Context Pack v1）: [共通例題: 注文処理](../../docs/examples/common-example/)
 
@@ -104,7 +104,7 @@ constraints:
     diagrams: [] # 効果境界に関する不変条件（例: D1, D2）
 ```
 
-例（方針イメージ）:
+例（方針イメージ）は次のとおりです。
 
 ```text
 pure core:
@@ -123,7 +123,7 @@ impure shell:
 - pure core への効果混入（テスト不能化）
 - 監査/冪等性の破壊
 
-指示の書き方（抜粋）:
+指示の書き方（抜粋）は次のとおりです。
 
 > pure core / impure shell を維持せよ。pure core にIO/DB/外部APIを追加してはいけない。  
 > failures/retry/idempotency/audit を Context Pack の通りに実装せよ。勝手に増減してはいけない。  
@@ -146,12 +146,17 @@ impure shell:
 2. failures/retry/idempotency/audit をテンプレに落とす
 3. D1（冪等）/D2（監査整合）を壊さないためのテスト観点を列挙する
 4. AIに委任する場合の禁止事項（副作用の無断追加、境界破壊）を Context Pack に追記する
-5. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
+5. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）。
    - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
-   - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
-   - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
-   - （任意）CI相当の一括チェック: `npm run qa`
-   - 検証コマンドの SSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - minimal lint を実行する。
+     - `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+   - schema validation を実行する。
+     - `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+   - （任意）CI相当の一括チェックとして `npm run qa` を実行する。
+   - 検証コマンドの SSOT を確認する。
+     - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
 
 ## まとめ
 

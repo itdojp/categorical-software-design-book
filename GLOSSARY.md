@@ -26,7 +26,10 @@ permalink: /glossary/
 
 ### Context Pack
 
-AIエージェントへ引き渡す入力契約。最低限、Problem statement / Glossary / Objects / Morphisms / Diagrams / Constraints / Acceptance tests / Coding conventions / Forbidden changes を含む（[Context Pack v1 仕様](docs/spec/context-pack-v1.md)）。
+AIエージェントへ引き渡す入力契約です。
+最低限、Problem statement / Glossary / Objects / Morphisms / Diagrams を含みます。
+加えて、Constraints / Acceptance tests を含みます。
+Coding conventions / Forbidden changes も含みます（[Context Pack v1 仕様](docs/spec/context-pack-v1.md)）。
 
 本書での使い方: SSOT として扱い、Issue→PR→CI の差分レビューと検証の基準を固定する。
 

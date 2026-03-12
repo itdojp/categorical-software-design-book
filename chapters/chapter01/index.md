@@ -21,7 +21,7 @@ chapter: chapter01
 - 恒等射（Identity）: 何もしないが、合成の単位元として振る舞う（`id_A`）
 - 図式（Diagram）と可換性（Commutativity）: 複数の経路で同じ結果に到達する、という要件（不変条件）を表す
 
-ミニ例（直観）:
+ミニ例（直観）を示します。
 
 「注文を確定する」処理が複数の手続き（在庫引当、決済、監査ログ）に分かれているとき、実装では順序や再試行の影響で破綻しやすい。そこで「どの経路を辿っても最終的に同じ状態になる」「監査ログが必ず残る」などを、可換図式（不変条件）として固定し、後段の実装・テスト生成の拠り所にします。
 
@@ -192,7 +192,7 @@ graph TD
 
 1. 受入テスト（Acceptance tests）: 仕様の最低限（DoD）を担保する
 2. 図式（Diagrams）: 「どの経路でも同じ結果」を壊していないことを担保する
-3. 制約（Constraints）: 非機能（性能/セキュリティ/運用）を担保する
+3. 制約（Constraints）: 非機能（性能/セキュリティ/運用）を担保する。
 
 ## 演習（手で設計→AIに実装/テスト生成させる）
 
@@ -200,26 +200,36 @@ graph TD
 
 1. 共通例題（注文処理）の Context Pack を読む: [共通例題: 注文処理](../../docs/examples/common-example/)
 2. 次の追加要件を1つだけ定義する（例: CancelOrder を追加し、監査と状態遷移の安全性を維持）
-3. 追加要件に必要な差分を Context Pack v1 として作る（Goals/Non-goals、Objects/Morphisms/Diagrams、Acceptance tests、Forbidden changes を更新）
+3. 追加要件に必要な差分を Context Pack v1 として作る。
+   更新対象は Goals/Non-goals、Objects/Morphisms/Diagrams、Acceptance tests、Forbidden changes である。
 4. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
    - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
-   - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
-   - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
-   - （任意）CI相当の一括チェック: `npm run qa`
-   - 検証コマンドの SSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - `minimal lint` を実行する。
+     - `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+   - `schema validation` を実行する。
+     - `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+   - （任意）CI 相当の一括チェックとして `npm run qa` を実行する。
+   - 検証コマンドの SSOT を確認する。
+     - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
 5. 更新した Context Pack をAIに渡し、以下を生成させる
    - 実装スケルトン（モジュール境界を意識）
    - 受入テスト（Acceptance tests）
    - Diagrams を壊さない検証（プロパティ/チェック観点）
 6. 人間がレビューし、Forbidden changes と Diagrams を基準に差し戻す
 
-提出物（最小）:
+提出物（最小）は次のとおりです。
 - 更新した Context Pack v1（YAML/JSON）
 - 受入テスト（シナリオ＋期待結果）
 - 破壊的変更を避けるための禁止事項（Forbidden changes）
 
 ## まとめ（再利用可能なルール）
 
-- AIに委任する前に、入力契約（Context Pack）を固定する
+- AI へ委任する前に、入力契約（Context Pack）を固定する
 - 不変条件（Diagrams）は「検証可能な形」で定義する
-- 用語・記法・成果物テンプレを SSOT で管理し、章間の揺れを抑制する
+- 用語・記法・成果物テンプレは SSOT で管理し、章間の揺れを抑制する
+
+### 次章への接続
+
+- 第2章では、ここで固定した成果物を Objects / Morphisms / 合成の最小文法へ落とし込む。

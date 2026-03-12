@@ -10,7 +10,7 @@ description: "図式の表現方式、画像配置、命名規約"
 - アーキテクチャ/フロー: **Mermaid** を第一候補とする
 - 圏論の可換図式: まずは **テキスト＋最小の図版**（SVG）で表現し、必要に応じて表現方式を拡張する
 
-補足:
+補足は次のとおりです。
 - Mermaid は progressive enhancement と位置づける。GitHub Pages ではクライアント側で Mermaid をレンダリングする（`assets/js/mermaid-init.js`）。現状は Mermaid `10.9.1` を CDN から読み込み、HTML 内の `.mermaid` 要素を図として表示する。
 - dark/light 切替では図のテーマが焼き付くため、テーマ切替時に再レンダリングする（`assets/js/mermaid-init.js`）。
 - Mermaid で表現力が不足する可換図式/ストリング図式は、SVG（`assets/images/`）を利用する。
