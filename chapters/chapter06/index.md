@@ -24,6 +24,9 @@ chapter: chapter06
   - 直観: OR（どちらか一方の分岐、識別子付きUnion）
   - 例: 結果が「成功」または「エラー」なら、それは余積として表現できる（`Result<Success, Error>`）
 
+図6-1 は、左に「必須情報の束」、右に「分岐の束」を置いた最小図です。
+本章では、この読み方を `PlaceOrder` 契約の正規化へ使います。
+
 ```mermaid
 graph LR
   subgraph Product["積（Product）: A × B"]
@@ -36,6 +39,9 @@ graph LR
     B2["B"] -->|ι2| S
   end
 ```
+
+図6-1: 積は AND、余積は OR です。
+左は「何が必須か」を、右は「どこで分岐するか」を固定します。
 
 ミニ例（直観）:
 
@@ -86,6 +92,38 @@ graph LR
 参照:
 
 - 共通例題（Context Pack v1）: [共通例題: 注文処理](../../docs/examples/common-example/)
+
+### 共通例題で見る「悪い契約 / 良い契約」
+
+<table>
+  <thead>
+    <tr>
+      <th>観点</th>
+      <th>悪い契約</th>
+      <th>良い契約</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>入力</td>
+      <td><code>PlaceOrderRequest</code> に optional を足し続ける</td>
+      <td><code>orderId / actor / idempotencyKey</code> のように必須情報だけを束ねる</td>
+    </tr>
+    <tr>
+      <td>失敗</td>
+      <td>エラーを自然言語で一括処理する</td>
+      <td><code>NotFound / InvalidState / OutOfStock</code> を variant で列挙する</td>
+    </tr>
+    <tr>
+      <td>テスト</td>
+      <td>正常系だけを確認する</td>
+      <td>variant ごとに最小 1 ケースを用意する</td>
+    </tr>
+  </tbody>
+</table>
+
+この比較だけで、
+「万能 DTO を避けて最小契約へ寄せる」という本章の狙いを追えます。
 
 ### 契約テンプレ（最小）
 

@@ -26,11 +26,17 @@ chapter: chapter03
 
 同じ注文に対して `PlaceOrder` が重複実行されても、在庫引当が二重計上されない（冪等）。これは「射の繰り返しが、ある意味で恒等に近い振る舞いをする」という不変条件であり、図式（性質）として固定すると、実装方式（再試行/非同期/ロック戦略）が変わっても検証軸が揺れません。
 
+図3-1 は、同じ入力に対して `PlaceOrder` を 1 回呼ぶ場合と、
+2 回呼ぶ場合の観測結果を比較する図です。
+
 ```mermaid
 graph LR
   I["入力（orderId, idempotencyKey）"] -->|PlaceOrder| O["出力（Placed + Audit）"]
   I -->|PlaceOrder ∘ PlaceOrder| O
 ```
+
+図3-1: 冪等性の読み方。上段と下段で同じ観測結果に収束するなら、
+重複実行でも在庫引当と監査が二重化していません。
 
 ## ソフトウェア設計への射影（どこに効くか）
 
@@ -55,6 +61,35 @@ AIによる実装・改稿・リファクタは、局所最適化が入りやす
 共通例題（注文処理）の Diagrams は次にあります。
 
 - [共通例題: 注文処理](../../docs/examples/common-example/)
+
+### 本章で使う図式断片
+
+<table>
+  <thead>
+    <tr>
+      <th>Diagram</th>
+      <th>観測点</th>
+      <th>壊れ方</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>D1-idempotency-place-order</code></td>
+      <td><code>InventoryReservation</code> と <code>AuditEvent</code> が重複しない</td>
+      <td>重複実行で在庫や監査が二重計上される</td>
+    </tr>
+    <tr>
+      <td><code>D2-audit-consistency</code></td>
+      <td>重要操作の成功時に対応する監査証跡が存在する</td>
+      <td>状態は進むのに監査だけ欠落する</td>
+    </tr>
+    <tr>
+      <td><code>D3-state-transition-safety</code></td>
+      <td>禁止遷移が <code>InvalidState</code> で止まる</td>
+      <td><code>Draft → ShipOrder</code> のような越境が通る</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Diagrams テンプレ（最小）
 
