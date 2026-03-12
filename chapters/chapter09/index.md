@@ -77,7 +77,7 @@ graph LR
   <div class="mermaid-fallback">
     <img src="{{ '/assets/images/chapter09/pure-core-impure-shell.svg' | relative_url }}" alt="pure core / impure shell 図の fallback SVG。入力が pure core に入り、その結果が impure shell を経て出力になる。">
   </div>
-  <figcaption>図: pure core / impure shell。入力は純粋な判断ロジックに入り、その結果だけを効果境界へ渡して DB・外部 API・監査・再試行を処理します。</figcaption>
+  <figcaption>図9-1: pure core / impure shell。入力は純粋な判断ロジックに入り、その結果だけを効果境界へ渡して DB・外部 API・監査・再試行を処理します。</figcaption>
 </figure>
 
 図9-1 は、判断と副作用をどこで分けるかを示す図です。

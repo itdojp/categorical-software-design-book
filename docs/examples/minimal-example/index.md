@@ -27,6 +27,8 @@ diagrams:
   - id: D1-order-state
 acceptance_tests:
   - id: AT1-happy-path
+forbidden_changes:
+  - "Diagrams を満たさない変更"
 ```
 
 ## 省けないもの / 省いてよいもの
