@@ -66,7 +66,7 @@ graph LR
   B --> I[Integration tests]
 ```
 
-同じ構造をマルチエージェントに適用する場合は、`Lint/Unit tests` を「独立な作業（⊗）」として割り当て、合流点（Merge gate）で品質ゲートを満たした成果物のみを次へ渡します。
+同じ構造をマルチエージェントに適用する場合は、`Lint/Unit tests` を「独立な作業（⊗）」として割り当て、合流点（[Merge gate]({{ '/glossary/' | relative_url }}#merge-gate)）で品質ゲートを満たした成果物のみを次へ渡します。
 
 ## AIエージェントへの引き渡し
 

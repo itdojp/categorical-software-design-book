@@ -6,6 +6,8 @@ appendix: prompts
 # 付録B: AIエージェント用プロンプト集
 
 本書の章末演習で、そのまま利用できるプロンプト例です。前提として、AIに渡す入力契約は Context Pack v1（[Context Pack v1 仕様](../../docs/spec/context-pack-v1.md)）を想定します。
+用語の定義を引き直すときは [用語集（Glossary）](../../GLOSSARY.md) を、
+差し戻し観点や戻り先を引き直すときは [付録D: クイックリファレンス](../../appendices/desk-reference/) を参照してください。
 
 ## 共通ルール（先頭に付ける）
 

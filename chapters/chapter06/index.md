@@ -7,7 +7,7 @@ chapter: chapter06
 
 ## 学習ゴール
 
-- 積＝AND（情報の束）、余積＝OR（分岐/Union/エラー合成）として説明できる
+- 積＝AND（情報の束）、余積＝OR（分岐/[Union]({{ '/glossary/' | relative_url }}#union)/エラー合成）として説明できる
 - 成功/失敗を余積（sum type）として設計し、テスト設計へ接続できる
 - AIに「最小の契約」を設計させる指示（入力・禁止事項）を書ける
 - 例題（注文処理）で DTO/API/ドメイン型を標準形に落とせる
@@ -21,7 +21,7 @@ chapter: chapter06
   - 直観: AND（両方の情報を同時に持つ束）
   - 例: 入力が「`orderId` と `actor` を必ず持つ」なら、それは積として束ねられる
 - 余積（Coproduct）: `A + B`
-  - 直観: OR（どちらか一方の分岐、識別子付きUnion）
+  - 直観: OR（どちらか一方の分岐、識別子付き[Union]({{ '/glossary/' | relative_url }}#union)）
   - 例: 結果が「成功」または「エラー」なら、それは余積として表現できる（`Result<Success, Error>`）
 
 ```mermaid
