@@ -9,7 +9,7 @@ chapter: chapter02
 注文処理の流れを Objects / Morphisms / 合成で言い直すと、
 AI に渡す契約がどこで閉じるかが見えます。
 
-本章の見せ場は、図2-1と Objects / Morphisms の断片です。
+本章の見せ場は、注文処理フローの図と Objects / Morphisms の断片です。
 射の契約をどの粒度で書けば後続章へ持ち運べるかを、その場で確認できます。
 
 ## 学習ゴール

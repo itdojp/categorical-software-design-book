@@ -10,7 +10,7 @@ chapter: chapter09
 第9章では、pure core / impure shell を
 効果境界として整理します。
 
-本章の見せ場は、図9-1と core / shell 対応表です。
+本章の見せ場は、pure core / impure shell 図と core / shell 対応表です。
 どの判断を純粋に保ち、どの処理を境界へ追い出すかを、その場で確認できます。
 
 ## 学習ゴール
