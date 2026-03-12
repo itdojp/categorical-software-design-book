@@ -31,3 +31,5 @@ appendices:
     path: "/appendices/prompts/"
   - title: "付録C 参考文献"
     path: "/appendices/references/"
+  - title: "付録D クイックリファレンス"
+    path: "/appendices/desk-reference/"

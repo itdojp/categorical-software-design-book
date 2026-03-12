@@ -11,9 +11,9 @@ permalink: /glossary/
 ## 引き直し導線
 
 - 用語の定義を確認する: 本ページ
-- 図版・チェックリスト・症状別の戻り先を確認する: [付録D: クイックリファレンス](appendices/desk-reference/)
-- 設計成果物の雛形を再利用する: [付録A: 設計成果物テンプレ集](appendices/templates/)
-- AI への渡し方を再利用する: [付録B: AIエージェント用プロンプト集](appendices/prompts/)
+- 図版・チェックリスト・症状別の戻り先を確認する: [付録D: クイックリファレンス]({{ '/appendices/desk-reference/' | relative_url }})
+- 設計成果物の雛形を再利用する: [付録A: 設計成果物テンプレ集]({{ '/appendices/templates/' | relative_url }})
+- AI への渡し方を再利用する: [付録B: AIエージェント用プロンプト集]({{ '/appendices/prompts/' | relative_url }})
 
 ## A
 
