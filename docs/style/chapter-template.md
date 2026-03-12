@@ -8,6 +8,13 @@ permalink: /style/chapter-template/
 
 本書の各章は、AI生成・人手改稿のいずれでも破綻しにくいよう、見出し構造と成果物（Design Artifact）を固定します。
 
+## Developmental Edit（必須）
+
+- H1 直後に 2〜4 文の opener を置き、その章固有の問題設定・ payoff を先に示す
+- opener 内または直後に、その章の見せ場（key exhibit: 図/表/抜粋 artifact）を 1 つ指名する
+- `まとめ` には、次章への接続を 1〜3 行で入れる
+- 最終章は、次章の代わりに付録や実務適用先への導線を置く
+
 ## Front Matter（必須）
 
 章ファイル先頭に以下を設定します。
@@ -64,3 +71,5 @@ chapter: chapterNN
 - 共通例題（[共通例題（注文処理）]({{ '/examples/common-example/' | relative_url }})）への参照が一貫している
 - 可換性（不変条件）が「検証可能な形」で記述されている（テスト観点/受入条件に落ちている）
 - AI引き渡しが Context Pack v1 形式で再現できる（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})）
+- opener と key exhibit が章固有の読みどころを示している
+- `まとめ` から次章または付録への reader-facing な導線がある
