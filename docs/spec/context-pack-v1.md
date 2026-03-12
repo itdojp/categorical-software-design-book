@@ -19,7 +19,8 @@ permalink: /spec/context-pack-v1/
 Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性のため YAML を推奨します。
 
 機械可読スキーマ（JSON Schema）は次を参照してください。
-- JSON Schema: [context-pack-v1.schema.json]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})（[raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)）
+- [JSON Schema]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})
+- raw: [context-pack-v1.schema.json](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)
 
 ### 検証コマンド {#validation-commands}
 
@@ -82,7 +83,7 @@ minimal lint と schema validation は目的が異なるため、併用を推奨
 
 システムが満たすべき不変条件を列挙します。
 
-必須:
+必須項目は次のとおりです。
 - 条件（自然言語）
 - 検証方法（受入テスト/プロパティ/チェック観点）
 
@@ -106,7 +107,7 @@ DoD として必要な受入テストを列挙します（シナリオ/期待結
 
 AIが勝手に変更してはいけない事項を明示します。
 
-例:
+例は次のとおりです。
 - 公開APIの互換性
 - 不変条件（Diagrams）
 - 権限境界（ACL/RBAC）

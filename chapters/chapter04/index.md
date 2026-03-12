@@ -30,13 +30,14 @@ chapter: chapter04
 - 合成保存: `F(g ∘ f) = F(g) ∘ F(f)`
 - 恒等保存: `F(id_A) = id_{F(A)}`
 
-直観:
+直観を示します。
 
-「仕様の構造（対象/操作/合成）を、実装の構造（型/関数/モジュール）へ写すとき、合成や恒等といった“形”を壊さない」ことが、関手性です。関手性が壊れると、AIは局所最適化のつもりで境界や契約を破壊し、変更容易性が落ちます。
+「仕様の構造（対象/操作/合成）を、実装の構造（型/関数/モジュール）へ写すとき、合成や恒等といった“形”を壊さない」ことが関手性です。
+関手性が壊れると、AIは局所最適化のつもりで境界や契約を破壊し、変更容易性が落ちます。
 
 ## ソフトウェア設計への射影（どこに効くか）
 
-本書では、次の二つの「圏」を意識して設計成果物を作ります。
+本書では、次の2つの「圏」を意識して設計成果物を作ります。
 
 - 仕様圏（Spec）:
   - 対象: Objects（型/状態/境界）
@@ -47,6 +48,7 @@ chapter: chapter04
   - 射: 関数/メソッド/APIハンドラ/ジョブ
 
 <figure class="diagram-with-fallback">
+  <!-- textlint-disable -->
   <div class="mermaid-live">
     <div class="mermaid-wrapper">
       <div class="mermaid">
@@ -59,11 +61,15 @@ graph LR
   end
 
   subgraph Code["実装圏（Code）"]
-    T["Types / Modules"]
-    F["Functions / APIs"]
-    X["Tests / Checks"]
+    %% 区切り。
+    T["Types"]
+    %% 区切り。
+    F["Functions"]
+    %% 区切り。
+    X["Tests"]
     T --> F --> X
   end
+  %% 区切り。
 
   O -. "F" .-> T
   M -. "F" .-> F
@@ -71,10 +77,11 @@ graph LR
       </div>
     </div>
   </div>
+  <!-- textlint-enable -->
   <div class="mermaid-fallback">
-    <img src="{{ '/assets/images/chapter04/spec-code-functor.svg' | relative_url }}" alt="Spec から Code への写像図の fallback SVG。Objects は Types/Modules、Morphisms は Functions/APIs、Diagrams は Tests/Checks へ対応する。">
+    <img src="{{ '/assets/images/chapter04/spec-code-functor.svg' | relative_url }}" alt="仕様圏の Objects・Morphisms・Diagrams が、実装圏の Types・Functions・Tests へ対応づけられる写像図。">
   </div>
-  <figcaption>図: Spec から Code への写像。Objects / Morphisms / Diagrams を、それぞれ Types/Modules / Functions/APIs / Tests/Checks へ対応づけて関手性を保ちます。</figcaption>
+  <figcaption>図: Spec から Code への写像。Objects は Types、Morphisms は Functions、Diagrams は Tests へ対応づけられ、仕様の構造保存を確認する。</figcaption>
 </figure>
 
 AI委任を関手として捉えると、次の設計判断がしやすくなります。
@@ -83,12 +90,12 @@ AI委任を関手として捉えると、次の設計判断がしやすくなり
 - 合成の固定: 仕様圏の「操作の合成」を、実装の呼び出し順/依存関係へ写す（勝手に並べ替えない）
 - 恒等の固定: 「何もしない」ことが意味を持つ箇所（監査、権限、再試行）で、暗黙の副作用を入れない
 
-仕様変更時の線引き（例）:
+仕様変更時の線引き（例）を示します。
 
-- AIに任せやすい:
+- AIに任せやすい変更は次のとおりである。
   - 新しい Morphism の追加（既存Objects/Diagramsを不変とし、契約が明確）
   - 既存実装の整形・性能改善（Diagrams/Forbidden changes を満たす範囲）
-- 人間が再設計すべき:
+- 人間が再設計すべき変更は次のとおりである。
   - Objects の境界変更（責務や所有権の変更）
   - Diagrams（不変条件）の変更（正しさの定義が変わる）
   - 失敗条件/権限/監査の変更（運用・責任の変更）
@@ -128,13 +135,13 @@ AI委任を関手として捉えると、次の設計判断がしやすくなり
 
 AIへ引き渡す際は「保存すべき構造」を禁止事項として具体化し、逸脱を抑制します。
 
-入力（最低限）:
+入力（最低限）は次のとおりです。
 
 - Objects/Morphisms/Diagrams（仕様圏）
 - Coding conventions（実装圏の置き場）
 - Forbidden changes（保存すべき構造）
 
-プロンプト例（抜粋）:
+プロンプト例（抜粋）を示します。
 
 > 以下の Context Pack を仕様とする。Objects/Morphisms/Diagrams/Forbidden changes を変更してはいけない。  
 > 実装は、Objects をモジュール境界として尊重し、Morphism ごとに対応する実装単位（関数/API）を作れ。  
@@ -161,13 +168,18 @@ AIへ引き渡す際は「保存すべき構造」を禁止事項として具体
    - 例（追加）: `CancelOrder` を追加（既存 Diagrams を維持）
    - 例（変更）: `Payment` 境界を `Order` へ統合（境界変更）
 2. それぞれについて、Context Pack の Forbidden changes と Constraints をどう書くべきか整理し、Context Pack を更新する
-3. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
+3. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）。
    - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
-   - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
-   - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
-   - （任意）CI相当の一括チェック: `npm run qa`
-   - 検証コマンドの SSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
-4. AIに実装を委任する場合のレビュー観点（関手性チェックリスト）を列挙する
+   - `minimal lint` を実行する。
+     - `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+   - `schema validation` を実行する。
+     - `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+   - （任意）CI 相当の一括チェックとして `npm run qa` を実行する。
+   - 検証コマンドの SSOT を確認する。
+     - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+4. AIに実装を委任する場合のレビュー観点（関手性チェックリスト）を列挙する。
 
 ## まとめ
 

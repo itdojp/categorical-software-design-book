@@ -23,11 +23,11 @@ Pullback / Pushout として固定します。
 
 ## 圏論コア（定義・直観・ミニ例）
 
-統合（結合・移行）は「二つのものを同時に満たす」「共通部分で貼り合わせる」といった構造を持ちます。本章では、その標準形として Pullback と Pushout の直観を使います。
+統合（結合・移行）は「2つのものを同時に満たす」「共通部分で貼り合わせる」といった構造を持ちます。本章では、その標準形として Pullback と Pushout の直観を使います。
 
 ### Pullback（整合のある結合）
 
-二つの対象 `A`, `B` を、共通の対象 `C` への対応（写像）を揃えたまま結合する構造です。
+2つの対象 `A`, `B` を、共通の対象 `C` への対応（写像）を揃えたまま結合する構造です。
 
 <figure class="diagram-with-fallback">
   <div class="mermaid-live">
@@ -47,7 +47,7 @@ graph TD
   <figcaption>図: Pullback。結合対象 P は A と B を同時に満たし、A と B は共通対象 C への整合条件を保ちます。</figcaption>
 </figure>
 
-直観:
+直観は次のとおりです。
 
 `A` と `B` は独立だが、`C` に対応する部分は一致していなければならない。Pullback は「一致条件（整合性）」を保った結合を表現します。
 
@@ -73,7 +73,7 @@ graph TD
   <figcaption>図: Pushout。共通対象 C を基準に A と B を貼り合わせ、統合先 P で共通インターフェースを成立させます。</figcaption>
 </figure>
 
-直観:
+直観は次のとおりです。
 
 `C`（共通インターフェース/共通スキーマ/共通認証）を基準に、`A` と `B` を接着する。移行や統合APIの設計で頻出します。
 
@@ -81,14 +81,15 @@ graph TD
 
 統合点で壊れる典型は「どこが同一で、どこが差分か」が曖昧なまま接着してしまうことです。Pullback/Pushout を図式として書くことで、統合条件（同値条件/互換条件）を先に固定できます。
 
-代表ケース:
+代表ケースは次のとおりです。
 
 - スキーマ統合:
   - 旧DBと新DBを共通キー（例: `orderId`）で整合させつつ統合する（Pullback）
 - サービス統合:
   - 旧APIと新APIを共通インターフェースで接着し、クライアント互換を保つ（Pushout）
 - 認証統合:
-  - 複数[IdP]({{ '/glossary/' | relative_url }}#idp) の subject を共通の主体（[Principal]({{ '/glossary/' | relative_url }}#principal)）へ写して整合させる（Pullback）
+  - 複数[IdP]({{ '/glossary/' | relative_url }}#idp) の subject を整合させる
+  - 共通の主体（[Principal]({{ '/glossary/' | relative_url }}#principal)）へ写す（Pullback）
 - 移行（旧→新）:
   - 旧データと新データが共通の正規形（Canonical）へ写したとき一致する（Pullback）
 
@@ -96,7 +97,7 @@ graph TD
 
 ## 設計成果物（テンプレ：表/図式/チェックリスト）
 
-共通例題（注文処理）では、境界（Order/Payment/Inventory/Shipment/Audit）の統合点が複数あります。統合を行う場合は、少なくとも次を成果物として固定します。
+共通例題（注文処理）では、境界（Order/Payment/Inventory/Shipment/Audit）の統合点が複数あります。統合する場合は、少なくとも次を成果物として固定します。
 
 ### 統合点テンプレ（最小）
 
@@ -119,7 +120,7 @@ graph TD
 
 統合・移行は、AIが局所的に“つなぐ”と破綻しやすい領域です。AIへ委任する場合は、統合条件（図式）と検証項目を先に入力します。
 
-指示の書き方（抜粋）:
+指示の書き方（抜粋）は次のとおりです。
 
 > Pullback/Pushout の統合条件（Diagrams）を満たすように実装/テストを生成せよ。  
 > 互換性（旧/新）を破壊する仕様追加は禁止。写像（旧→C、新→C）を勝手に変えてはいけない。  
@@ -141,12 +142,17 @@ graph TD
 1. 統合ケースを1つ選ぶ（例: `Payment` を外部サービスに切り出す/統合する）
 2. 共通基準 `C`（正規形または共通インターフェース）を定義する
 3. 図式（Pullback/Pushout）の統合条件を Context Pack の Diagrams として記述する
-4. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
+4. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）。
    - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
-   - minimal lint: `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
-   - schema validation: `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`（例: `docs/examples/common-example/context-pack-v1.yaml`）
-   - （任意）CI相当の一括チェック: `npm run qa`
-   - 検証コマンドの SSOT: [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - minimal lint を実行する。
+     - `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+   - schema validation を実行する。
+     - `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+   - （任意）CI相当の一括チェックとして `npm run qa` を実行する。
+   - 検証コマンドの SSOT を確認する。
+     - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
 5. 図式→テスト項目（差分/互換）へ変換し、検証項目リストとして残す
 
 ## まとめ

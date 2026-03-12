@@ -17,7 +17,7 @@
 
 Mermaid の重要図は fallback SVG を含めて QA 対象とします。
 
-前提:
+前提は次のとおりです。
 - Ruby / Bundler（Jekyll build + rendered HTML 回帰チェック用）
 - Node.js（CIは Node 20）
 - Python 3（CIは Python 3.12）
@@ -25,16 +25,16 @@ Mermaid の重要図は fallback SVG を含めて QA 対象とします。
 - Git
 - Bash
 
-実行:
+実行は次のとおりです。
 
 ```bash
 npm run qa
 ```
 
-出力:
+出力は次のとおりです。
 - `qa-reports/*.json`
 
-補足:
+補足は次のとおりです。
 - 重要な Mermaid 図は fallback SVG を含めて QA 対象とする
 
 ## レビュー観点（最低限）

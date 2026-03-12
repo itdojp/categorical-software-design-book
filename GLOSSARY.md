@@ -51,7 +51,10 @@ permalink: /glossary/
 
 ### Context Pack
 
-AIエージェントへ引き渡す入力契約。最低限、Problem statement / Glossary / Objects / Morphisms / Diagrams / Constraints / Acceptance tests / Coding conventions / Forbidden changes を含む（[Context Pack v1 仕様](docs/spec/context-pack-v1.md)）。
+AIエージェントへ引き渡す入力契約です。
+最低限、Problem statement / Glossary / Objects / Morphisms / Diagrams を含みます。
+加えて、Constraints / Acceptance tests を含みます。
+Coding conventions / Forbidden changes も含みます（[Context Pack v1 仕様](docs/spec/context-pack-v1.md)）。
 
 本書での使い方: SSOT として扱い、Issue→PR→CI の差分レビューと検証の基準を固定する。
 
@@ -113,7 +116,7 @@ AIエージェントへ引き渡す入力契約。最低限、Problem statement 
 
 ### Impure shell（効果を持つ外側） {#impure-shell}
 
-DB、外部 API、監査、再試行などの副作用を引き受ける境界。pure core の判断結果を受けて、実世界への書き込みや通信を実行します。
+DB、外部 API、監査、再試行などの副作用を引き受ける境界。pure core の判断結果を受けて、実世界への書き込みや通信をします。
 
 本書での使い方: 効果境界を明示し、監査や冪等性をどこで観測・検証するかを固定するための語彙として使う。
 

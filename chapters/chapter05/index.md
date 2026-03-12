@@ -22,7 +22,7 @@ chapter: chapter05
 
 ## 圏論コア（定義・直観・ミニ例）
 
-自然変換（Natural Transformation）は、二つの関手 `F, G: C → D` のあいだの「関手の変換」です。
+自然変換（Natural Transformation）は、2つの関手 `F, G: C → D` のあいだの「関手の変換」です。
 
 - 各対象 `A` に対して成分 `η_A: F(A) → G(A)` を持つ
 - 自然性（Naturality）: 任意の射 `f: A → B` について次が可換
@@ -36,25 +36,27 @@ graph TD
   GA -->|"G(f)"| GB
 ```
 
-直観:
+直観を示します。
 
-対象ごとに「古い表現→新しい表現」への変換（成分）を用意し、その変換が全ての操作（射）と矛盾しない（可換）ことを要求する。これにより「構造を変えても意味を保つ」リファクタを、条件として固定できます。
+対象ごとに「古い表現→新しい表現」への変換（成分）を用意し、その変換が全ての操作（射）と矛盾しないことを要求します。
+これにより、「構造を変えても意味を保つ」リファクタを条件として固定できます。
 
-ミニ例（直観）:
+ミニ例（直観）を示します。
 
-`Order` の表現を変更した（フィールド名変更、状態表現の変更など）とき、`PlaceOrder` や `ShipOrder` が “同じ意味” を持つように、入力/出力/監査の対応を成分 `η` で定義し、各操作との可換性で検証する。
+`Order` の表現を変更したときは、フィールド名変更や状態表現の変更が起こり得ます。
+その場合でも `PlaceOrder` や `ShipOrder` が “同じ意味” を持つように、入力/出力/監査の対応を成分 `η` で定義し、各操作との可換性で検証します。
 
 ## ソフトウェア設計への射影（どこに効くか）
 
 AIにリファクタを任せると、コードの見た目は良くなるが意味が壊れる、という事故が起きやすい。自然変換として捉えると、改修を「意味保存の差分」として評価できます。
 
-本書での読み替え:
+本書での読み替えを示します。
 
 - 関手 `F`: Before（改修前）の設計/実装の写像
 - 関手 `G`: After（改修後）の設計/実装の写像
 - 自然変換 `η`: 対象ごとの対応（変換）＋可換条件（操作と整合すること）
 
-自然性が破れる典型:
+自然性が破れる典型を示します。
 
 - ある対象では変換できるが、別の対象では意味がずれる（部分最適化）
 - 操作の前後で、変換の位置が変わると結果が一致しない（可換性が壊れる）
@@ -87,7 +89,7 @@ AIにリファクタを任せると、コードの見た目は良くなるが意
 
 AIにリファクタを委任する場合は、自然性を満たすための安全柵を入力として与えます。
 
-入力（最低限）:
+入力（最低限）は次のとおりです。
 
 - 変更の目的/非目的
 - 影響範囲（Objects/Morphisms/Diagrams）
@@ -95,7 +97,7 @@ AIにリファクタを委任する場合は、自然性を満たすための安
 - 禁止事項（Forbidden changes）
 - 可換チェック（テスト観点）
 
-プロンプト例（抜粋）:
+プロンプト例（抜粋）を示します。
 
 > 次の Before/After と可換チェックに従ってリファクタせよ。  
 > 仕様追加は禁止。Pre/Post/failures/Diagrams/Forbidden changes を変更してはいけない。  
@@ -123,11 +125,15 @@ AIにリファクタを委任する場合は、自然性を満たすための安
 1. 変更を1つだけ決める（例: `AuditEvent` のフィールド追加、エラー分類の整理）
 2. Before/After テンプレで差分説明を書く
 3. 対象ごとの成分（対応）と、操作ごとの可換チェック（テスト観点）を列挙する
-4. 破綻検知（最低限）:
-   - Context Pack を変更した場合（minimal lint）: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`（対象: [共通例題: 注文処理](../../docs/examples/common-example/)、スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)）
-   - Context Pack を変更した場合（schema validation）: `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
-   - CI（book-formatter checks + Context Pack 検証: minimal lint + schema validation）で破綻が検出されることを確認する
-   - （任意）ローカルでは `npm run qa` で CI 相当を一括実行できる
+4. 破綻検知（最低限）を行う。
+   - Context Pack を変更した場合は `minimal lint` を実行する。
+     - `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
+     - 対象: [共通例題: 注文処理](../../docs/examples/common-example/)
+     - スクリプト: [scripts/validate-context-pack.py](https://github.com/itdojp/categorical-software-design-book/blob/main/scripts/validate-context-pack.py)
+   - Context Pack を変更した場合は `schema validation` を実行する。
+     - `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
+   - CI（book-formatter checks + Context Pack 検証: minimal lint + schema validation）で破綻が検出されることを確認する。
+   - （任意）ローカルでは `npm run qa` で CI 相当を一括実行できる。
 
 ## まとめ
 

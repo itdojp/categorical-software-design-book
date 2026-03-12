@@ -30,7 +30,7 @@ chapter: chapter03
   - 同じ入力に対して、実行経路や再試行の違いがあっても「意味として同じ結果」になる
   - 例: 冪等（idempotency）、正規化（normalization）、互換性（compatibility）、権限境界（authorization）
 
-ミニ例（直観）:
+ミニ例（直観）を示します。
 
 同じ注文に対して `PlaceOrder` が重複実行されても、在庫引当が二重計上されない（冪等）。これは「射の繰り返しが、ある意味で恒等に近い振る舞いをする」という不変条件であり、図式（性質）として固定すると、実装方式（再試行/非同期/ロック戦略）が変わっても検証軸が揺れません。
 
@@ -50,7 +50,7 @@ AIによる実装・改稿・リファクタは、局所最適化が入りやす
 - テストの生成: 性質から検証項目（テスト観点）を導く
 - レビューの基準: 差分が図式を壊していないかを確認する
 
-可換図式として扱いやすい設計要件の例:
+可換図式として扱いやすい設計要件の例を示します。
 
 - 冪等（同一入力の重複が同じ結果に収束する）
 - 正規化（正規化前後で観測可能な意味が変わらない）
@@ -74,7 +74,7 @@ diagrams:
     counterexample: "" # 任意
 ```
 
-例（監査整合）:
+例（監査整合）を示します。
 
 ```yaml
 diagrams:
@@ -101,13 +101,13 @@ diagrams:
 
 図式からテストを生成させる場合、AIが仕様を追加・変更しないように制約します。
 
-入力（最低限）:
+入力（最低限）は次のとおりです。
 
 - Diagrams（id/statement/verification）
 - 関係する Objects/Morphisms（用語解釈のぶれを防ぐ）
 - Forbidden changes（仕様追加・契約改変の禁止）
 
-AIプロンプト例（抜粋）:
+AIプロンプト例（抜粋）を示します。
 
 > 次の Diagrams を満たすテスト観点を列挙し、各 Diagram id に紐づくテスト案を作成せよ。  
 > 仕様追加は禁止。Diagrams/Objects/Morphisms/Pre/Post/failures を変更してはいけない。  
@@ -137,11 +137,13 @@ AIプロンプト例（抜粋）:
 1. 共通例題の Context Pack に、図式を1つ追加する（例: CancelOrder の冪等性）
 2. 追加した図式の verification を「検証項目リスト」として書く
 3. AIに、図式 id ごとのテスト観点案を生成させる（仕様追加は禁止）
-4. 追加内容がフォーマットとして破綻していないか、機械的に検出する
-   - minimal lint: `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
-   - schema validation: `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
-   - CI（book-formatter checks + Context Pack 検証: minimal lint + schema validation）で破綻が検出されることを確認する
-   - （任意）ローカルでは `npm run qa` で CI 相当を一括実行できる
+4. 追加内容がフォーマットとして破綻していないか、機械的に検出する。
+   - `minimal lint` を実行する。
+     - `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
+   - `schema validation` を実行する。
+     - `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
+   - CI（book-formatter checks + Context Pack 検証: minimal lint + schema validation）で破綻が検出されることを確認する。
+   - （任意）ローカルでは `npm run qa` で CI 相当を一括実行できる。
 
 ## まとめ
 

@@ -4,10 +4,10 @@
 
 ## 関連書と位置づけ
 
-- 本 repo は `categorical-software-design-book` として公開する独立した日本語書籍です。
-- `Compositional Software Design for Agentic Systems`（`composable-software-design-book`）は、同じ主題圏を扱う関連する独立した英語書籍です。
+- 本 repo は `categorical-software-design-book` として公開する独立した日本語書籍である。
+- `Compositional Software Design for Agentic Systems`（`composable-software-design-book`）は、関連する独立した英語書籍である。
 - 両書は問題意識と語彙を一部共有しますが、旧版/新版や単純翻訳の関係ではありません。
-- 日本語で AI エージェント時代の設計成果物、Context Pack、GitHub/CI 運用まで追いたい読者は本書から読むことを推奨します。
+- 日本語で AI エージェント時代の設計成果物、Context Pack、GitHub/CI 運用まで追いたい読者には、本書から読むことを推奨する。
 - 英語で compositional design / verifiable engineering の全体像を通読したい読者は、関連英語書籍から始めてください。
 - 関連英語書籍:
   - 公開サイト: https://itdojp.github.io/composable-software-design-book/
@@ -73,22 +73,23 @@ bundle exec jekyll build
 
 ## 品質チェック（ローカルQA）
 
-CIでは `itdojp/book-formatter` のチェッカー（リンク/Unicode/構造/textlint等）、Context Pack 検証スクリプト、Jekyll の rendered HTML 回帰チェックを実行します。Mermaid 図は fallback SVG を含めて QA 対象です。ローカルでは `npm run qa` で主要チェックを一括実行できます（`book-formatter/` は自動取得/更新）。
+CI では `itdojp/book-formatter` のチェッカー、Context Pack 検証、Jekyll の rendered HTML 回帰チェックを実行します。
+Mermaid 図は fallback SVG を含めて QA 対象です。ローカルでは `npm run qa` で主要チェックを一括実行できます（`book-formatter/` は自動取得/更新）。
 
-前提:
+前提は次のとおりです。
 - Ruby / Bundler（`bundle exec jekyll build` による rendered HTML チェック用）
 - Node.js（CIは Node 20）
 - Python 3（CIは Python 3.12）
 - Git / Bash
 - （推奨）Python仮想環境（venv/conda）
 
-実行:
+実行は次のとおりです。
 
 ```bash
 npm run qa
 ```
 
-出力:
+出力は次のとおりです。
 - `qa-reports/*.json`
 
 詳細は `scripts/qa.sh` と `.github/workflows/ci.yml` を参照してください。
