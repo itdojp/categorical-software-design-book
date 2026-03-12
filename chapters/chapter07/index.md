@@ -88,7 +88,7 @@ graph TD
 - サービス統合:
   - 旧APIと新APIを共通インターフェースで接着し、クライアント互換を保つ（Pushout）
 - 認証統合:
-  - 複数IdPの subject を共通の主体（Principal）へ写して整合させる（Pullback）
+  - 複数[IdP]({{ '/glossary/' | relative_url }}#idp) の subject を共通の主体（[Principal]({{ '/glossary/' | relative_url }}#principal)）へ写して整合させる（Pullback）
 - 移行（旧→新）:
   - 旧データと新データが共通の正規形（Canonical）へ写したとき一致する（Pullback）
 
@@ -131,7 +131,7 @@ graph TD
 
 - 差分検証（Diff）:
   - Pullback の一致条件（旧→C と 新→C が一致）を検証する
-- 互換検証（Compatibility）:
+- 互換検証（[Compatibility]({{ '/glossary/' | relative_url }}#compatibility)）:
   - Pushout の共通インターフェース経由で旧/新が同じ観測結果になることを検証する
 - 監査:
   - 統合・移行操作が監査証跡を残す（D2のような図式）

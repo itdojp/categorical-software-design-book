@@ -6,6 +6,9 @@ appendix: templates
 # 付録A: 設計成果物テンプレ集
 
 本書で用いる設計成果物（Design Artifacts）のテンプレです。章内で必要に応じて参照します。
+用語の定義を引き直すときは [用語集（Glossary）](../../GLOSSARY.md) を、
+図版・チェックリスト・症状別の戻り先を引き直すときは
+[付録D: クイックリファレンス](../../appendices/desk-reference/) を参照してください。
 
 ## Context Pack（最小スケルトン）
 

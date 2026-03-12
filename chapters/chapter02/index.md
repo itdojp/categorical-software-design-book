@@ -27,8 +27,8 @@ AI に渡す契約がどこで閉じるかが見えます。
 - 射（Morphism）: 対象から対象への写像（本書では「操作/API/変換」を代表させる）
 - 合成（Composition）: 射をつないで新しい射を作る（`g ∘ f`）
 - 合成律（Laws）:
-  - 結合律（Associativity）: `h ∘ (g ∘ f) = (h ∘ g) ∘ f`
-  - 恒等射（Identity）: 任意の `f: A → B` に対して `f ∘ id_A = f` かつ `id_B ∘ f = f`
+  - 結合律（[Associativity]({{ '/glossary/' | relative_url }}#associativity)）: `h ∘ (g ∘ f) = (h ∘ g) ∘ f`
+  - 恒等射（[Identity]({{ '/glossary/' | relative_url }}#identity)）: 任意の `f: A → B` に対して `f ∘ id_A = f` かつ `id_B ∘ f = f`
 
 型シグネチャの最小例:
 
