@@ -76,6 +76,10 @@
       {
         "id": "references",
         "title": "参考文献"
+      },
+      {
+        "id": "desk-reference",
+        "title": "クイックリファレンス"
       }
     ]
   },
@@ -84,10 +88,10 @@
     "modules": {
       "quickStart": true,
       "readingGuide": true,
-      "checklistPack": false,
-      "troubleshootingFlow": false,
+      "checklistPack": true,
+      "troubleshootingFlow": true,
       "conceptMap": true,
-      "figureIndex": false,
+      "figureIndex": true,
       "legalNotice": false,
       "glossary": true
     }

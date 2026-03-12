@@ -5,6 +5,14 @@ chapter: chapter07
 
 # 第7章: Pullback/Pushout（統合・移行の設計パターン）
 
+統合と移行は、
+局所最適の寄せ集めにすると一気に壊れます。
+第7章では、共通基準で結合する条件を
+Pullback / Pushout として固定します。
+
+本章の見せ場は、Pullback / Pushout の2図と統合点テンプレです。
+どこを揃えれば互換性と整合性が保てるかを、本文だけで追えます。
+
 ## 学習ゴール
 
 - Pullback（整合のある結合）/ Pushout（共通インターフェースでの接着）の直観を説明できる
@@ -80,8 +88,7 @@ graph TD
 - サービス統合:
   - 旧APIと新APIを共通インターフェースで接着し、クライアント互換を保つ（Pushout）
 - 認証統合:
-  - 複数の IdP が発行した subject を整合させる
-  - 共通の主体（Principal）へ写す（Pullback）
+  - 複数[IdP]({{ '/glossary/' | relative_url }}#idp) の subject を共通の主体（[Principal]({{ '/glossary/' | relative_url }}#principal)）へ写して整合させる（Pullback）
 - 移行（旧→新）:
   - 旧データと新データが共通の正規形（Canonical）へ写したとき一致する（Pullback）
 
@@ -124,7 +131,7 @@ graph TD
 
 - 差分検証（Diff）:
   - Pullback の一致条件（旧→C と 新→C が一致）を検証する
-- 互換検証（Compatibility）:
+- 互換検証（[Compatibility]({{ '/glossary/' | relative_url }}#compatibility)）:
   - Pushout の共通インターフェース経由で旧/新が同じ観測結果になることを検証する
 - 監査:
   - 統合・移行操作が監査証跡を残す（D2のような図式）
@@ -151,3 +158,7 @@ graph TD
 
 - Pullback は「整合条件を保った結合」、Pushout は「共通基準での接着」として統合を表現できる
 - 統合条件を図式（Diagrams）として固定し、差分/互換テストへ変換することで、統合で壊れる要因を先に封じられる
+
+### 次章への接続
+
+- 第8章では、ここで定義した統合点を前提に、分業と合流点の配線を設計する。
