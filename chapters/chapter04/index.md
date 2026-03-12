@@ -71,9 +71,9 @@ graph LR
   </div>
   <!-- textlint-enable -->
   <div class="mermaid-fallback">
-    <img src="{{ '/assets/images/chapter04/spec-code-functor.svg' | relative_url }}" alt="Spec から Code への写像図。">
+    <img src="{{ '/assets/images/chapter04/spec-code-functor.svg' | relative_url }}" alt="仕様圏の Objects・Morphisms・Diagrams が、実装圏の Types・Functions・Tests へ対応づけられる写像図。">
   </div>
-  <figcaption>図: Spec から Code への写像。</figcaption>
+  <figcaption>図: Spec から Code への写像。Objects は Types、Morphisms は Functions、Diagrams は Tests へ対応づけられ、仕様の構造保存を確認する。</figcaption>
 </figure>
 
 AI委任を関手として捉えると、次の設計判断がしやすくなります。
