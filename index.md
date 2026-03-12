@@ -154,7 +154,7 @@ graph TD
   <div class="mermaid-fallback">
     <img src="{{ '/assets/images/shared/context-pack-concept-map.svg' | relative_url }}" alt="概念マップの fallback SVG。Problem statement、Glossary、Objects、Morphisms、Diagrams、Acceptance tests、Forbidden changes が Context Pack に集約され、AI、PR、レビュー、CI へ接続する。">
   </div>
-  <figcaption>図: 概念マップ。Problem statement / Glossary / Objects / Morphisms / Diagrams / Acceptance tests / Forbidden changes が Context Pack に集約されます。そこから AI→PR→レビュー→CI へ接続します。左側が契約、右側が運用です。</figcaption>
+  <figcaption>図: 概念マップ。Problem statement / Glossary / Objects / Morphisms / Diagrams / Acceptance tests / Forbidden changes が Context Pack に集約され、そこから AI→PR→レビュー→CI へ接続する契約から運用までの流れを示します。</figcaption>
 </figure>
 
 ## クイックスタート
