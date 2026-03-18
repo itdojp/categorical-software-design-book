@@ -5,15 +5,18 @@ on:
   push:
     branches: [main]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 jobs:
   qa:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout book repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Checkout book-formatter
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: itdojp/book-formatter
           path: book-formatter
@@ -73,7 +76,7 @@ jobs:
 
       - name: Upload reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: qa-reports
           path: qa-reports/*.json
