@@ -22,7 +22,7 @@ appendix: desk-reference
   <tbody>
     <tr>
       <td>概念マップ</td>
-      <td><a href="{{ '/#概念マップ' | relative_url }}">トップページ / 概念マップ</a></td>
+      <td><a href="{{ '/' | relative_url }}#概念マップ">トップページ / 概念マップ</a></td>
       <td>本書全体の論点が、仕様・設計・検証・運用でどうつながるかを見直すとき</td>
     </tr>
     <tr>
@@ -57,11 +57,11 @@ appendix: desk-reference
 
 迷ったら、まず「いま困っているのが仕様・統合・分業・副作用・運用のどれか」を切り分けると、戻る章を選びやすくなります。
 
-- 仕様が曖昧で AI が勝手に補完する: 第1章 → 第2章
-- 差分レビューで意味保存を確認したい: 第5章 → 第10章
-- 統合・移行で境界が壊れる: 第7章
-- 並列化や責務分担で配線が壊れる: 第8章
-- 失敗処理・監査・再試行の責務が混ざる: 第9章
+- 仕様が曖昧で AI が勝手に補完する: [第1章]({{ '/chapters/chapter01/' | relative_url }}) → [第2章]({{ '/chapters/chapter02/' | relative_url }})
+- 差分レビューで意味保存を確認したい: [第5章]({{ '/chapters/chapter05/' | relative_url }}) → [第10章]({{ '/chapters/chapter10/' | relative_url }})
+- 統合・移行で境界が壊れる: [第7章]({{ '/chapters/chapter07/' | relative_url }})
+- 並列化や責務分担で配線が壊れる: [第8章]({{ '/chapters/chapter08/' | relative_url }})
+- 失敗処理・監査・再試行の責務が混ざる: [第9章]({{ '/chapters/chapter09/' | relative_url }})
 
 ## 3. 症状から引く戻り先
 

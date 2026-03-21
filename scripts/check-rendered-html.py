@@ -9,6 +9,7 @@ from pathlib import Path
 
 
 TABLE_RE = re.compile(r"<table\b", re.IGNORECASE)
+TABLE_BLOCK_RE = re.compile(r"<table\b.*?</table>", re.IGNORECASE | re.DOTALL)
 LINK_HREF_RE = re.compile(r"<a\b[^>]*href=[\"']([^\"']+)[\"']", re.IGNORECASE)
 IMG_SRC_RE = re.compile(r"<img\b[^>]*src=[\"']([^\"']+)[\"']", re.IGNORECASE)
 CLASS_ATTR_RE = re.compile(r"class=[\"']([^\"']*)[\"']", re.IGNORECASE)
@@ -29,10 +30,13 @@ def has_table(html: str) -> bool:
 
 
 def has_table_headers(html: str, headers: list[str]) -> bool:
-    return all(
-        re.search(rf"<th\b[^>]*>\s*{re.escape(header)}\s*</th>", html, re.IGNORECASE)
-        for header in headers
-    )
+    for table_html in TABLE_BLOCK_RE.findall(html):
+        if all(
+            re.search(rf"<th\b[^>]*>\s*{re.escape(header)}\s*</th>", table_html, re.IGNORECASE)
+            for header in headers
+        ):
+            return True
+    return False
 
 
 def has_link_fragment(html: str, fragment: str) -> bool:
