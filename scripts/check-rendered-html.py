@@ -75,6 +75,30 @@ def main() -> int:
             ],
         ),
         (
+            Path("appendices/references/index.html"),
+            [
+                ("missing <table> for chapter-to-reference mapping", lambda html: has_table(html)),
+                (
+                    "missing expected headers for references table",
+                    lambda html: has_table_headers(html, ["章", "次に読む候補"]),
+                ),
+            ],
+        ),
+        (
+            Path("appendices/desk-reference/index.html"),
+            [
+                ("missing rendered tables for desk reference", lambda html: len(TABLE_RE.findall(html)) >= 2),
+                (
+                    "missing expected headers for figure index table",
+                    lambda html: has_table_headers(html, ["図版", "場所", "何を確認するときに使うか"]),
+                ),
+                (
+                    "missing expected headers for symptom lookup table",
+                    lambda html: has_table_headers(html, ["症状", "最初に戻る場所", "まず見るもの"]),
+                ),
+            ],
+        ),
+        (
             Path("index.html"),
             [
                 ("missing Mermaid live wrapper for concept map", lambda html: class_count(html, "mermaid-live") >= 1 and class_count(html, "mermaid-wrapper") >= 1),
