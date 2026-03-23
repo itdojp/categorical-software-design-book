@@ -26,6 +26,7 @@
 ## この本の読み方（推奨）
 
 - まず `index.md` の目次から全体像を把握する
+- 理論・設計の対応を先に掴みたい場合は、概念マップ → `GLOSSARY.md` → `appendices/desk-reference/index.md` → 第2章 → 第4章の順で引く
 - 第1章で「人間とAIの責任分界」と「設計成果物＝入力契約」を固定する
 - 第2〜6章で、Objects/Morphisms/Diagrams と契約の標準形を最小セットで揃える
 - 第7〜9章で、統合/分業/効果境界の破綻点を図式と検証へ落とす
@@ -37,7 +38,8 @@
 - 共通例題 Context Pack: `docs/examples/common-example/context-pack-v1.yaml`
 - 付録A（テンプレ集）: `appendices/templates/index.md`
 - 付録B（プロンプト集）: `appendices/prompts/index.md`
-- 付録C（学習マップ・参考文献）: `appendices/references/index.md`
+- 付録C（参考文献）: `appendices/references/index.md`
+- 付録D（図版索引・症状別の戻り先）: `appendices/desk-reference/index.md`
 
 ## フィードバック
 
