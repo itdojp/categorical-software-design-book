@@ -60,7 +60,7 @@ AIに実装やテストを委任すると、速度は上がる一方で、仕様
 
 ## 前提が足りない場合の補助導線
 
-- 圏論の記法や訳語に不安がある場合は、[第2章 合成の最小コア（対象・射・合成）](chapters/chapter02/)、[用語集（Glossary）](GLOSSARY.md)、[記法ガイド](docs/style/notation.md) を先に参照する
+- 圏論の記法や訳語に不安がある場合は、[第2章 合成の最小コア（対象・射・合成）](chapters/chapter02/)、[用語集（Glossary）]({{ '/glossary/' | relative_url }}), [記法ガイド](docs/style/notation.md) を先に参照する
 - Context Pack の仕様だけ先に押さえたい場合は、[第1章 AIエージェント開発の分担モデルと設計成果物](chapters/chapter01/)、[Context Pack v1 仕様](docs/spec/context-pack-v1.md)、[最小例: minimal-example](docs/examples/minimal-example/) から入る
 - 通しの運用像を先に確認したい場合は、[第10章 ケーススタディ（仕様→設計→検証→AI実装）](chapters/chapter10/) を先に読み、必要になった章へ戻る
 
@@ -74,11 +74,11 @@ AIに実装やテストを委任すると、速度は上がる一方で、仕様
 - 通読ルート（初読者向け）:
   - 第1章から第10章まで順に読み、最後に第10章のケーススタディで全体を回収する
 - 理論・設計の対応を先に掴みたい読者向け:
-  - [概念マップ](#概念マップ) → [用語集（Glossary）](GLOSSARY.md) → [付録D: クイックリファレンス](appendices/desk-reference/) → [第2章](chapters/chapter02/) → [第4章](chapters/chapter04/) の順に引く
+  - [概念マップ](#概念マップ) → [用語集（Glossary）]({{ '/glossary/' | relative_url }}) → [付録D: クイックリファレンス](appendices/desk-reference/) → [第2章](chapters/chapter02/) → [第4章](chapters/chapter04/) の順に引く
 - 実務適用ルート（導入担当・テックリード向け）:
   - 第1章 → 第3章 → 第4章 → 第7章 → 第9章 → 第10章の順に読み、自プロジェクトへ当てる
 - 辞書的参照ルート（レビュー担当・運用担当向け）:
-  - 用語は [用語集（Glossary）](GLOSSARY.md)、図版と症状別導線は [付録D: クイックリファレンス](appendices/desk-reference/)、設計成果物の雛形は [付録A: 設計成果物テンプレ集](appendices/templates/) を起点に引き直す
+  - 用語は [用語集（Glossary）]({{ '/glossary/' | relative_url }}), 図版と症状別導線は [付録D: クイックリファレンス](appendices/desk-reference/)、設計成果物の雛形は [付録A: 設計成果物テンプレ集](appendices/templates/) を起点に引き直す
   - プロンプトは [付録B: AIエージェント用プロンプト集](appendices/prompts/)、学習マップと参考文献は [付録C: 参考文献](appendices/references/) を起点に引き直す
 
 ## 目次（Part構成）
