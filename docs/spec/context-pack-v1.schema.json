@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://itdojp.github.io/categorical-software-design-book/spec/context-pack-v1.schema.json",
+  "$id": "https://itdojp.github.io/categorical-software-design-book/docs/spec/context-pack-v1.schema.json",
   "title": "Context Pack v1",
   "type": "object",
   "additionalProperties": true,
