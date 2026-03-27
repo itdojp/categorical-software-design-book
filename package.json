@@ -11,7 +11,8 @@
     "serve:pages": "bundle exec jekyll serve --livereload",
     "gen:navigation": "node scripts/generate-navigation.js",
     "validate-deploy": "node scripts/validate-github-pages.js",
-    "pages-status": "node scripts/check-pages-status.js"
+    "pages-status": "node scripts/check-pages-status.js",
+    "check:navigation": "node scripts/generate-navigation.js --check"
   },
   "devDependencies": {},
   "repository": {

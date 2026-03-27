@@ -7,6 +7,10 @@ appendix: desk-reference
 
 本付録は、一読後に「どこへ戻れば判断材料を引き直せるか」を素早く確認するための再参照ページです。図版の位置と、典型的な詰まり方ごとの戻り先をまとめます。
 
+本書では、この付録を図版索引・レビュー前の最小確認項目・症状別の再参照導線をまとめた統合入口として扱います。図版から戻りたい場合、レビュー前の確認項目を引き直したい場合、症状から戻りたい場合は、まず本付録を起点にしてください。
+
+本文や付録間で説明が食い違う場合は、本付録だけで判断せず、まず [公開トップページの「確認したいこと別の正本」]({{ '/' | relative_url }}#確認したいこと別の正本) を参照してください。形式と必須項目は [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})、実行手順は [検証コマンド]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)、語義は [用語集（Glossary）]({{ '/glossary/' | relative_url }})、版差は [CHANGELOG](https://github.com/itdojp/categorical-software-design-book/blob/main/CHANGELOG.md) を確認します。
+
 ## 1. 図版索引
 
 まず図を見直して全体像を掴みたい場合は、この表を起点に戻ってください。
@@ -53,7 +57,19 @@ appendix: desk-reference
   </tbody>
 </table>
 
-## 2. 目的別の引き直し方
+## 2. レビュー前の最小確認項目
+
+設計成果物や PR を確認する前に、最低限次の 5 点を見直してください。
+
+詳細なレビュー用チェックリストや成果物テンプレートが必要な場合は、[付録A: 設計成果物テンプレ集](../../appendices/templates/) に戻ってください。本節は「まずどこを見るか」を絞るための最小入口です。
+
+- Context Pack に goals / non-goals、境界、Forbidden changes が明記されている
+- 用語や訳語が [用語集（Glossary）]({{ '/glossary/' | relative_url }}) と衝突していない
+- 図式や不変条件が、対応するテスト観点へ落ちている
+- 効果境界や副作用が pure core / impure shell の切り分けと矛盾していない
+- Issue / PR / CI のどこで確認するかが、第10章のケーススタディと整合している
+
+## 3. 目的別の引き直し方
 
 迷ったら、まず「いま困っているのが仕様・統合・分業・副作用・運用のどれか」を切り分けると、戻る章を選びやすくなります。
 
@@ -62,8 +78,11 @@ appendix: desk-reference
 - 統合・移行で境界が壊れる: [第7章]({{ '/chapters/chapter07/' | relative_url }})
 - 並列化や責務分担で配線が壊れる: [第8章]({{ '/chapters/chapter08/' | relative_url }})
 - 失敗処理・監査・再試行の責務が混ざる: [第9章]({{ '/chapters/chapter09/' | relative_url }})
+- 設計成果物のテンプレートを先に見たい: [付録A: 設計成果物テンプレ集]({{ '/appendices/templates/' | relative_url }})
+- AIレビュー・実装プロンプトを先に見たい: [付録B: AIエージェント用プロンプト集]({{ '/appendices/prompts/' | relative_url }})
+- 次に学ぶ順番や原典を確認したい: [付録C: 参考文献]({{ '/appendices/references/' | relative_url }})
 
-## 3. 症状から引く戻り先
+## 4. 症状から引く戻り先
 
 症状ベースで再参照したい場合は、この表を使って最初の戻り先を決めてください。
 
@@ -83,8 +102,8 @@ appendix: desk-reference
     </tr>
     <tr>
       <td>用語や境界の意味が章ごとにずれて見える</td>
-      <td><a href="{{ '/style/terminology/' | relative_url }}">用語ガイド</a></td>
-      <td>主要概念（推奨訳語）と Glossary へのリンク</td>
+      <td><a href="{{ '/glossary/' | relative_url }}">用語集（Glossary）</a></td>
+      <td>主要概念の意味を確認し、表記ルールが必要なら用語ガイドへ進む</td>
     </tr>
     <tr>
       <td>統合や移行で、どの条件を一致させるべきか判断できない</td>
@@ -105,6 +124,11 @@ appendix: desk-reference
       <td>Issue / PR / CI にどう落とすか分からない</td>
       <td><a href="{{ '/chapters/chapter10/' | relative_url }}">第10章</a></td>
       <td>ケーススタディ全体、レビュー手順、CI の検証ポイント</td>
+    </tr>
+    <tr>
+      <td>公開ページの説明と公開版 YAML / GitHub の変更履歴が一致しないように見える</td>
+      <td><a href="{{ '/' | relative_url }}#update-info">トップページ / 利用と更新情報</a></td>
+      <td><a href="https://github.com/itdojp/categorical-software-design-book/blob/main/CHANGELOG.md">CHANGELOG</a>、コミット履歴、公開ページ本文との版差確認手順</td>
     </tr>
   </tbody>
 </table>

@@ -8,6 +8,8 @@ permalink: /spec/context-pack-v1/
 
 本書における **Context Pack** は、人間が作る設計成果物を、AIエージェントが実装/テストへ落とすための入力契約です。章末演習・実務適用では、この形式を維持します。
 
+注記: このページは Context Pack の形式と必須項目の正本です。章立てや読み順の reader-facing な正本は公開トップページの目次を参照してください。
+
 ## 目的
 
 - AIに委任する範囲（実装/テスト/リファクタ）を明確化する
@@ -19,8 +21,7 @@ permalink: /spec/context-pack-v1/
 Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性のため YAML を推奨します。
 
 機械可読スキーマ（JSON Schema）は次を参照してください。
-- [JSON Schema]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})
-- raw: [context-pack-v1.schema.json](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/spec/context-pack-v1.schema.json)
+- [JSON Schema]({{ '/spec/context-pack-v1.schema.json' | relative_url }})
 
 ### 検証コマンド {#validation-commands}
 
@@ -116,11 +117,17 @@ AIが勝手に変更してはいけない事項を明示します。
 
 以下は「必須キー＋最小要素」だけで成立する例です（章末演習の叩き台）。
 
-“コピペして使う最小例” の SSOT はファイルとして管理します。
+この節の役割は次のとおりです。
+
+- 形式と必須項目の正本: この仕様ページ
+- machine-readable な最小例の authoring / local 検証用インスタンス: `docs/examples/minimal-example/context-pack-v1.yaml`
+- reader-facing な確認導線: 公開の [最小例: minimal-example]({{ '/examples/minimal-example/' | relative_url }}) ページ
+
+注記: この節の YAML は説明用の転載です。source 側のファイルは contributor / authoring 用の管理対象であり、読者として内容確認する場合は、まず次の公開例題ページから YAML と解説を参照してください。current checkout に未公開変更が含まれる場合でも、reader-facing な確認は公開例題ページと `CHANGELOG.md` を優先します。版差が気になる場合は commit 履歴も確認します。
 
 - 最小例ページ: [最小例: minimal-example]({{ '/examples/minimal-example/' | relative_url }})
-- YAML（raw）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/minimal-example/context-pack-v1.yaml)
-- YAML（GitHub）: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/minimal-example/context-pack-v1.yaml)
+
+注記: GitHub の repository view では、このページ内の埋め込み YAML は展開されません。repo view で確認する場合は、同階層の `docs/examples/minimal-example/context-pack-v1.yaml` を参照し、reader-facing な確認は公開の最小例ページを優先してください。
 
 ```yaml
 version: 1
@@ -173,5 +180,3 @@ forbidden_changes:
 共通例題（注文処理）の Context Pack v1 は次を参照します。
 
 - 共通例題ページ: [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }})
-- YAML（raw）: [raw](https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/docs/examples/common-example/context-pack-v1.yaml)
-- YAML（GitHub）: [GitHub](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/common-example/context-pack-v1.yaml)

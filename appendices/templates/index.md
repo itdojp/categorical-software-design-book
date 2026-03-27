@@ -6,7 +6,7 @@ appendix: templates
 # 付録A: 設計成果物テンプレ集
 
 本書で用いる設計成果物（Design Artifacts）のテンプレです。章内で必要に応じて参照します。
-用語の定義を引き直すときは [用語集（Glossary）](../../GLOSSARY.md) を、
+用語の定義を引き直すときは [用語集（Glossary）]({{ '/glossary/' | relative_url }}) を、
 図版・チェックリスト・症状別の戻り先を引き直すときは
 [付録D: クイックリファレンス](../../appendices/desk-reference/) を参照してください。
 
@@ -17,6 +17,8 @@ appendix: templates
 検証コマンドの詳細は [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands) を参照してください。
 
 注意: schema validation はプレースホルダ（例: `name: <project-or-example-name>`）を具体値へ置換した段階で通す想定です。
+
+注記: 本付録は reader-facing な雛形集です。説明が食い違う場合は、まず [公開トップページの「確認したいこと別の正本」]({{ '/' | relative_url }}#確認したいこと別の正本) を参照してください。形式と必須項目は [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})、実行手順は [検証コマンド]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)、語義は [用語集（Glossary）]({{ '/glossary/' | relative_url }})、版差は [CHANGELOG](https://github.com/itdojp/categorical-software-design-book/blob/main/CHANGELOG.md) を確認します。
 
 ```yaml
 version: 1
@@ -146,6 +148,8 @@ diagrams:
 ```
 
 ## レビュー用チェックリスト（AI生成物レビュー含む）
+
+この節は詳細版のチェックリストです。まず論点を絞りたい場合は、[付録D: クイックリファレンス](../../appendices/desk-reference/) の「レビュー前の最小確認項目」から入ってください。
 
 ### 契約（Context Pack）レビュー
 

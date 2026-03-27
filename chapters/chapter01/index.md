@@ -90,7 +90,7 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 
 ## 設計成果物（テンプレ：表/図式/チェックリスト）
 
-本書の共通例題（注文処理）は [共通例題（Context Pack v1）](../../docs/examples/common-example/) を参照。
+本書の共通例題（注文処理）は [共通例題（Context Pack v1）]({{ '/examples/common-example/' | relative_url }}) を参照。
 
 本書でいう「設計成果物」は、AIへ引き渡せる入力契約（Context Pack）として構造化したものです。
 
@@ -104,7 +104,7 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 - Objects: ドメイン上の「型/状態」を中心に、実装で表現すべき対象を列挙したもの
 - Morphisms: Objects を入力/出力として持つ操作（API/ユースケース/関数）を列挙したもの
 - Diagrams: 複数の経路（操作の組合せ）で同じ結果になる、という不変条件
-- Context Pack: 上記を含む入力契約（[Context Pack v1 仕様](../../docs/spec/context-pack-v1.md)）
+- Context Pack: 上記を含む入力契約（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})）
 
 ### 最小Context Pack（例）
 
@@ -158,8 +158,8 @@ forbidden_changes:
 
 ## AIエージェントへの引き渡し（Context Pack/プロンプト/禁止事項）
 
-- Context Pack v1 仕様: [Context Pack v1 仕様](../../docs/spec/context-pack-v1.md)
-- 共通例題（注文処理）: [共通例題: 注文処理](../../docs/examples/common-example/)
+- Context Pack v1 仕様: [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})
+- 共通例題（注文処理）: [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }})
 - 禁止事項: 不変条件（Diagrams）と権限境界を無断変更しない
 
 ### 最小ループ（Context Pack → AI → 検証）
@@ -194,7 +194,7 @@ graph TD
 ## 検証（テスト観点・可換性チェック）
 
 - 不変条件（Diagrams）がテスト観点へ落ちていることを確認する
-- 例: 監査ログ一貫性（D2）が必ず満たされる（[共通例題（Context Pack v1）](../../docs/examples/common-example/)）
+- 例: 監査ログ一貫性（D2）が必ず満たされる（[共通例題（Context Pack v1）]({{ '/examples/common-example/' | relative_url }})）
 
 検証の観点は次の順で固定します。
 
@@ -206,7 +206,7 @@ graph TD
 
 ### 演習1: Context Pack → AI実装/テストの最小ループ
 
-1. 共通例題（注文処理）の Context Pack を読む: [共通例題: 注文処理](../../docs/examples/common-example/)
+1. 共通例題（注文処理）の Context Pack を読む: [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }})
 2. 次の追加要件を1つだけ定義する（例: CancelOrder を追加し、監査と状態遷移の安全性を維持）
 3. 追加要件に必要な差分を Context Pack v1 として作る。
    更新対象は Goals/Non-goals、Objects/Morphisms/Diagrams、Acceptance tests、Forbidden changes である。
@@ -221,6 +221,7 @@ graph TD
    - （任意）CI 相当の一括チェックとして `npm run qa` を実行する。
    - 検証コマンドの SSOT を確認する。
      - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - 注記: `docs/examples/common-example/context-pack-v1.yaml` のような repository 内パスは local 検証用の例です。reader-facing な内容確認は公開ページの [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) を正本として参照します。
 5. 更新した Context Pack をAIに渡し、以下を生成させる
    - 実装スケルトン（モジュール境界を意識）
    - 受入テスト（Acceptance tests）

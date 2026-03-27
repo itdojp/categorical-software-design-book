@@ -5,12 +5,14 @@
 - **Issue first**: 変更は原則Issue起点で行う（目的・スコープ・DoDを明確化）
 - **小さいPR**: レビュー可能な粒度に分割する（目安: 1章/1テーマ）
 - **SSOT**: 用語・テンプレ・共通例題は単一の真実に集約する
+- **Public-first**: reader-facing な正本は公開トップページの `確認したいこと別の正本` 表を起点に判断する
+- **Navigation SSOT**: 目次の正本は `book-config.json`、`_data/navigation.yml` は生成物として扱い手編集しない
 - **No placeholders**: 未確定表現（プレースホルダ）を公開コンテンツに残さない（CIで検出）
 
 ## 執筆/改稿のルール
 
 - 章構造は `docs/style/chapter-template.md` に従う
-- 用語/記法は `docs/style/terminology.md`, `docs/style/notation.md` と `GLOSSARY.md` に従う
+- 用語の意味・訳語の正本は `GLOSSARY.md`、表記運用は `docs/style/terminology.md`、記号規則は `docs/style/notation.md` に従う
 - 図式・図版は `docs/style/diagram-style.md` に従う
 
 ## ローカルQA（CI相当）
@@ -28,6 +30,8 @@ Mermaid の重要図は fallback SVG を含めて QA 対象とします。
 実行は次のとおりです。
 
 ```bash
+npm run check:navigation
+npm run validate-deploy
 npm run qa
 ```
 
@@ -40,6 +44,7 @@ npm run qa
 ## レビュー観点（最低限）
 
 - 章間の参照が壊れていない（リンク/アンカー/用語）
+- 目次差分は `book-config.json` を正として `npm run check:navigation` で drift を検知できる
 - 不変条件（Diagrams）が検証可能な形になっている
 - AI引き渡し（Context Pack）が再現可能である（`docs/spec/context-pack-v1.md`）
 

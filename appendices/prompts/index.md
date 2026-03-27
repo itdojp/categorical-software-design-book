@@ -5,9 +5,11 @@ appendix: prompts
 
 # 付録B: AIエージェント用プロンプト集
 
-本書の章末演習で、そのまま利用できるプロンプト例です。前提として、AIに渡す入力契約は Context Pack v1（[Context Pack v1 仕様](../../docs/spec/context-pack-v1.md)）を想定します。
-用語の定義を引き直すときは [用語集（Glossary）](../../GLOSSARY.md) を、
+本書の章末演習で、そのまま利用できるプロンプト例です。前提として、AIに渡す入力契約は Context Pack v1（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})）を想定します。
+用語の定義を引き直すときは [用語集（Glossary）]({{ '/glossary/' | relative_url }}) を、
 差し戻し観点や戻り先を引き直すときは [付録D: クイックリファレンス](../../appendices/desk-reference/) を参照してください。
+
+注記: 本付録は補助資料です。説明が食い違う場合は、まず [公開トップページの「確認したいこと別の正本」]({{ '/' | relative_url }}#確認したいこと別の正本) を参照してください。形式と必須項目は [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})、実行手順は [検証コマンド]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)、語義は [用語集（Glossary）]({{ '/glossary/' | relative_url }})、版差は [CHANGELOG](https://github.com/itdojp/categorical-software-design-book/blob/main/CHANGELOG.md) を確認します。
 
 ## 共通ルール（先頭に付ける）
 

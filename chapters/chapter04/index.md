@@ -179,6 +179,7 @@ AIへ引き渡す際は「保存すべき構造」を禁止事項として具体
    - （任意）CI 相当の一括チェックとして `npm run qa` を実行する。
    - 検証コマンドの SSOT を確認する。
      - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - reader-facing な正本として共通例題を引き直す場合は、repo path ではなく [共通例題（注文処理）]({{ '/examples/common-example/' | relative_url }}) を参照する。
 4. AIに実装を委任する場合のレビュー観点（関手性チェックリスト）を列挙する。
 
 ## まとめ

@@ -62,7 +62,7 @@ AIによる実装・改稿・リファクタは、局所最適化が入りやす
 
 共通例題（注文処理）の Diagrams は次にあります。
 
-- [共通例題: 注文処理](../../docs/examples/common-example/)
+- [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }})
 
 ### Diagrams テンプレ（最小）
 
@@ -144,6 +144,7 @@ AIプロンプト例（抜粋）を示します。
      - `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
    - CI（book-formatter checks + Context Pack 検証: minimal lint + schema validation）で破綻が検出されることを確認する。
    - （任意）ローカルでは `npm run qa` で CI 相当を一括実行できる。
+   - 注記: `docs/examples/common-example/context-pack-v1.yaml` のような repository 内パスは local 検証用の例です。reader-facing な内容確認は公開ページの [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) を正本として参照します。
 
 ## まとめ
 

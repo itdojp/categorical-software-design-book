@@ -62,6 +62,9 @@ jobs:
           python scripts/check-placeholders.py
           python scripts/check-invalid-markdown-links.py
 
+      - name: Check navigation drift
+        run: npm run check:navigation
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

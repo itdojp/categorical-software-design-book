@@ -153,6 +153,7 @@ graph TD
    - （任意）CI相当の一括チェックとして `npm run qa` を実行する。
    - 検証コマンドの SSOT を確認する。
      - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - reader-facing な正本として共通例題を引き直す場合は、repo path ではなく [共通例題（注文処理）]({{ '/examples/common-example/' | relative_url }}) を参照する。
 5. 図式→テスト項目（差分/互換）へ変換し、検証項目リストとして残す
 
 ## まとめ

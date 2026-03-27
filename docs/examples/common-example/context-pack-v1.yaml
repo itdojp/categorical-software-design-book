@@ -1,3 +1,6 @@
+# この YAML は共通例題の入力例・local 検証用インスタンスです。
+# 形式と必須項目の正本は docs/spec/context-pack-v1.md、
+# reader-facing な導線は公開の /examples/common-example/ を参照してください。
 version: 1
 name: common-example-order-processing
 
