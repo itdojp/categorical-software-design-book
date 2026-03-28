@@ -24,6 +24,16 @@ chapters:
   - title: "第10章 ケーススタディ（仕様→設計→検証→AI実装）"
     path: "/chapters/chapter10/"
 
+resources:
+  - title: "用語集（Glossary）"
+    path: "/glossary/"
+  - title: "Context Pack v1 仕様"
+    path: "/spec/context-pack-v1/"
+  - title: "最小例: minimal-example"
+    path: "/examples/minimal-example/"
+  - title: "共通例題: 注文処理"
+    path: "/examples/common-example/"
+
 appendices:
   - title: "付録A 設計成果物テンプレ集"
     path: "/appendices/templates/"

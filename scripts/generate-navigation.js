@@ -21,6 +21,7 @@ function appendixLabel(index) {
 const repoRoot = process.cwd();
 const configPath = path.join(repoRoot, 'book-config.json');
 const outPath = path.join(repoRoot, '_data', 'navigation.yml');
+const checkMode = process.argv.includes('--check');
 
 if (!fs.existsSync(configPath)) {
   console.error(`❌ book-config.json が見つかりません: ${configPath}`);
@@ -29,10 +30,11 @@ if (!fs.existsSync(configPath)) {
 
 const config = readJson(configPath);
 const chapters = config?.structure?.chapters ?? [];
+const resources = config?.structure?.resources ?? [];
 const appendices = config?.structure?.appendices ?? [];
 
-if (!Array.isArray(chapters) || !Array.isArray(appendices)) {
-  console.error('❌ structure.chapters / structure.appendices は配列である必要があります');
+if (!Array.isArray(chapters) || !Array.isArray(resources) || !Array.isArray(appendices)) {
+  console.error('❌ structure.chapters / structure.resources / structure.appendices は配列である必要があります');
   process.exit(1);
 }
 
@@ -52,6 +54,19 @@ chapters.forEach((chapter, index) => {
 });
 
 lines.push('');
+if (resources.length > 0) {
+  lines.push('resources:');
+  resources.forEach((resource) => {
+    const id = String(resource?.id ?? '').trim();
+    const title = String(resource?.title ?? '').trim();
+    const resourcePath = String(resource?.path ?? `/${id}/`).trim();
+    if (!id || !title) return;
+    lines.push(`  - title: ${yamlQuote(title)}`);
+    lines.push(`    path: ${yamlQuote(resourcePath)}`);
+  });
+}
+
+lines.push('');
 lines.push('appendices:');
 appendices.forEach((appendix, index) => {
   const id = String(appendix?.id ?? '').trim();
@@ -62,6 +77,16 @@ appendices.forEach((appendix, index) => {
   lines.push(`    path: ${yamlQuote(`/appendices/${id}/`)}`);
 });
 
+const output = `${lines.join('\n')}\n`;
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
-fs.writeFileSync(outPath, `${lines.join('\n')}\n`, 'utf8');
+if (checkMode) {
+  const current = fs.existsSync(outPath) ? fs.readFileSync(outPath, 'utf8') : '';
+  if (current !== output) {
+    console.error(`❌ navigation.yml is out of sync: ${path.relative(repoRoot, outPath)}`);
+    process.exit(1);
+  }
+  console.log(`✅ navigation.yml is up to date: ${path.relative(repoRoot, outPath)}`);
+  process.exit(0);
+}
+fs.writeFileSync(outPath, output, 'utf8');
 console.log(`✅ Wrote ${path.relative(repoRoot, outPath)}`);

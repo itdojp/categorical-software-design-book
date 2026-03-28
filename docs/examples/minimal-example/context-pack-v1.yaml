@@ -1,3 +1,6 @@
+# この YAML は最小例の source 管理・local 検証用です。
+# 形式と必須項目の正本は `docs/spec/context-pack-v1.md` を参照してください。
+# reader-facing な導線は公開の `/examples/minimal-example/` ページを優先します。
 version: 1
 name: minimal-example
 

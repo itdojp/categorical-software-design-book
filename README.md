@@ -25,8 +25,10 @@
 
 ## この本の読み方（推奨）
 
-- まず `index.md` の目次から全体像を把握する
-- 理論・設計の対応を先に掴みたい場合は、概念マップ → `GLOSSARY.md` → `appendices/desk-reference/index.md` → 第2章 → 第4章の順で引く
+- 読者向け本文の正本は [公開トップページ](https://itdojp.github.io/categorical-software-design-book/) です。README は repository の入口として、参照先の優先順位と開発者向け情報を要約しています。
+- まず [公開トップページ](https://itdojp.github.io/categorical-software-design-book/) の目次から全体像を把握する
+- 参照先が複数ある場合の優先順位は、公開トップページの `確認したいこと別の正本` 表を参照してください
+- 理論・設計の対応を先に掴みたい場合は、概念マップ → 用語集 → [付録D: クイックリファレンス](https://itdojp.github.io/categorical-software-design-book/appendices/desk-reference/) → 第2章 → 第4章の順で引く
 - 第1章で「人間とAIの責任分界」と「設計成果物＝入力契約」を固定する
 - 第2〜6章で、Objects/Morphisms/Diagrams と契約の標準形を最小セットで揃える
 - 第7〜9章で、統合/分業/効果境界の破綻点を図式と検証へ落とす
@@ -34,16 +36,20 @@
 
 ## 成果物テンプレ（導線）
 
-- Context Pack v1 仕様: `docs/spec/context-pack-v1.md`
-- 共通例題 Context Pack: `docs/examples/common-example/context-pack-v1.yaml`
-- 付録A（テンプレ集）: `appendices/templates/index.md`
-- 付録B（プロンプト集）: `appendices/prompts/index.md`
-- 付録C（参考文献）: `appendices/references/index.md`
-- 付録D（図版索引・症状別の戻り先）: `appendices/desk-reference/index.md`
+- Context Pack v1 仕様: [Context Pack v1 仕様](https://itdojp.github.io/categorical-software-design-book/spec/context-pack-v1/)
+- 最小例ハブ: [最小例: minimal-example](https://itdojp.github.io/categorical-software-design-book/examples/minimal-example/)
+- 共通例題ハブ: [共通例題: 注文処理](https://itdojp.github.io/categorical-software-design-book/examples/common-example/)
+- 付録A（テンプレ集）: [付録A](https://itdojp.github.io/categorical-software-design-book/appendices/templates/)
+- 付録B（プロンプト集）: [付録B](https://itdojp.github.io/categorical-software-design-book/appendices/prompts/)
+- 付録C（参考文献）: [付録C](https://itdojp.github.io/categorical-software-design-book/appendices/references/)
+- 付録D（図版・最小確認項目・症状別の戻り先）: [付録D](https://itdojp.github.io/categorical-software-design-book/appendices/desk-reference/)
+- まず論点を絞る場合は付録D、詳細なレビュー用チェックリストは付録Aを参照
+- 仕様や雛形が食い違う場合は、まず公開トップの `確認したいこと別の正本` 表で確認対象を切り分けてください。形式と必須項目は Context Pack v1 仕様、共通例題は各 example ページ内 YAML と解説、用語は Glossary、版差は CHANGELOG / GitHub 履歴を正とします
 
 ## フィードバック
 
-- 誤植/表記ゆれ/質問/技術的指摘は、Issueテンプレを利用してください（`.github/ISSUE_TEMPLATE/`）。
+- 誤植/表記ゆれ/質問/技術的指摘は、GitHub Issues のテンプレートを利用してください。
+- Issues: https://github.com/itdojp/categorical-software-design-book/issues/new/choose
 
 ## ローカル開発（プレビュー/ビルド）
 
@@ -73,6 +79,8 @@ bundle exec jekyll serve --livereload --baseurl ""
 bundle exec jekyll build
 ```
 
+注記: 目次や章順の SSOT は `book-config.json` です。`_data/navigation.yml` は generator による生成物として扱い、手編集せず `npm run gen:navigation` / `npm run check:navigation` で整合を確認してください。
+
 ## 品質チェック（ローカルQA）
 
 CI では `itdojp/book-formatter` のチェッカー、Context Pack 検証、Jekyll の rendered HTML 回帰チェックを実行します。
@@ -92,6 +100,6 @@ npm run qa
 ```
 
 出力は次のとおりです。
-- `qa-reports/*.json`
+- `qa-reports/*.json`（contributor 向けの検証出力。reader-facing な正本ではありません）
 
 詳細は `scripts/qa.sh` と `.github/workflows/ci.yml` を参照してください。

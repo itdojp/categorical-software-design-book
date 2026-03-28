@@ -11,6 +11,13 @@
     "url": "https://github.com/itdojp/categorical-software-design-book.git",
     "branch": "main"
   },
+  "links": {
+    "pagesUrl": "https://itdojp.github.io/categorical-software-design-book/",
+    "rawBaseUrl": "https://raw.githubusercontent.com/itdojp/categorical-software-design-book/main/",
+    "issuesUrl": "https://github.com/itdojp/categorical-software-design-book/issues",
+    "pullsUrl": "https://github.com/itdojp/categorical-software-design-book/pulls",
+    "commitsUrl": "https://github.com/itdojp/categorical-software-design-book/commits/main/"
+  },
   "structure": {
     "chapters": [
       {
@@ -67,19 +74,49 @@
     "appendices": [
       {
         "id": "templates",
-        "title": "設計成果物テンプレ集"
+        "title": "設計成果物テンプレ集",
+        "description": "Context Pack や設計成果物の雛形を確認するときに使う。"
       },
       {
         "id": "prompts",
-        "title": "AIエージェント用プロンプト集"
+        "title": "AIエージェント用プロンプト集",
+        "description": "AI への入力例やレビュー・実装プロンプトを確認するときに使う。"
       },
       {
         "id": "references",
-        "title": "参考文献"
+        "title": "参考文献",
+        "description": "原典、背景文献、次に読む資料を確認するときに使う。"
       },
       {
         "id": "desk-reference",
-        "title": "クイックリファレンス"
+        "title": "クイックリファレンス",
+        "description": "図版、レビュー前の最小確認項目、症状別の戻り先を短時間で引き直すときに使う。"
+      }
+    ],
+    "resources": [
+      {
+        "id": "glossary",
+        "title": "用語集（Glossary）",
+        "description": "本文と付録で使う訳語や用語の意味を確認するときに使う。",
+        "path": "/glossary/"
+      },
+      {
+        "id": "context-pack-v1",
+        "title": "Context Pack v1 仕様",
+        "description": "形式、必須項目、検証コマンドを確認するときに使う。",
+        "path": "/spec/context-pack-v1/"
+      },
+      {
+        "id": "minimal-example",
+        "title": "最小例: minimal-example",
+        "description": "最小の Context Pack と検証結果を確認するときに使う。",
+        "path": "/examples/minimal-example/"
+      },
+      {
+        "id": "common-example",
+        "title": "共通例題: 注文処理",
+        "description": "本書を通して使う注文処理の入力例、差分、レビュー観点を確認するときに使う。",
+        "path": "/examples/common-example/"
       }
     ]
   },
@@ -88,11 +125,11 @@
     "modules": {
       "quickStart": true,
       "readingGuide": true,
-      "checklistPack": true,
+      "checklistPack": false,
       "troubleshootingFlow": true,
       "conceptMap": true,
       "figureIndex": true,
-      "legalNotice": false,
+      "legalNotice": true,
       "glossary": true
     }
   }

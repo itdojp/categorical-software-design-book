@@ -96,7 +96,7 @@ graph LR
 
 参照先は次のとおりです。
 
-- 共通例題（Context Pack v1）: [共通例題: 注文処理](../../docs/examples/common-example/)
+- 共通例題（Context Pack v1）: [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }})
 
 ### 効果境界テンプレ（最小）
 
@@ -165,6 +165,7 @@ impure shell:
    - （任意）CI相当の一括チェックとして `npm run qa` を実行する。
    - 検証コマンドの SSOT を確認する。
      - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+   - 注記: `docs/examples/common-example/context-pack-v1.yaml` のような repository 内パスは local 検証用の例です。reader-facing な内容確認は公開ページの [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) を正本として参照します。
 
 ## まとめ
 

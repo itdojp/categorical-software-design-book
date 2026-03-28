@@ -12,4 +12,8 @@ description: "全章で参照する共通ドメイン例（Order/Payment/Invento
 
 ## 成果物
 
-- Context Pack v1（最小版）: [context-pack-v1.yaml](https://github.com/itdojp/categorical-software-design-book/blob/main/docs/examples/common-example/context-pack-v1.yaml)
+- reader-facing な正本: https://itdojp.github.io/categorical-software-design-book/examples/common-example/
+- 形式と必須項目の正本: [`docs/spec/context-pack-v1.md`](../../spec/context-pack-v1.md)
+- local 検証 / authoring 用入口: [`docs/examples/common-example/context-pack-v1.yaml`](./context-pack-v1.yaml)
+
+注記: 内容確認の起点は公開ページの共通例題ハブです。README は repository 内での補助説明であり、YAML への repo-relative link は local 検証や authoring 作業へ戻るための入口です。current checkout に未公開の変更が含まれる場合でも、reader-facing な確認は公開ページと `CHANGELOG.md` を優先します。

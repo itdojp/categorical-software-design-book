@@ -51,6 +51,7 @@ exclude:
   - AI_USAGE_POLICY.md
   - UPDATE_POLICY.md
   - CONTRIBUTING.md
+  - docs/examples/common-example/README.md
 
 # 日本語対応
 kramdown:
