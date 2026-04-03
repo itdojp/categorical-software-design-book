@@ -21,7 +21,7 @@ permalink: /spec/context-pack-v1/
 Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性のため YAML を推奨します。
 
 機械可読スキーマ（JSON Schema）は次を参照してください。
-- [JSON Schema]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})
+- [JSON Schema]({{ '/spec/context-pack-v1.schema.json' | relative_url }})
 
 ### 検証コマンド {#validation-commands}
 
