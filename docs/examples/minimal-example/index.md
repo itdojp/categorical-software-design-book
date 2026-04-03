@@ -8,7 +8,7 @@ permalink: /examples/minimal-example/
 
 本ページは、本文・仕様ページから「最小例の Context Pack」に確実に到達するためのハブです。
 
-注記: 公開ページ本文と同じ版を確認したい場合は、このページ内に埋め込まれた YAML を優先してください。GitHub の repository view では埋め込み表示が展開されないため、その場合は同階層の [`context-pack-v1.yaml`]({{ '/docs/examples/minimal-example/context-pack-v1.yaml' | relative_url }}) を参照します。版差が疑われる場合は、CHANGELOG とコミット履歴を確認します。
+注記: 公開ページ本文と同じ版を確認したい場合は、このページ内に埋め込まれた YAML を優先してください。GitHub の repository view では埋め込み表示が展開されないため、その場合は同階層の [`context-pack-v1.yaml`](./context-pack-v1.yaml) を参照します。版差が疑われる場合は、CHANGELOG とコミット履歴を確認します。
 
 ## 導線
 
