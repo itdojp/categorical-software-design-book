@@ -51,6 +51,26 @@ forbidden_changes:
   - "<forbidden change>"
 ```
 
+## 理論・実装接続レビューゲート（Phase 5）
+
+圏論の語彙をソフトウェア設計へ対応づける場合は、対応を「説明」だけで終わらせず、Context Pack と検証条件へ戻せる形で記録します。
+
+- 用語・記号の一貫性:
+  - Object / Morphism / Functor / Natural transformation / Product / Coproduct / Monad / Kleisli の表記が用語集と矛盾しないこと。
+  - 戻り先: [用語集（Glossary）]({{ '/glossary/' | relative_url }})
+- 対応づけの明示:
+  - 元の理論概念、対応する設計成果物、保存したい構造、保存しないことを同じ箇所に書くこと。
+  - 戻り先: [第4章]({{ '/chapters/chapter04/' | relative_url }}) / [第5章]({{ '/chapters/chapter05/' | relative_url }})
+- 検証可能性:
+  - 図式や不変条件が、Acceptance test、property、review checklist のいずれかへ落ちていること。
+  - 戻り先: [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})
+- 適用範囲と限界:
+  - 「圏論だから正しい」と断定せず、実務上の前提、適用しない場面、未確定事項を残すこと。
+  - 戻り先: [付録D]({{ '/appendices/desk-reference/' | relative_url }})
+- 関連書との分界:
+  - 日本語本は Context Pack / GitHub / CI 運用、英語本は compositional design / verifiable engineering の全体像という役割差を保つこと。
+  - 戻り先: 公開トップページの「関連書について」
+
 ## Objects テンプレ（型/状態/不変条件/権限/エラー）
 
 ```yaml

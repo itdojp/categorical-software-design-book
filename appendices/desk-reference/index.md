@@ -67,6 +67,8 @@ appendix: desk-reference
 - 用語や訳語が [用語集（Glossary）]({{ '/glossary/' | relative_url }}) と衝突していない
 - 図式や不変条件が、対応するテスト観点へ落ちている
 - 効果境界や副作用が pure core / impure shell の切り分けと矛盾していない
+- 理論概念から実務成果物への対応について、保存したい構造、保存しないこと、検証方法が同じレビュー単位で説明されている
+- 関連英語書籍 `composable-software-design-book` と旧版/新版・単純翻訳の関係として扱わず、本書の Context Pack / GitHub / CI 運用上の責務が明確である
 - Issue / PR / CI のどこで確認するかが、第10章のケーススタディと整合している
 
 ## 3. 目的別の引き直し方
