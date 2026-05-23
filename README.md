@@ -17,6 +17,17 @@
 
 - https://itdojp.github.io/categorical-software-design-book/
 
+## Phase 5 理論・実装接続レビューゲート（確認日: 2026-05-23）
+
+本書の圏論的な語彙を実務成果物へ適用する前に、次のゲートで「比喩」と「検証条件」を分離します。
+
+- 用語・記号: Category / Object / Morphism / Diagram / Functor / Natural transformation の表記を揃える。Product / Coproduct / Monoidal category / Monad / Kleisli も、公開トップページ、用語集、Context Pack v1 仕様で確認する。
+- 対応づけ: 理論概念をソフトウェア成果物へ写す場合は、元の概念、対応する成果物、保存したい構造を記録する。あわせて、保存しないことと検証方法も同じ箇所に残す。
+- 適用範囲: 本書は厳密な圏論の証明ではなく、AI 実装委任の入力契約とレビュー運用へ落とすための設計語彙を提供する。設計判断を「圏論だから正しい」と断定しない。
+- Context Pack 連動: Objects / Morphisms / Diagrams / Forbidden changes を変更した場合は、関連する成果物も確認する。Context Pack v1 仕様、例題 YAML、テンプレート、受入テスト、レビュー観点の同期を確認する。
+- 関連書分界: 本書は日本語で Context Pack、GitHub/CI、AI委任レビューまで接続する実務運用を担う。`composable-software-design-book` は英語で compositional design / verifiable engineering の全体像を扱う。両者を旧版/新版や単純翻訳として扱わない。
+- Review completion: PR では GitHub Copilot review の本文・inline comment・suggestion を全件確認し、未解決 review thread 0 と CI green を merge 条件にする。
+
 ## 対象読者
 
 - AIを用いた実装・テスト生成を運用している（または導入したい）ソフトウェア開発者/テックリード

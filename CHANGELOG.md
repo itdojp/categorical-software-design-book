@@ -6,6 +6,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- [#110](https://github.com/itdojp/categorical-software-design-book/issues/110) に従い、Phase 5 理論・実装接続レビューゲート、関連書分界、Copilot review completion gate を追加しました。
+
 ## [1.0.0] - 2026-02-22
 
 ### Added
