@@ -21,8 +21,10 @@
 - [ ] `GLOSSARY.md` / `docs/style/*` に沿って用語・記法が統一されている
 - [ ] 主要リンクが壊れていない（相互参照、画像、外部リンク）
 - [ ] Context Pack v1 の参照/更新が必要な場合、`docs/spec/context-pack-v1.md` に従っている
-- [ ] `npm run qa`（またはCI）で link/unicode/structure/textlint
-      + Context Pack minimal lint + schema validation + rendered HTML check が通っている
+- [ ] `npm run qa`（またはCI）を実行し、次を確認した
+  - link / unicode / structure / textlint
+  - Context Pack minimal lint / schema validation
+  - rendered HTML check
 - [ ] Context Pack v1 を更新した場合、spec/例題/テンプレの同期チェックが通っている
       （該当する場合）
 
