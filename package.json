@@ -1,7 +1,7 @@
 {
   "name": "categorical-software-design-book",
   "version": "1.0.0",
-  "description": "仕様・設計・検証を合成可能にする共通言語",
+  "description": "AI実装委任を壊さないための設計成果物・検証・運用を圏論で整理する",
   "author": "株式会社アイティードゥ",
   "license": "CC BY-NC-SA 4.0",
   "scripts": {
@@ -12,12 +12,16 @@
     "gen:navigation": "node scripts/generate-navigation.js",
     "validate-deploy": "node scripts/validate-github-pages.js",
     "pages-status": "node scripts/check-pages-status.js",
-    "check:navigation": "node scripts/generate-navigation.js --check"
+    "check:navigation": "node scripts/generate-navigation.js --check",
+    "check:metadata": "python3 scripts/check-metadata-consistency.py"
   },
   "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/itdojp/categorical-software-design-book.git"
   },
-  "homepage": "https://itdojp.github.io/categorical-software-design-book"
+  "homepage": "https://itdojp.github.io/categorical-software-design-book/",
+  "bugs": {
+    "url": "https://github.com/itdojp/categorical-software-design-book/issues"
+  }
 }
