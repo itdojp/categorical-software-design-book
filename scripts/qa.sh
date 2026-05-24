@@ -82,6 +82,7 @@ if [[ "$missing_py_deps" == "true" ]]; then
   fi
 fi
 
+python3 "$ROOT/scripts/check-metadata-consistency.py"
 python3 "$ROOT/scripts/validate-context-pack.py" "$ROOT/docs/examples/common-example/context-pack-v1.yaml"
 python3 "$ROOT/scripts/validate-context-pack.py" "$ROOT/docs/examples/minimal-example/context-pack-v1.yaml"
 python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/common-example/context-pack-v1.yaml"

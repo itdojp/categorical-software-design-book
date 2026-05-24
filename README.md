@@ -94,7 +94,7 @@ bundle exec jekyll build
 
 ## 品質チェック（ローカルQA）
 
-CI では `itdojp/book-formatter` のチェッカー、Context Pack 検証、Jekyll の rendered HTML 回帰チェックを実行します。
+CI では `itdojp/book-formatter` のチェッカー、book/package/Jekyll のメタデータ整合、Context Pack 検証、Jekyll の rendered HTML 回帰チェックを実行します。
 Mermaid 図は fallback SVG を含めて QA 対象です。ローカルでは `npm run qa` で主要チェックを一括実行できます（`book-formatter/` は自動取得/更新）。
 
 前提は次のとおりです。
