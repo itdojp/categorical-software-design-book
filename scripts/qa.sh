@@ -4,6 +4,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPORT_DIR="$ROOT/qa-reports"
 BOOK_FORMATTER_DIR="$ROOT/book-formatter"
+BOOK_FORMATTER_REMOTE_URL="${BOOK_FORMATTER_REMOTE_URL:-https://github.com/itdojp/book-formatter.git}"
+BOOK_FORMATTER_REF="${BOOK_FORMATTER_REF:-da2a49e7d2dcd9e1fa885e910c458130fe8d73a4}"
 
 die() {
   local msg="$1"
@@ -12,30 +14,41 @@ die() {
 }
 
 echo "==> Preparing book-formatter: $BOOK_FORMATTER_DIR"
+echo "==> Using book-formatter ref: $BOOK_FORMATTER_REF"
 if [[ ! -d "$BOOK_FORMATTER_DIR" ]]; then
-  git clone --depth 1 https://github.com/itdojp/book-formatter.git "$BOOK_FORMATTER_DIR"
+  git init "$BOOK_FORMATTER_DIR"
+  (
+    cd "$BOOK_FORMATTER_DIR"
+    git remote add origin "$BOOK_FORMATTER_REMOTE_URL"
+    git fetch --depth 1 origin "$BOOK_FORMATTER_REF"
+    git checkout --detach FETCH_HEAD
+  )
 else
   if [[ ! -d "$BOOK_FORMATTER_DIR/.git" ]]; then
     die "book-formatter exists but is not a git repository: $BOOK_FORMATTER_DIR"
   fi
   (
     cd "$BOOK_FORMATTER_DIR"
-    if ! git fetch origin; then
-      echo "❌ Failed to fetch updates for book-formatter in $BOOK_FORMATTER_DIR" >&2
+    if [[ -n "$(git status --porcelain)" ]]; then
+      echo "❌ book-formatter has local changes: $BOOK_FORMATTER_DIR" >&2
+      echo "   Commit/remove them or delete '$BOOK_FORMATTER_DIR' and run this script again." >&2
+      exit 1
+    fi
+    if git remote get-url origin >/dev/null 2>&1; then
+      current_origin="$(git remote get-url origin)"
+      if [[ "$current_origin" != "$BOOK_FORMATTER_REMOTE_URL" ]]; then
+        echo "==> Resetting book-formatter origin from '$current_origin' to '$BOOK_FORMATTER_REMOTE_URL'"
+        git remote set-url origin "$BOOK_FORMATTER_REMOTE_URL"
+      fi
+    else
+      git remote add origin "$BOOK_FORMATTER_REMOTE_URL"
+    fi
+    if ! git fetch --depth 1 origin "$BOOK_FORMATTER_REF"; then
+      echo "❌ Failed to fetch book-formatter ref '$BOOK_FORMATTER_REF' in $BOOK_FORMATTER_DIR" >&2
       echo "   If this problem persists, try removing '$BOOK_FORMATTER_DIR' and run this script again." >&2
       exit 1
     fi
-    if ! git checkout main; then
-      echo "❌ Failed to switch book-formatter to 'main' branch in $BOOK_FORMATTER_DIR" >&2
-      echo "   Ensure the repository is clean or remove '$BOOK_FORMATTER_DIR' and run this script again." >&2
-      exit 1
-    fi
-    if ! git pull --ff-only; then
-      echo "❌ Failed to fast-forward book-formatter to the latest 'main' from origin in $BOOK_FORMATTER_DIR" >&2
-      echo "   This can happen if there are local changes or the branch has diverged." >&2
-      echo "   To fix this, remove '$BOOK_FORMATTER_DIR' and run this script again to reclone book-formatter." >&2
-      exit 1
-    fi
+    git checkout --detach FETCH_HEAD
   )
 fi
 
