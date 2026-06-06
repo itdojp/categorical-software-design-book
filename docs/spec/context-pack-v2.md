@@ -158,7 +158,47 @@ data_contracts:
 
 ### open_systems
 
-`components` には責務境界、`boundaries` には外部との接点、`composition` には合成後も守る不変条件を書きます。境界を超える外部システムの詳細を Context Pack 内へ混ぜず、観測できる契約へ落とします。
+`components` には責務境界、`boundaries` には外部との接点や共有インターフェース、`composition` には合成方法と合成後も守る不変条件を書きます。
+境界を超える外部システムの詳細を Context Pack 内へ混ぜず、観測できる契約へ落とします。
+Structured cospans / open systems の説明では、部品の内部ではなく、境界と shared boundary をレビュー対象にします。
+
+構造化して書く場合の例は次のとおりです。
+`composition` は Context Pack v2 schema に合わせて配列にし、各要素に shared boundary、合成方法、期待する検証条件を書きます。
+
+```yaml
+open_systems:
+  components:
+    - id: PaymentAdapter
+      boundary_in:
+        - AuthorizePayment
+      boundary_out:
+        - PaymentAuthorized
+        - PaymentRejected
+      internal_effects:
+        - ExternalAPI
+        - Retry
+        - Audit
+    - id: OrderService
+      boundary_in:
+        - CancelOrderCommand
+      boundary_out:
+        - OrderCancelled
+        - PaymentCancelRequested
+  boundaries:
+    - id: PaymentSharedBoundary
+      shared_interface:
+        - OrderId
+        - PaymentRequestId
+  composition:
+    - id: OrderPaymentComposition
+      shared_boundary:
+        - OrderId
+        - PaymentRequestId
+      method: compose_by_shared_interface
+      expected_property:
+        - no_orphan_payment_request
+        - audit_event_preserved
+```
 
 ### views.lenses_or_optics
 

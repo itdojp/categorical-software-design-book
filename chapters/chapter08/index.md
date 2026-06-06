@@ -77,6 +77,70 @@ graph LR
 同じ構造をマルチエージェントに適用する場合は、`Lint/Unit tests` を「独立な作業（⊗）」として割り当てます。
 合流点（[Merge gate]({{ '/glossary/' | relative_url }}#merge-gate)）では、品質ゲートを満たした成果物だけを次へ渡します。
 
+
+## 第8章補論: 境界を持つコンポーネントの合成
+
+通常の string diagram は、部品同士の接続を視覚化します。
+実務ではそれに加えて、「どこまでが部品の内部で、どこが外部へ公開される境界か」を固定する必要があります。
+Structured cospans / open systems の見方は、この境界を明示したまま部品を合成するための補助線です。
+
+本書では、double category の形式証明には踏み込みません。
+次の4つを設計成果物に落とすために使います。
+
+| 見方 | 第8章で固定するもの | 実務での確認点 |
+| --- | --- | --- |
+| String diagram | 部品の接続と合流点 | 入出力がつながっているか |
+| Open system | 内部実装と外部境界の分離 | 外部API、DB、監査境界を混ぜていないか |
+| Structured cospan | 境界を持つ部品の合成 | 共有インターフェースで合成しているか |
+| Pushout | 共有境界の同一視 | 同一視したキーやイベントが検証できるか |
+
+第7章の Pushout は「共通インターフェースでの接着」を扱いました。
+第8章では、その直観を分業・配線に引き継ぎ、部品の境界を明示したまま合成します。
+たとえば `OrderService` と `PaymentAdapter` をつなぐ場合、共有境界は `OrderId` と `PaymentRequestId` です。
+境界を明示しないまま実装すると、支払取消要求だけが孤立したり、監査イベントが失われたりします。
+
+Context Pack v2 では、この情報を `open_systems` に残します。
+`components` は境界を持つ部品、`boundaries` は共有インターフェース、`composition` は合成方法と検証条件です。
+
+```yaml
+open_systems:
+  components:
+    - id: PaymentAdapter
+      boundary_in:
+        - AuthorizePayment
+      boundary_out:
+        - PaymentAuthorized
+        - PaymentRejected
+      internal_effects:
+        - ExternalAPI
+        - Retry
+        - Audit
+    - id: OrderService
+      boundary_in:
+        - CancelOrderCommand
+      boundary_out:
+        - OrderCancelled
+        - PaymentCancelRequested
+  boundaries:
+    - id: PaymentSharedBoundary
+      shared_interface:
+        - OrderId
+        - PaymentRequestId
+  composition:
+    - id: OrderPaymentComposition
+      shared_boundary:
+        - OrderId
+        - PaymentRequestId
+      method: compose_by_shared_interface
+      expected_property:
+        - no_orphan_payment_request
+        - audit_event_preserved
+```
+
+この例で重要なのは、`PaymentAdapter` の内部効果を `OrderService` に漏らさないことです。
+`OrderService` は支払取消を要求しますが、外部決済APIのretryや監査の詳細は `PaymentAdapter` 側の境界内に閉じ込めます。
+合成後の正しさは、「圏論的に合成したから正しい」ではなく、`no_orphan_payment_request` や `audit_event_preserved` のような検証条件で確認します。
+
 ## 実装カタログへの接続
 
 配線や分業を実装・研究カタログへ接続する場合は、[付録E: Applied Category Theory 実装カタログ]({{ '/appendices/implementation-catalog/' | relative_url }}) を参照します。

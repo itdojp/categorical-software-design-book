@@ -230,8 +230,24 @@ open_systems:
   components:
     - id: OrderService
       boundary: "Order の状態遷移と注文API"
+      boundary_in:
+        - CancelOrderCommand
+      boundary_out:
+        - OrderCancelled
+        - PaymentCancelRequested
     - id: PaymentService
       boundary: "決済承認・取消。外部決済事業者の詳細は扱わない"
+    - id: PaymentAdapter
+      boundary_in:
+        - AuthorizePayment
+      boundary_out:
+        - PaymentAuthorized
+        - PaymentRejected
+        - PaymentCancelled
+      internal_effects:
+        - ExternalAPI
+        - Retry
+        - Audit
     - id: InventoryService
       boundary: "在庫引当と解除"
     - id: ShippingService
@@ -241,12 +257,31 @@ open_systems:
   boundaries:
     - id: ExternalPaymentBoundary
       rule: "決済事業者APIの詳細を Context Pack 内へ混ぜず、AuthorizePayment の入出力契約に閉じ込める"
+    - id: PaymentSharedBoundary
+      shared_interface:
+        - OrderId
+        - PaymentRequestId
+      rule: "OrderService と PaymentAdapter はこの shared boundary だけで合成する"
     - id: AuditExportBoundary
       rule: "監査検索・エクスポートは権限付き read model 経由に限定する"
   composition:
     - id: HappyPathComposition
       sequence: [CreateOrder, PlaceOrder, AuthorizePayment, ShipOrder]
       invariant: "D2-audit-consistency と D3-state-transition-safety を維持する"
+    - id: OrderPaymentComposition
+      shared_boundary:
+        - OrderId
+        - PaymentRequestId
+      method: compose_by_shared_interface
+      participants:
+        - OrderService
+        - PaymentAdapter
+      expected_property:
+        - no_orphan_payment_request
+        - audit_event_preserved
+      verification:
+        - D2-audit-consistency
+        - payment_cancel_request_has_order
 
 views:
   lenses_or_optics:
