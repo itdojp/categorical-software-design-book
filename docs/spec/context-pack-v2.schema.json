@@ -461,15 +461,73 @@
         "allowed_tools": {
           "type": "array",
           "items": {
-            "type": "string",
-            "minLength": 1
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "name",
+                  "protocol",
+                  "effect",
+                  "input_schema_ref",
+                  "output_schema_ref"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "protocol": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "effect": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "input_schema_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "output_schema_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
           }
         },
         "forbidden_tools": {
           "type": "array",
           "items": {
-            "type": "string",
-            "minLength": 1
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
           }
         },
         "guardrails": {

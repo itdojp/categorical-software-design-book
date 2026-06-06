@@ -40,6 +40,31 @@ def _is_str_or_object_list(v: Any) -> bool:
     return isinstance(v, list) and all(_is_non_empty_str(x) or isinstance(x, dict) for x in v)
 
 
+def _is_allowed_tool_contract(v: Any) -> bool:
+    if _is_non_empty_str(v):
+        return True
+    if not isinstance(v, dict):
+        return False
+    required = ["name", "protocol", "effect", "input_schema_ref", "output_schema_ref"]
+    return all(_is_non_empty_str(v.get(key)) for key in required)
+
+
+def _is_forbidden_tool_contract(v: Any) -> bool:
+    if _is_non_empty_str(v):
+        return True
+    if not isinstance(v, dict):
+        return False
+    return _is_non_empty_str(v.get("name"))
+
+
+def _is_allowed_tool_list(v: Any) -> bool:
+    return isinstance(v, list) and all(_is_allowed_tool_contract(x) for x in v)
+
+
+def _is_forbidden_tool_list(v: Any) -> bool:
+    return isinstance(v, list) and all(_is_forbidden_tool_contract(x) for x in v)
+
+
 def _expect(cond: bool, path: str, message: str, errors: list[ValidationErrorItem]) -> None:
     if not cond:
         errors.append(ValidationErrorItem(path=path, message=message))
@@ -270,6 +295,20 @@ def _expect_object_with_required_keys(
                 f"{child} は非空文字列またはオブジェクトの配列である必要があります",
                 errors,
             )
+        elif kind == "allowed_tool_array":
+            _expect(
+                _is_allowed_tool_list(child_value),
+                path,
+                f"{child} は非空文字列、または name/protocol/effect/input_schema_ref/output_schema_ref を持つ tool contract の配列である必要があります",
+                errors,
+            )
+        elif kind == "forbidden_tool_array":
+            _expect(
+                _is_forbidden_tool_list(child_value),
+                path,
+                f"{child} は非空文字列、または name を持つ禁止 tool contract の配列である必要があります",
+                errors,
+            )
         elif kind == "object":
             _expect(isinstance(child_value, dict), path, f"{child} はオブジェクトである必要があります", errors)
         else:
@@ -332,8 +371,8 @@ def validate_context_pack_v2(doc: Any) -> list[ValidationErrorItem]:
         doc,
         "agent_runtime",
         [
-            ("allowed_tools", "str_array"),
-            ("forbidden_tools", "str_array"),
+            ("allowed_tools", "allowed_tool_array"),
+            ("forbidden_tools", "forbidden_tool_array"),
             ("guardrails", "object"),
             ("trace_evidence", "object"),
         ],
