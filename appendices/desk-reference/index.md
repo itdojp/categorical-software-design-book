@@ -64,6 +64,8 @@ appendix: desk-reference
 詳細なレビュー用チェックリストや成果物テンプレートが必要な場合は、[付録A: 設計成果物テンプレ集](../../appendices/templates/) に戻ってください。本節は「まずどこを見るか」を絞るための最小入口です。
 
 - Context Pack に goals / non-goals、境界、Forbidden changes が明記されている
+- merge / refactor を含む PR では、Context Pack v2 の `change_semantics` を確認する
+- `change_semantics` では、許可する refactor、禁止する conflict 解決、merge invariant が分かれている
 - 用語や訳語が [用語集（Glossary）]({{ '/glossary/' | relative_url }}) と衝突していない
 - 図式や不変条件が、対応するテスト観点へ落ちている
 - 効果境界や副作用が pure core / impure shell の切り分けと矛盾していない
@@ -71,13 +73,42 @@ appendix: desk-reference
 - 関連英語書籍 `composable-software-design-book` と旧版/新版・単純翻訳の関係として扱わず、本書の Context Pack / GitHub / CI 運用上の責務が明確である
 - Issue / PR / CI のどこで確認するかが、第10章のケーススタディと整合している
 
-## 3. 目的別の引き直し方
+## 3. merge conflict を Pushout で見る最小メモ
+
+差分レビューや conflict 解決で判断に迷ったら、次の対応を使います。
+[第7章の補論]({{ '/chapters/chapter07/' | relative_url }}#第7章補論-merge-conflict-を-pushout-で見る) に戻ります。
+
+| 観点 | 見るもの |
+| --- | --- |
+| 共通祖先 | `A`: merge base、合意済み Context Pack、既存テスト |
+| 片側の変更 | `f: A -> B`: 人間または AI agent の branch 差分 |
+| もう片側の変更 | `g: A -> C`: main 側、または並行 PR の差分 |
+| merge 候補 | `D`: 両方の変更を含む候補。`Forbidden changes` と `merge_invariants` を満たす場合だけ採用する |
+
+最小チェック。
+
+- `allowed_refactors`: 意味保存として扱う変更だけを許可する。
+  - 例: `rename_private_method_without_behavior_change`、`extract_pure_function`
+- `forbidden_conflict_resolutions`: 危険な conflict 解決を禁止する。
+  - 例: `delete_failing_test`
+  - 例: `remove_audit_log_to_resolve_type_error`
+  - 例: `weaken_authorization_check`
+- `merge_invariants`: merge 後に守る不変条件を確認する。
+  - 例: `all_acceptance_tests_preserved`
+  - 例: `diagram_commutativity_preserved`
+  - 例: `context_pack_fields_not_silently_removed`
+
+ここでの Pushout は、GitHub 標準運用の置換ではありません。
+実務上は PR、CI、review thread、Context Pack validation の証跡で採否を判断します。
+
+## 4. 目的別の引き直し方
 
 迷ったら、まず「いま困っているのが仕様・統合・分業・副作用・運用のどれか」を切り分けると、戻る章を選びやすくなります。
 
 - 仕様が曖昧で AI が勝手に補完する: [第1章]({{ '/chapters/chapter01/' | relative_url }}) → [第2章]({{ '/chapters/chapter02/' | relative_url }})
 - 差分レビューで意味保存を確認したい: [第5章]({{ '/chapters/chapter05/' | relative_url }}) → [第10章]({{ '/chapters/chapter10/' | relative_url }})
 - 統合・移行で境界が壊れる: [第7章]({{ '/chapters/chapter07/' | relative_url }})
+- merge / refactor で意味保存が不安定になる: [第7章補論]({{ '/chapters/chapter07/' | relative_url }})
 - 並列化や責務分担で配線が壊れる: [第8章]({{ '/chapters/chapter08/' | relative_url }})
 - 失敗処理・監査・再試行の責務が混ざる: [第9章]({{ '/chapters/chapter09/' | relative_url }})
 - 設計成果物のテンプレートを先に見たい: [付録A: 設計成果物テンプレ集]({{ '/appendices/templates/' | relative_url }})
@@ -85,7 +116,7 @@ appendix: desk-reference
 - 次に学ぶ順番や原典を確認したい: [付録C: 参考文献]({{ '/appendices/references/' | relative_url }})
 - ACTの実装・研究候補を章別に引きたい: [付録E: Applied Category Theory 実装カタログ]({{ '/appendices/implementation-catalog/' | relative_url }})
 
-## 4. 症状から引く戻り先
+## 5. 症状から引く戻り先
 
 症状ベースで再参照したい場合は、この表を使って最初の戻り先を決めてください。
 

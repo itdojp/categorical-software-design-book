@@ -62,6 +62,15 @@ appendix: references
 - Categorical Data, “Papers”, <https://categoricaldata.net/papers.html>
   - CQL、Functorial Data Migration、Algebraic Data Integration などの一次導線を確認する。
 
+## 参考文献（Patch Theory / Version Control Semantics） {#ref-patch-theory-version-control}
+
+- Pijul, “Model”, <https://pijul.org/model/>
+  - patch を中心に branch を捉え、共同編集や conflict を pushout の直観で説明する公式導線。
+  - 本書では GitHub 標準運用の置換ではなく、merge invariant を考える発展的補助線として扱う。
+- Samuel Mimram, Cinzia Di Giusto, “A Categorical Theory of Patches”, <https://arxiv.org/abs/1311.3903>
+  - ファイルと patch の圏を考え、同じ始点を持つ2つの patch の merge を pushout として捉える論文。
+  - pushout が存在しない場合に conflict を扱う問題設定の背景として参照する。
+
 ## 参考文献（Applied Category Theory 実装・研究カタログ）
 
 - AlgebraicJulia, “Catlab.jl”, <https://github.com/AlgebraicJulia/Catlab.jl>
@@ -72,6 +81,7 @@ appendix: references
   - collaborative conceptual modeling の実装導線。公式サイトの補足として Topos Institute の CatColab 解説 <https://topos.institute/work/catcolab/> も確認する。
 - Pijul, “Model”, <https://pijul.org/model/>
   - patch theory、pushout、conflict を、分散バージョン管理の mental model として確認する導線。
+  - 第7章の `change_semantics` では [Patch Theory / Version Control Semantics](#ref-patch-theory-version-control) の参考文献へ戻す。
 - OCaml, “OCaml 5.0.0 Release Notes”, <https://ocaml.org/releases/5.0.0>
   - OCaml 5 で導入された effect handlers の公式リリース導線。
 - OCaml Manual, “Language extensions / Effect handlers”, <https://ocaml.org/manual/5.3/effects.html>

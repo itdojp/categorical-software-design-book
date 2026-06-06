@@ -433,12 +433,20 @@ resource_constraints:
 
 change_semantics:
   allowed_refactors:
+    - rename_private_method_without_behavior_change
+    - extract_pure_function
     - "OrderService 内部の関数分割。ただし Morphism id と外部契約は維持する"
     - "AuditSearchView の検索UI改善。ただし AuditEvent の追記専用制約は維持する"
   forbidden_conflict_resolutions:
+    - delete_failing_test
+    - remove_audit_log_to_resolve_type_error
+    - weaken_authorization_check
     - "OutOfStock を無視して PlaceOrder を成功扱いにすること"
     - "監査イベント重複を削除で解決すること"
   merge_invariants:
+    - all_acceptance_tests_preserved
+    - diagram_commutativity_preserved
+    - context_pack_fields_not_silently_removed
     - "D1-idempotency-place-order を満たすこと"
     - "D2-audit-consistency を満たすこと"
     - "D3-state-transition-safety を満たすこと"
@@ -455,3 +463,4 @@ formalization_level:
   reviewed_manually:
     - "data_contracts.mappings と diagrams の対応づけ"
     - "agent_runtime.guardrails が forbidden_tools と resource_constraints を矛盾なく扱うこと"
+    - "change_semantics.forbidden_conflict_resolutions が forbidden_changes を merge / refactor レビューへ具体化していること"

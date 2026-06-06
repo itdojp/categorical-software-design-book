@@ -28,6 +28,7 @@ permalink: /examples/common-example/
 - `effects`: 永続化、在庫引当、監査ログ追記、監査エクスポートを operation / handler に分離。特に `ReserveInventory` は本番 handler と test handler を分ける。
 - `agent_runtime`: tool contract 形式の allowed tools / forbidden tools、input / output / tool invocation guardrails、PR・CI・review の trace evidence。
 - `resource_constraints`: CI 時間、PII、本番データ、冪等性キー、ワンタイム決済トークン。
+- `change_semantics`: 許可する refactor、禁止する conflict 解決、merge 後も守る不変条件を分け、`Forbidden changes` を差分レビューへ接続する。
 - `formalization_level`: 比喩、CI検証、手動レビューを分け、圏論語彙を検証済み主張と混同しない。
 
 ## 検証（ローカル）

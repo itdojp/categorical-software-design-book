@@ -336,7 +336,39 @@ agent_runtime:
 
 ### change_semantics
 
-`allowed_refactors` は許可する意味保存の変更、`forbidden_conflict_resolutions` は禁止する衝突解決、`merge_invariants` はマージ前に守る不変条件を書きます。
+`allowed_refactors` は、許可する意味保存の変更です。
+`forbidden_conflict_resolutions` は、禁止する衝突解決です。
+`merge_invariants` は、マージ後にも守る不変条件です。
+これは Git / GitHub の標準運用を置き換える項目ではありません。
+PR 差分や AI agent が作った branch をレビューするときに使います。
+どの refactor を許可し、どの conflict 解決を拒否するかを明示します。
+
+`Forbidden changes` は、Context Pack 全体で破ってはいけない非交渉の禁止事項です。
+`change_semantics` は、その禁止事項を merge / refactor / conflict resolution の場面へ落とす運用ルールです。
+たとえば `forbidden_changes` に「監査ログを削除しない」と書いた場合、
+`change_semantics.forbidden_conflict_resolutions` に具体化します。
+例は「型エラーや conflict を解くために監査ログを削除しない」です。
+
+```yaml
+change_semantics:
+  allowed_refactors:
+    - rename_private_method_without_behavior_change
+    - extract_pure_function
+
+  forbidden_conflict_resolutions:
+    - delete_failing_test
+    - remove_audit_log_to_resolve_type_error
+    - weaken_authorization_check
+
+  merge_invariants:
+    - all_acceptance_tests_preserved
+    - diagram_commutativity_preserved
+    - context_pack_fields_not_silently_removed
+```
+
+Pushout の直観を使う場合も、対応づけに留めます。
+見るのは「共通祖先 `A` からの変更 `A -> B` と `A -> C` を含む `D` が作れるか」です。
+`D` が作れても、上記の `merge_invariants`、`forbidden_changes`、受入テスト、schema validation を破るなら採用しません。
 
 ### formalization_level
 
