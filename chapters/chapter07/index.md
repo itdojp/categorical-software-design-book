@@ -116,6 +116,67 @@ graph TD
 - Pushout（接着）:
   - 共通インターフェースを通る経路で、旧/新の観測結果が一致することを検証する（互換テスト）
 
+## 第7章補論: スキーマ統合と関手的データ移行
+
+Pullback/Pushout は、API 統合だけでなく DB スキーマ統合にも現れます。旧注文 DB、監査ログ、read model を別々に扱うと、`OrderId`、決済承認、監査 lineage のどれを保存するのかが曖昧になります。ここで CQL（Categorical Query Language）や Functorial Data Migration の考え方を使うと、「どのスキーマを小さな圏として見て、どの写像でデータを移すか」を設計成果物として明示できます。
+
+CQL は、圏論を使って database の querying、combining、migrating、evolving を扱う open-source の言語/IDE として公開されています（[CQL 公式サイト](https://categoricaldata.net/)）。公式 tutorial でも `Typesides`、`Schemas`、`Instances`、`Mappings`、`Delta and Sigma` が導入されており（[CQL Tutorial](https://categoricaldata.net/cql/tutorial.html)）、本書ではその全機能を解説するのではなく、スキーマ統合の設計語彙として必要な部分だけを使います。
+
+対応づけは次のとおりです。
+
+| ソフトウェア設計 | 圏論的対応 |
+| --- | --- |
+| DBスキーマ | 小さな圏 |
+| テーブル / エンティティ | 対象 |
+| 外部キー / 関係 | 射 |
+| DBインスタンス | `Schema -> Set` の関手 |
+| スキーマ変換 | 関手 |
+| データ移行 | スキーマ関手から誘導される移行 |
+| 統合・集約 | colimit / pushout 的構成 |
+| 整合性制約 | 可換図式・等式制約 |
+| lineage / provenance | 移行経路の保存情報 |
+
+この対応づけで重要なのは、用語を飾りとして使うことではありません。たとえば、旧スキーマ `LegacyOrderDB` と新しい `OrderReadModel` を統合するとき、共通部分 `OrderId` と `PaymentAuthorization` をどの経路でも同じものとして扱うなら、その同一視は Pushout 的な接着として設計できます。一方、移行後の read model と元データを突き合わせ、同じ `OrderId` へ写る行だけを検証対象にするなら、Pullback 的な整合条件として読めます。
+
+Context Pack v2 では、この対応を `data_contracts` に残します。
+
+```yaml
+data_contracts:
+  schemas:
+    - id: LegacyOrderDB
+      role: source
+    - id: OrderReadModel
+      role: target
+    - id: AuditEventSchema
+      role: lineage_source
+      fields: [eventId, lineage]
+
+  mappings:
+    - id: legacy_to_read_model
+      source: LegacyOrderDB
+      target: OrderReadModel
+      preserves:
+        - OrderId
+        - PaymentAuthorization
+        - AuditEvent.lineage
+      does_not_preserve:
+        - legacy_internal_status_text
+
+  migration_verification:
+    - type: row_count_invariant
+    - type: foreign_key_preservation
+    - type: lineage_trace_check
+    - type: acceptance_query
+```
+
+この例では、`legacy_to_read_model` が「何を保存し、何を保存しないか」を明示します。`AuditEvent.lineage` は、共通例題 v2 の `AuditEventSchema` で定義する追跡キーです。`legacy_internal_status_text` のような旧システム内部の表示用文字列は read model へ持ち込まない一方、`OrderId`、決済承認、監査 lineage は保存対象として扱います。AI に実装や移行スクリプトの案を出させる場合も、ここを勝手に変えさせないことがレビュー境界になります。
+
+### CQL / FDM を使うときの限界
+
+CQL は汎用分散 DBMS ではありません。本書で扱うのは、スキーマ、写像、等式制約、移行検証を設計成果物として明示する用途です。実案件では、CQL の実行環境、対象データ量、既存 DB との接続、運用監視、権限、PII、再実行手順を別途評価します。SQL 実装詳細、DB 製品比較、CQL tutorial の再掲は本章の範囲外です。
+
+また、Pushout 的に統合したからといって、業務上の整合性が自動で証明されるわけではありません。正しさは、`row_count_invariant`、`foreign_key_preservation`、`lineage_trace_check`、`acceptance_query` のような検証条件に落とし、CI、fixture、監査レビューで確認します。圏論語彙は、比喩、対応づけ、検証条件を分けて使います。
+
 ## AIエージェントへの引き渡し
 
 統合・移行は、AIが局所的に“つなぐ”と破綻しやすい領域です。AIへ委任する場合は、統合条件（図式）と検証項目を先に入力します。
@@ -147,12 +208,15 @@ graph TD
    - minimal lint を実行する。
      - `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`
      - 例: `docs/examples/common-example/context-pack-v1.yaml`
+     - `data_contracts` を使う場合の例: `docs/examples/common-example/context-pack-v2.yaml`
    - schema validation を実行する。
      - `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
      - 例: `docs/examples/common-example/context-pack-v1.yaml`
+     - `data_contracts` を使う場合の例: `docs/examples/common-example/context-pack-v2.yaml`
    - （任意）CI相当の一括チェックとして `npm run qa` を実行する。
    - 検証コマンドの SSOT を確認する。
      - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+     - [Context Pack v2 仕様（検証コマンド）]({{ '/spec/context-pack-v2/' | relative_url }}#validation-commands)
    - reader-facing な正本として共通例題を引き直す場合は、repo path ではなく [共通例題（注文処理）]({{ '/examples/common-example/' | relative_url }}) を参照する。
 5. 図式→テスト項目（差分/互換）へ変換し、検証項目リストとして残す
 

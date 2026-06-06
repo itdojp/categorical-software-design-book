@@ -36,6 +36,10 @@ def _is_list(v: Any) -> bool:
     return isinstance(v, list)
 
 
+def _is_str_or_object_list(v: Any) -> bool:
+    return isinstance(v, list) and all(_is_non_empty_str(x) or isinstance(x, dict) for x in v)
+
+
 def _expect(cond: bool, path: str, message: str, errors: list[ValidationErrorItem]) -> None:
     if not cond:
         errors.append(ValidationErrorItem(path=path, message=message))
@@ -259,6 +263,13 @@ def _expect_object_with_required_keys(
             _expect(_is_list(child_value), path, f"{child} は配列である必要があります", errors)
         elif kind == "str_array":
             _expect(_is_str_list(child_value), path, f"{child} は文字列配列である必要があります", errors)
+        elif kind == "str_or_object_array":
+            _expect(
+                _is_str_or_object_list(child_value),
+                path,
+                f"{child} は非空文字列またはオブジェクトの配列である必要があります",
+                errors,
+            )
         elif kind == "object":
             _expect(isinstance(child_value, dict), path, f"{child} はオブジェクトである必要があります", errors)
         else:
@@ -287,7 +298,7 @@ def validate_context_pack_v2(doc: Any) -> list[ValidationErrorItem]:
         [
             ("schemas", "array"),
             ("mappings", "array"),
-            ("migration_verification", "str_array"),
+            ("migration_verification", "str_or_object_array"),
         ],
         errors,
     )
