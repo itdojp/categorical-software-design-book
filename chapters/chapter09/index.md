@@ -244,7 +244,7 @@ effects:
     - id: ProductionInventoryHandler
       operation: ReserveInventory
       implementation: InventoryService.MCP
-      retry_policy: exponential_backoff_bounded
+      retry_policy: bounded
       timeout_ms: 3000
       audit_sink: OrderAuditLog
     - id: TestInventoryHandler
@@ -255,6 +255,7 @@ effects:
         - local
   effect_safety_notes:
     - "ReserveInventory の本番 handler は timeout と bounded retry を必須にする"
+    - "bounded retry の詳細として指数バックオフを使う場合は運用設定で明示する"
     - "TestInventoryHandler を production で使わない"
 ```
 

@@ -172,7 +172,7 @@ data_contracts:
 
 構造化して書く場合は、operation 側に入出力、失敗、必須性質を書きます。
 handler 側には対象 operation、実装、retry、timeout、audit、利用可能環境を書きます。
-`operation` は単一の operation id を指す書き方、`handles` は複数 operation を扱う既存の短縮表現です。
+`operation` は単一の operation id を指す書き方です。`handles` は 1 件以上の operation id を配列で列挙する既存の短縮表現で、単一要素でも使えます。
 AI agent tool call へ接続する場合は、operation を勝手に増やさず、handler の環境制約を guardrail / CI / review で確認します。
 
 ```yaml
@@ -191,7 +191,7 @@ effects:
     - id: ProductionInventoryHandler
       operation: ReserveInventory
       implementation: InventoryService.MCP
-      retry_policy: exponential_backoff_bounded
+      retry_policy: bounded
       timeout_ms: 3000
       audit_sink: OrderAuditLog
     - id: TestInventoryHandler
@@ -202,6 +202,7 @@ effects:
         - local
   effect_safety_notes:
     - "ReserveInventory の本番 handler は timeout と bounded retry を必須にする"
+    - "bounded retry の詳細として指数バックオフを使う場合は運用設定で明示する"
     - "TestInventoryHandler を production で使わない"
 ```
 
