@@ -42,6 +42,8 @@ objects:
       - items
       - totalAmount
       - state
+      - displayName
+      - shippingMemo
   - id: Payment
     kind: entity
     fields:
@@ -181,7 +183,7 @@ data_contracts:
   schemas:
     - id: OrderSchema
       object: Order
-      fields: [orderId, items, totalAmount, state]
+      fields: [orderId, items, totalAmount, state, displayName, shippingMemo]
       source_of_truth: Order service database
     - id: AuditEventSchema
       object: AuditEvent
