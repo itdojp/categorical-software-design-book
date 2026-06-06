@@ -99,10 +99,10 @@ effects:
   effect_safety_notes: []
 
 agent_runtime:
-  allowed_tools: []
-  forbidden_tools: []
-  guardrails: {}
-  trace_evidence: {}
+  allowed_tools: [] # 文字列または tool contract オブジェクト
+  forbidden_tools: [] # 文字列または禁止理由つきオブジェクト
+  guardrails: {} # input / output / tool invocation の検証点
+  trace_evidence: {} # required_spans / artifacts / retention policy
 
 resource_constraints:
   tool_budget: {}
@@ -170,7 +170,52 @@ data_contracts:
 
 ### agent_runtime
 
-`allowed_tools` と `forbidden_tools` で実行環境の境界を固定します。`guardrails` は入力検証、出力検証、tool invocation の制約を書き、`trace_evidence` はPR、CI、レビュー、ログなど後から監査できる証跡を書きます。
+`allowed_tools` と `forbidden_tools` で実行環境の境界を固定します。各 tool は、簡単な文字列でも、`name`、`protocol`、`effect`、`input_schema_ref`、`output_schema_ref`、`preconditions`、`postconditions` を持つ構造化オブジェクトでも構いません。`forbidden_tools` は「実行してはいけない tool / 経路」を列挙し、レビューで検出できる禁止事項にします。`guardrails` は input / output / tool invocation の検証点を書き、`trace_evidence` はPR、CI、レビュー、ログなど後から監査できる証跡を書きます。
+
+```yaml
+agent_runtime:
+  allowed_tools:
+    - name: get_order
+      protocol: MCP
+      effect: ReadDB
+      input_schema_ref: schemas/GetOrderInput.json
+      output_schema_ref: schemas/GetOrderOutput.json
+      preconditions:
+        - tenant_id_is_bound
+        - caller_has_order_read_permission
+      postconditions:
+        - no_write_performed
+        - pii_fields_redacted_unless_allowed
+
+    - name: cancel_order
+      protocol: MCP
+      effect: WriteDB
+      idempotency_key: order_id
+      audit_required: true
+      retry_policy: bounded
+
+  forbidden_tools:
+    - direct_sql_write
+    - shell_without_sandbox
+    - network_call_to_unregistered_endpoint
+
+  guardrails:
+    input:
+      - reject_cross_tenant_request
+    output:
+      - verify_no_secret_exfiltration
+    tool:
+      - validate_tool_input_schema
+      - validate_tool_output_schema
+
+  trace_evidence:
+    required_spans:
+      - llm_generation
+      - tool_call
+      - guardrail_result
+      - handoff
+    retention_policy: project_default
+```
 
 ### resource_constraints
 
@@ -276,20 +321,30 @@ effects:
 
 agent_runtime:
   allowed_tools:
-    - "local test runner"
+    - name: validate_context_pack
+      protocol: local
+      effect: ReadRepo
+      input_schema_ref: schemas/ContextPackPath.json
+      output_schema_ref: schemas/ValidationResult.json
   forbidden_tools:
-    - "production database"
+    - production_database
+    - shell_without_sandbox
   guardrails:
-    input_validation:
+    input:
       - "Context Pack の必須フィールドが欠落していないこと"
-    output_validation:
+    output:
       - "Forbidden changes を破る差分を出力しないこと"
-    tool_invocation:
-      - "許可された local tool だけを使うこと"
+    tool:
+      - "allowed_tools にある local tool だけを使うこと"
   trace_evidence:
-    required:
+    required_spans:
+      - llm_generation
+      - tool_call
+      - guardrail_result
+    required_artifacts:
       - "実行した検証コマンド"
       - "レビューで確認した Diagram id"
+    retention_policy: project_default
 
 resource_constraints:
   tool_budget:

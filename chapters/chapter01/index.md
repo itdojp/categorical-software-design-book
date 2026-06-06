@@ -117,6 +117,8 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 
 この場合の正本は [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }}) と、[共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) の v2 YAML です。
 
+特に tool call を含む案件では、v2 の `agent_runtime` を Agent Runtime Contract として扱います。これは「AIに何を任せるか」の希望ではなく、`allowed_tools`、`forbidden_tools`、`guardrails`、`trace_evidence` を PR / CI / review で確認できる形へ落とした実行時契約です。第9章では Kleisli arrow と tool call の対応、第10章では CancelOrder の Issue / PR / CI への適用を扱います。
+
 ### 最小Context Pack（例）
 
 詳細は共通例題ファイルを参照しつつ、最小形は次の粒度です。

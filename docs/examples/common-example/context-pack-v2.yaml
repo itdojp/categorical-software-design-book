@@ -288,27 +288,56 @@ effects:
 
 agent_runtime:
   allowed_tools:
-    - "repository read"
-    - "local test runner"
-    - "schema validator"
+    - name: get_order
+      protocol: MCP
+      effect: ReadDB
+      input_schema_ref: schemas/GetOrderInput.json
+      output_schema_ref: schemas/GetOrderOutput.json
+      preconditions:
+        - tenant_id_is_bound
+        - caller_has_order_read_permission
+      postconditions:
+        - no_write_performed
+        - pii_fields_redacted_unless_allowed
+    - name: append_audit_event
+      protocol: local
+      effect: WriteAuditLog
+      input_schema_ref: schemas/AppendAuditEventInput.json
+      output_schema_ref: schemas/AppendAuditEventOutput.json
+      audit_required: true
+      retry_policy: bounded
+    - name: validate_context_pack
+      protocol: local
+      effect: ReadRepo
+      input_schema_ref: schemas/ContextPackPath.json
+      output_schema_ref: schemas/ValidationResult.json
   forbidden_tools:
-    - "production database"
-    - "external payment console"
-    - "unredacted PII export"
+    - direct_sql_write
+    - shell_without_sandbox
+    - network_call_to_unregistered_endpoint
+    - unredacted_pii_export
   guardrails:
-    input_validation:
-      - "Context Pack v2 schema validation を通す"
-      - "変更要求が goals / non_goals / forbidden_changes と矛盾しないことを確認する"
-    output_validation:
-      - "差分が D1/D2/D3 と acceptance_tests を破っていないこと"
-      - "allowed_tools 以外の利用前提を実装案へ混ぜないこと"
-    tool_invocation:
-      - "外部副作用を伴う tool call は禁止し、必要な場合は人間へ確認を戻す"
+    input:
+      - reject_cross_tenant_request
+      - require_context_pack_validation_before_tool_plan
+    output:
+      - verify_no_secret_exfiltration
+      - verify_diagram_and_acceptance_test_ids_are_referenced
+    tool:
+      - validate_tool_input_schema
+      - validate_tool_output_schema
+      - require_human_approval_for_write_effects
   trace_evidence:
-    required:
-      - "実行した validate-context-pack コマンドと結果"
-      - "PR URL と CI run URL"
-      - "レビューで確認した Diagram id / Acceptance test id"
+    required_spans:
+      - llm_generation
+      - tool_call
+      - guardrail_result
+      - handoff
+    required_artifacts:
+      - validate-context-pack command result
+      - PR URL and CI run URL
+      - review comment or approval for write-effect tools
+    retention_policy: project_default
 
 resource_constraints:
   tool_budget:

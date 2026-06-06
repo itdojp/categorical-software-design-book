@@ -123,6 +123,88 @@ impure shell:
   appendAudit(event) -> IO<Unit>
 ```
 
+## 第9章補論: Kleisli arrow と Agent tool call
+
+AI エージェントの tool call も、効果付き計算として扱えます。たとえば `get_order` は入力 schema を受け取り、DB 読み取り、権限確認、PII マスキング、失敗を含む出力を返します。これは単なる `A -> B` ではなく、外部世界との相互作用を含む `A -> M B` として扱う方が安全です。
+
+Model Context Protocol（MCP）は、LLM アプリケーションと外部データソース / tool を接続する open protocol として定義されています（[MCP specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25)）。本書では MCP の詳細仕様を再掲せず、tool input/output schema、権限、guardrail、trace evidence を Context Pack v2 の契約へ落とします。
+
+対応は次のとおりです。
+
+| 圏論 | Agent runtime |
+| --- | --- |
+| `A` | tool input schema |
+| `B` | tool output schema |
+| `M` | 外部世界との相互作用、失敗、権限、監査、非決定性 |
+| Kleisli composition | tool call chain / workflow |
+| unit | 純粋値を effect context へ持ち上げる |
+| bind | 前段 tool 結果を次段 tool へ渡す |
+| law violation | retry、重複実行、副作用漏れ、監査欠落、非 idempotent 実行 |
+
+この対応で重要なのは、tool call chain を「便利な手順」ではなく、合成される効果としてレビューすることです。`get_order` の出力を `cancel_order` に渡す場合、`tenant_id`、権限、`Order.state`、idempotency key、監査イベントが保存されなければ、Kleisli 合成の直観は破綻します。
+
+```yaml
+agent_runtime:
+  allowed_tools:
+    - name: get_order
+      protocol: MCP
+      effect: ReadDB
+      input_schema_ref: schemas/GetOrderInput.json
+      output_schema_ref: schemas/GetOrderOutput.json
+      preconditions:
+        - tenant_id_is_bound
+        - caller_has_order_read_permission
+      postconditions:
+        - no_write_performed
+        - pii_fields_redacted_unless_allowed
+
+    - name: cancel_order
+      protocol: MCP
+      effect: WriteDB
+      idempotency_key: order_id
+      audit_required: true
+      retry_policy: bounded
+
+  forbidden_tools:
+    - direct_sql_write
+    - shell_without_sandbox
+    - network_call_to_unregistered_endpoint
+
+  guardrails:
+    input:
+      - reject_cross_tenant_request
+    output:
+      - verify_no_secret_exfiltration
+    tool:
+      - validate_tool_input_schema
+      - validate_tool_output_schema
+
+  trace_evidence:
+    required_spans:
+      - llm_generation
+      - tool_call
+      - guardrail_result
+      - handoff
+    retention_policy: project_default
+```
+
+OpenAI Agents SDK は、Agents、tools、handoffs、guardrails、tracing などの primitives を提供する実装例です。公式ドキュメントでは、guardrails は input / output / tool invocation の検証点として説明され、tracing は generation、function tool call、guardrail、handoff などを span として記録します（[Agents SDK Guardrails](https://openai.github.io/openai-agents-python/guardrails/)、[Agents SDK Tracing](https://openai.github.io/openai-agents-python/tracing/)）。ただし、本書では特定 SDK に閉じません。OpenAI Agents SDK、GitHub Copilot agent、Codex などは、Agent Runtime Contract を実装・運用する具体例として扱います。
+
+### law violation をレビュー観点へ落とす
+
+Kleisli の law をここで証明する必要はありません。実務では、破綻を次のレビュー観点へ落とします。
+
+- retry:
+  - 同じ `idempotency_key` で二重取消が起きないか。
+- 重複実行:
+  - tool call が再実行されても監査イベントが二重集計されないか。
+- 副作用漏れ:
+  - `get_order` のような read tool が write を行っていないか。
+- 監査欠落:
+  - `cancel_order` 成功時に `tool_call` と `guardrail_result` の trace が残るか。
+- 非 idempotent 実行:
+  - retry policy が bounded で、失敗時の再実行条件が明示されているか。
+
 ## AIエージェントへの引き渡し
 
 効果境界は、AIが勝手に“便利化”しやすい部分です。以下を禁止事項として明確化します。

@@ -332,8 +332,8 @@ def validate_context_pack_v2(doc: Any) -> list[ValidationErrorItem]:
         doc,
         "agent_runtime",
         [
-            ("allowed_tools", "str_array"),
-            ("forbidden_tools", "str_array"),
+            ("allowed_tools", "str_or_object_array"),
+            ("forbidden_tools", "str_or_object_array"),
             ("guardrails", "object"),
             ("trace_evidence", "object"),
         ],

@@ -204,6 +204,84 @@ data_contracts:
 
 この追加は、BI/分析向けの取消理由集計を本章へ持ち込むものではありません。non-goal を広げず、CancelOrder の運用に必要な read model と監査 lineage の保存条件だけを検証対象にします。
 
+## 第10章補論: Agent Runtime Contract をIssue/PR/CIで検証する
+
+`CancelOrder` を AI エージェントへ委任する場合、Context Pack の morphism だけでは不十分です。どの tool を呼んでよいか、どの検証を通すか、実行証跡をどこで確認するかを、Agent Runtime Contract として固定します。ここでの圏論語彙は「`CancelOrder` を正当化する証明」ではありません。対応づけは次のように分けます。
+
+- 比喩: tool call chain を Kleisli composition として眺めると、効果境界を説明しやすい。
+- 対応づけ: tool input schema を `A`、tool output schema を `B`、外部I/O・失敗・権限・監査を `M` として扱う。
+- 検証条件: allowed / forbidden tool、guardrail、trace evidence が PR と CI で確認できること。
+
+`CancelOrder` の場合、Context Pack v2 へ次の差分を追加します。
+
+```yaml
+agent_runtime:
+  allowed_tools:
+    - name: get_order
+      protocol: MCP
+      effect: ReadDB
+      input_schema_ref: schemas/GetOrderInput.json
+      output_schema_ref: schemas/GetOrderOutput.json
+      preconditions:
+        - tenant_id_is_bound
+        - caller_has_order_read_permission
+      postconditions:
+        - no_write_performed
+        - pii_fields_redacted_unless_allowed
+
+    - name: cancel_order
+      protocol: MCP
+      effect: WriteDB
+      idempotency_key: order_id
+      audit_required: true
+      retry_policy: bounded
+
+  forbidden_tools:
+    - direct_sql_write
+    - shell_without_sandbox
+    - network_call_to_unregistered_endpoint
+
+  guardrails:
+    input:
+      - reject_cross_tenant_request
+    output:
+      - verify_no_secret_exfiltration
+    tool:
+      - validate_tool_input_schema
+      - validate_tool_output_schema
+
+  trace_evidence:
+    required_spans:
+      - llm_generation
+      - tool_call
+      - guardrail_result
+      - handoff
+    retention_policy: project_default
+```
+
+この contract は MCP server の実装手順ではなく、レビュー対象の境界です。MCP は外部 tool / data source へ接続するプロトコルとして扱い、詳細仕様の再掲はしません。OpenAI Agents SDK や GitHub Copilot coding agent も、同じ contract を満たす実行基盤の例に過ぎません。特定実装に閉じるのではなく、次の確認点へ落とします。
+
+| 確認対象 | PRで見る証跡 | CIまたはレビューでの判定 |
+| --- | --- | --- |
+| `allowed_tools` | 使用 tool 一覧、tool input/output schema 参照 | `cancel_order` が契約内 tool として呼ばれているか |
+| `forbidden_tools` | 差分内の shell / DB / network 呼び出し | `direct_sql_write` や未登録 endpoint への呼び出しがないか |
+| `guardrails.input` | tenant / 権限 / schema validation のログ | cross-tenant request を拒否しているか |
+| `guardrails.output` | 出力検査結果、PII/secret scan 結果 | secret / PII を漏らしていないか |
+| `guardrails.tool` | tool call 前後の validation 結果 | input/output schema を通過しているか |
+| `trace_evidence.required_spans` | trace URL、CI run URL、レビューコメント | `llm_generation`、`tool_call`、`guardrail_result`、`handoff` が揃っているか |
+
+Issue には、変更要求だけでなく、この contract のチェックリストを置きます。PR には、Context Pack diff、実装差分、検証コマンド、trace evidence の参照を載せます。CI は `validate-context-pack` と schema validation で contract の構造を検知し、実装リポジトリ側のテストで `AT4/AT5` と `D2/D4` を検知します。人間レビューは、CI が拾えない「forbidden tool を提案していないか」「trace evidence が監査に使える粒度か」を確認します。
+
+`CancelOrder` の tool chain は、最小では次の順序です。
+
+1. `get_order`: 注文状態、tenant、権限、PII マスキングを確認する。読み取り効果なので postcondition は `no_write_performed` でなければならない。
+2. `guardrails.input`: `Order.state in [Draft, Placed]`、tenant 境界、caller 権限を検証する。
+3. `cancel_order`: `WriteDB` 効果を持つため、`idempotency_key: order_id`、bounded retry、audit required を満たす。
+4. `guardrails.output`: secret / PII 漏洩と schema 逸脱がないことを検証する。
+5. `trace_evidence`: tool call、guardrail result、handoff を PR と CI の証跡へ残す。
+
+この順序が崩れると、Kleisli law の「きれいな合成」ではなく、実務上の law violation として現れます。たとえば、retry が二重取消を生む、`cancel_order` 前に `get_order` を省略して cross-tenant 更新を許す、監査 trace が欠落してレビュー不能になる、といった破綻です。
+
 ## AI へ委任する
 
 Context Pack を更新したら、その差分だけを根拠付きで AI に渡します。

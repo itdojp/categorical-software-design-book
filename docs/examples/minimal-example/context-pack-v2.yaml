@@ -83,20 +83,30 @@ effects:
 
 agent_runtime:
   allowed_tools:
-    - "local test runner"
+    - name: validate_context_pack
+      protocol: local
+      effect: ReadRepo
+      input_schema_ref: schemas/ContextPackPath.json
+      output_schema_ref: schemas/ValidationResult.json
   forbidden_tools:
-    - "production database"
+    - production_database
+    - shell_without_sandbox
   guardrails:
-    input_validation:
+    input:
       - "Context Pack の必須フィールドが欠落していないこと"
-    output_validation:
+    output:
       - "Forbidden changes を破る差分を出力しないこと"
-    tool_invocation:
-      - "許可された local tool だけを使うこと"
+    tool:
+      - "allowed_tools にある local tool だけを使うこと"
   trace_evidence:
-    required:
+    required_spans:
+      - llm_generation
+      - tool_call
+      - guardrail_result
+    required_artifacts:
       - "実行した検証コマンド"
       - "レビューで確認した Diagram id"
+    retention_policy: project_default
 
 resource_constraints:
   tool_budget:

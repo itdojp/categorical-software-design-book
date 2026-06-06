@@ -97,10 +97,37 @@ effects:
   effect_safety_notes: []
 
 agent_runtime:
-  allowed_tools: []
-  forbidden_tools: []
-  guardrails: {}
-  trace_evidence: {}
+  allowed_tools:
+    - name: <tool-name>
+      protocol: MCP # MCP | local | HTTP | other agreed protocol
+      effect: ReadDB # ReadDB | WriteDB | ReadRepo | WriteAuditLog | ExternalCall
+      input_schema_ref: schemas/<ToolInput>.json
+      output_schema_ref: schemas/<ToolOutput>.json
+      preconditions: []
+      postconditions: []
+      idempotency_key: <optional-key>
+      audit_required: false
+      retry_policy: none # none | bounded
+  forbidden_tools:
+    - direct_sql_write
+    - shell_without_sandbox
+    - network_call_to_unregistered_endpoint
+  guardrails:
+    input:
+      - validate_tool_input_schema
+    output:
+      - validate_tool_output_schema
+      - verify_no_secret_exfiltration
+    tool:
+      - reject_tool_not_in_allowed_tools
+  trace_evidence:
+    required_spans:
+      - llm_generation
+      - tool_call
+      - guardrail_result
+      - handoff
+    required_artifacts: []
+    retention_policy: project_default
 
 resource_constraints:
   tool_budget: {}

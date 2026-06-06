@@ -62,6 +62,21 @@ appendix: references
 - Categorical Data, “Papers”, <https://categoricaldata.net/papers.html>
   - CQL、Functorial Data Migration、Algebraic Data Integration などの一次導線を確認する。
 
+## 参考文献（Agent Runtime / MCP / Guardrails / Tracing）
+
+- Model Context Protocol, “Specification 2025-11-25”, <https://modelcontextprotocol.io/specification/2025-11-25>
+  - MCP を外部 tool / data source へ接続する protocol として確認する一次導線。本書では詳細仕様の再掲ではなく、tool contract とレビュー境界へ落とす。
+- OpenAI, “OpenAI Agents SDK”, <https://openai.github.io/openai-agents-python/>
+  - agents、handoffs、guardrails、tracing などを備えた実行基盤の例。特定実装に閉じず、Agent Runtime Contract の検証点を考えるための参照として使う。
+- OpenAI, “Guardrails”, <https://openai.github.io/openai-agents-python/guardrails/>
+  - input / output の検証点として guardrail を扱う参考導線。
+- OpenAI, “Tracing”, <https://openai.github.io/openai-agents-python/tracing/>
+  - tool call、handoff、guardrail result を後から確認する trace evidence の参考導線。
+- GitHub Docs, “GitHub Copilot features”, <https://docs.github.com/en/copilot/get-started/features>
+  - Copilot coding agent、code review、MCP servers など、GitHub上のAI支援機能を確認する導線。
+- OpenAI, “Codex”, <https://openai.com/codex/>
+  - GitHub / CLI / cloud 環境でタスクを委任するエージェント実行基盤の例として参照する。
+
 ## 参考文献（FP/型/意味論・周辺）
 
 - Benjamin C. Pierce, *Types and Programming Languages*
@@ -83,5 +98,5 @@ appendix: references
 | 第6章 | Fong & Spivak（普遍性の応用）、型システム入門（合併型/直積型） |
 | 第7章 | Spivak / Fong & Spivak（統合の図式化）、CQL / Functorial Data Migration（スキーマ統合・データ移行） |
 | 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、実務の並列/合流設計資料 |
-| 第9章 | FP文献（モナド/効果）、形式手法（不変条件の固定） |
-| 第10章 | GitHub Actions / テスト戦略 / レビュー運用の実務資料（再現可能性を優先） |
+| 第9章 | FP文献（モナド/効果）、MCP / Agents SDK（tool call と guardrail / tracing の実行境界）、形式手法（不変条件の固定） |
+| 第10章 | GitHub Actions / GitHub Copilot features / Agent Runtime Contract / テスト戦略 / レビュー運用の実務資料（再現可能性を優先） |
