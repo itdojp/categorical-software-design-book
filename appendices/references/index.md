@@ -102,6 +102,16 @@ appendix: references
 - Andrew W. Appel, *Modern Compiler Implementation*（意味保存の観点に有用）
 - Paul Hudak ほか, *Haskell* 系入門（モナド/効果の実装直観）
 
+
+## 参考文献（Algebraic Effects / Effect Handlers）
+
+- OCaml, “OCaml 5.0.0 Release Notes”, <https://ocaml.org/releases/5.0.0>
+  - OCaml 5.0 で effect handlers が導入されたことを確認する一次導線。
+- OCaml Manual, “Language extensions / Effect handlers”, <https://ocaml.org/manual/5.3/effects.html>
+  - operation、handler、未処理 effect、effect safety の限界、線形 continuation の注意点を確認する。
+- Koka, “The Koka Programming Language”, <https://koka-lang.github.io/koka/doc/index.html>
+  - effect types / handlers を備える研究言語として、operation と handler の分離を学ぶ導線。
+
 ## 参考文献（テスト/検証/形式手法）
 
 - Leslie Lamport, *Specifying Systems*（TLA+）

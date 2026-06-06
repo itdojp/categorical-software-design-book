@@ -267,6 +267,14 @@ effects:
     - id: ReserveInventory
       kind: external-call
       target: InventoryService
+      input: ReserveInventoryInput
+      output: ReserveInventoryResult
+      possible_failures:
+        - OutOfStock
+        - InventoryServiceTimeout
+      required_properties:
+        - idempotent_by_order_id
+        - audited
     - id: AppendAuditEvent
       kind: write-once
       target: AuditLog
@@ -276,13 +284,26 @@ effects:
   handlers:
     - id: OrderRepository
       handles: [PersistOrder]
-    - id: InventoryGateway
-      handles: [ReserveInventory]
+    - id: ProductionInventoryHandler
+      operation: ReserveInventory
+      implementation: InventoryService.MCP
+      retry_policy: bounded
+      timeout_ms: 3000
+      audit_sink: OrderAuditLog
+    - id: TestInventoryHandler
+      operation: ReserveInventory
+      implementation: InMemoryFake
+      allowed_environments:
+        - test
+        - local
     - id: AuditAppender
       handles: [AppendAuditEvent]
     - id: AuditExporter
       handles: [ExportAuditEvents]
   effect_safety_notes:
+    - "ReserveInventory の本番 handler は timeout と bounded retry を必須にすること"
+    - "bounded retry の詳細として指数バックオフを使う場合は運用設定で明示すること"
+    - "TestInventoryHandler は test / local 以外で使わないこと"
     - "AppendAuditEvent は成功した重要操作ごとに必ず1回以上観測できること"
     - "ExportAuditEvents は actor の権限を guardrail と acceptance_tests で確認すること"
 

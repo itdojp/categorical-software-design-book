@@ -166,7 +166,45 @@ data_contracts:
 
 ### effects
 
-外部I/O、永続化、tool call、監査ログ追記などを `operations` として列挙し、どの `handlers` が扱うかを分けます。`effect_safety_notes` には、成功条件、失敗条件、再試行、冪等性、監査上の注意を書きます。
+外部I/O、永続化、tool call、監査ログ追記などを `operations` として列挙し、どの `handlers` が扱うかを分けます。
+`operations` は「何を要求するか」、`handlers` は「その要求をどの環境・実装でどう解釈するか」です。
+`effect_safety_notes` には、成功条件、失敗条件、再試行、冪等性、監査上の注意を書きます。
+
+構造化して書く場合は、operation 側に入出力、失敗、必須性質を書きます。
+handler 側には対象 operation、実装、retry、timeout、audit、利用可能環境を書きます。
+`operation` は単一の operation id を指す書き方です。`handles` は 1 件以上の operation id を配列で列挙する既存の短縮表現で、単一要素でも使えます。
+AI agent tool call へ接続する場合は、operation を勝手に増やさず、handler の環境制約を guardrail / CI / review で確認します。
+
+```yaml
+effects:
+  operations:
+    - id: ReserveInventory
+      input: ReserveInventoryInput
+      output: ReserveInventoryResult
+      possible_failures:
+        - OutOfStock
+        - InventoryServiceTimeout
+      required_properties:
+        - idempotent_by_order_id
+        - audited
+  handlers:
+    - id: ProductionInventoryHandler
+      operation: ReserveInventory
+      implementation: InventoryService.MCP
+      retry_policy: bounded
+      timeout_ms: 3000
+      audit_sink: OrderAuditLog
+    - id: TestInventoryHandler
+      operation: ReserveInventory
+      implementation: InMemoryFake
+      allowed_environments:
+        - test
+        - local
+  effect_safety_notes:
+    - "ReserveInventory の本番 handler は timeout と bounded retry を必須にする"
+    - "bounded retry の詳細として指数バックオフを使う場合は運用設定で明示する"
+    - "TestInventoryHandler を production で使わない"
+```
 
 ### agent_runtime
 
