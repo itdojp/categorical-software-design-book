@@ -142,6 +142,21 @@ open_systems:
 `OrderService` は支払取消を要求しますが、外部決済APIのretryや監査の詳細は `PaymentAdapter` 側の境界内に閉じ込めます。
 合成後の正しさは、「圏論的に合成したから正しい」ではなく、`no_orphan_payment_request` や `audit_event_preserved` のような検証条件で確認します。
 
+### Lens / Optic と feedback loop
+
+Lens / Optic は、第8章の配線図式では feedback loop を説明する補助線になります。
+`get` は source から agent が観測する view を作り、`put` は agent / UI が許可された差分だけを source へ戻します。
+agent loop へ接続する場合も、更新経路を自由な setter として扱わず、loop の戻り口に laws と forbidden updates を置きます。
+
+| loop の段階 | Lens / Optic で固定するもの | 検証観点 |
+| --- | --- | --- |
+| observe | `get` が作る view | 表示用 DTO が source の監査・権限条件を落としていないか |
+| decide | view 上の許可更新 | agent が forbidden updates を提案していないか |
+| act / update | `put` が source へ戻す差分 | `get_after_put_consistency` と監査追跡が保たれるか |
+
+Categorical cybernetics は、optimization や control を optics などの道具で扱う発展的な研究導線です。
+本書では強化学習や制御理論の詳細へ踏み込まず、agent loop の観測・更新境界を Context Pack の検証条件として書く用途に限定します。
+
 ## 実装カタログへの接続
 
 配線や分業を実装・研究カタログへ接続する場合は、[付録E: Applied Category Theory 実装カタログ]({{ '/appendices/implementation-catalog/' | relative_url }}) を参照します。

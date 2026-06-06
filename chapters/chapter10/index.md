@@ -204,6 +204,40 @@ data_contracts:
 
 この追加は、BI/分析向けの取消理由集計を本章へ持ち込むものではありません。non-goal を広げず、CancelOrder の運用に必要な read model と監査 lineage の保存条件だけを検証対象にします。
 
+### 4) DTO / view 更新を Lens として検証する
+
+CancelOrder の UI や API で `OrderSummaryDTO` を扱う場合、DTO は source である `Order` そのものではありません。
+view から戻してよい更新と、戻してはいけない更新を分けないと、表示項目の修正が決済承認や監査履歴の改変に化けます。
+Context Pack v2 では、view 更新を Lens / Optic の形で明示します。
+
+```yaml
+views:
+  lenses_or_optics:
+    - id: OrderSummaryView
+      source: Order
+      view: OrderSummaryDTO
+      get:
+        description: "Order と AuditEvent lineage から表示用 DTO を作る"
+        preserves:
+          - OrderId
+          - state
+          - auditLineage
+      put:
+        description: "UI から許可された表示メモだけを Order へ戻す"
+        allowed_updates:
+          - shippingMemo
+      laws:
+        - get_after_put_consistency
+        - put_after_get_no_spurious_change
+      forbidden_updates:
+        - change_payment_authorization_directly
+        - mutate_audit_history
+```
+
+レビューでは、`get` が表示に必要な監査 lineage を落としていないこと、`put` が `allowed_updates` 以外を source へ戻さないことを確認します。
+`get_after_put_consistency` は、許可された更新を戻したあと再度 DTO を作ったときに、利用者が入力した表示項目が失われないことを確認します。
+`put_after_get_no_spurious_change` は、source から作った DTO をそのまま戻しても、決済承認・監査履歴・状態遷移が余計に変わらないことを確認します。
+
 ## 第10章補論: Agent Runtime Contract をIssue/PR/CIで検証する
 
 `CancelOrder` を AI エージェントへ委任する場合、Context Pack の morphism だけでは不十分です。どの tool を呼んでよいか、どの検証を通すか、実行証跡をどこで確認するかを、Agent Runtime Contract として固定します。ここでの圏論語彙は「`CancelOrder` を正当化する証明」ではありません。対応づけは次のように分けます。
@@ -428,8 +462,8 @@ CI が落ちたときの修正順も、ケーススタディの一部です。
     </tr>
     <tr>
       <td>第5章</td>
-      <td>自然変換</td>
-      <td>差分レビューで「意味保存の変更か」を確認し、汎用 API 化を差し戻す</td>
+      <td>自然変換 / Lens</td>
+      <td>差分レビューで意味保存を確認し、DTO / view 更新は <code>get</code> / <code>put</code> / laws / forbidden updates で検証する</td>
     </tr>
     <tr>
       <td>第6章</td>

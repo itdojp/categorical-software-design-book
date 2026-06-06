@@ -286,6 +286,26 @@ open_systems:
 
 views:
   lenses_or_optics:
+    - id: OrderSummaryView
+      source: Order
+      view: OrderSummaryDTO
+      get:
+        description: "Order と AuditEvent lineage から UI 表示用 DTO を作る"
+        preserves:
+          - OrderId
+          - state
+          - auditLineage
+      put:
+        description: "UI/API から許可された表示メモだけを Order へ戻す"
+        allowed_updates:
+          - displayName
+          - shippingMemo
+      laws:
+        - get_after_put_consistency
+        - put_after_get_no_spurious_change
+      forbidden_updates:
+        - change_payment_authorization_directly
+        - mutate_audit_history
     - id: OrderLifecycleView
       source: Order
       focus: state
