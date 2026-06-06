@@ -170,7 +170,7 @@ data_contracts:
 
 ### agent_runtime
 
-`allowed_tools` と `forbidden_tools` で実行環境の境界を固定します。各 tool は、簡単な文字列でも、`name`、`protocol`、`effect`、`input_schema_ref`、`output_schema_ref`、`preconditions`、`postconditions` を持つ構造化オブジェクトでも構いません。`forbidden_tools` は「実行してはいけない tool / 経路」を列挙し、レビューで検出できる禁止事項にします。`guardrails` は input / output / tool invocation の検証点を書き、`trace_evidence` はPR、CI、レビュー、ログなど後から監査できる証跡を書きます。
+`allowed_tools` と `forbidden_tools` で実行環境の境界を固定します。各 allowed tool は、簡単な文字列でも、`name`、`protocol`、`effect`、`input_schema_ref`、`output_schema_ref` を持つ構造化オブジェクトでも構いません。構造化オブジェクトでは、必要に応じて `preconditions`、`postconditions`、`idempotency_key`、`audit_required`、`retry_policy` を追加します。`forbidden_tools` は「実行してはいけない tool / 経路」を列挙し、object 形式の場合は `name` を必須にします。`guardrails` は input / output / tool invocation の検証点を書き、`trace_evidence` はPR、CI、レビュー、ログなど後から監査できる証跡を書きます。
 
 ```yaml
 agent_runtime:
@@ -190,6 +190,8 @@ agent_runtime:
     - name: cancel_order
       protocol: MCP
       effect: WriteDB
+      input_schema_ref: schemas/CancelOrderInput.json
+      output_schema_ref: schemas/CancelOrderOutput.json
       idempotency_key: order_id
       audit_required: true
       retry_policy: bounded

@@ -232,6 +232,8 @@ agent_runtime:
     - name: cancel_order
       protocol: MCP
       effect: WriteDB
+      input_schema_ref: schemas/CancelOrderInput.json
+      output_schema_ref: schemas/CancelOrderOutput.json
       idempotency_key: order_id
       audit_required: true
       retry_policy: bounded
