@@ -45,3 +45,5 @@ appendices:
     path: "/appendices/references/"
   - title: "付録D クイックリファレンス"
     path: "/appendices/desk-reference/"
+  - title: "付録E Applied Category Theory 実装カタログ"
+    path: "/appendices/implementation-catalog/"

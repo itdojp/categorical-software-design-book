@@ -91,6 +91,11 @@
         "id": "desk-reference",
         "title": "クイックリファレンス",
         "description": "図版、レビュー前の最小確認項目、症状別の戻り先を短時間で引き直すときに使う。"
+      },
+      {
+        "id": "implementation-catalog",
+        "title": "Applied Category Theory 実装カタログ",
+        "description": "ACTの実装・研究成果を、章別の設計課題と実務上の注意点へ接続するときに使う。"
       }
     ],
     "resources": [

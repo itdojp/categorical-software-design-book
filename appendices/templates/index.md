@@ -262,6 +262,39 @@ diagrams:
     test_level: Integration
 ```
 
+## ACT実装・研究カタログ項目テンプレ
+
+外部ツールや研究成果を本文へ入れる場合は、ツール名だけでなく、
+公式URL、確認日、使いどころ、限界を同じ場所に残します。
+カタログ例は [付録E: Applied Category Theory 実装カタログ]({{ '/appendices/implementation-catalog/' | relative_url }}) を参照してください。
+
+```yaml
+act_catalog_entry:
+  name: <tool-or-research-name>
+  official_url: <official-or-paper-url>
+  confirmed_at: "YYYY-MM-DD"
+  source_type: official-site # official-site | repository | paper | release-note
+  use_case:
+    - <integration | wiring | effect | resource | patch>
+  book_chapters:
+    - chapter07
+  maps_to_context_pack:
+    - data_contracts
+  not_for:
+    - <claim-to-avoid>
+  maturity_notes:
+    - <research/prototype/production caveat>
+  review_questions:
+    - <question reviewers must ask>
+```
+
+レビュー時は次を確認します。
+
+- 公式URLまたは論文URLがある。
+- 「本書での対応章」と Context Pack の接続先がある。
+- proof assistant、production tool、GitHub標準運用との互換性を過大評価していない。
+- 成熟度、データ感度、運用上の制約を明記している。
+
 ## レビュー用チェックリスト（AI生成物レビュー含む）
 
 この節は詳細版のチェックリストです。まず論点を絞りたい場合は、[付録D: クイックリファレンス](../../appendices/desk-reference/) の「レビュー前の最小確認項目」から入ってください。
