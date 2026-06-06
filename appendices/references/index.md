@@ -81,6 +81,14 @@ appendix: references
 - Granule Project, “The Granule Language”, <https://granule-project.github.io/granule.html>
   - graded modal types、linear λ-calculus、resource reasoning の概念参照として使う。
 
+
+## 参考文献（Open Systems / Structured Cospans）
+
+- Evan Patterson, “Structured and Decorated Cospans from the Viewpoint of Double Category Theory”, <https://arxiv.org/abs/2304.00447>
+  - structured cospans と decorated cospans を open systems のための枠組みとして扱う論文。本書では double category の証明ではなく、境界・共有インターフェース・合成・検証条件への落とし込みに使う。
+- AlgebraicJulia, “Catlab.jl”, <https://github.com/AlgebraicJulia/Catlab.jl>
+  - wiring diagram や open systems の実装導線を調べる入口。形式証明ツールとは扱わない。
+
 ## 参考文献（Agent Runtime / MCP / Guardrails / Tracing）
 
 - Model Context Protocol, “Specification 2025-11-25”, <https://modelcontextprotocol.io/specification/2025-11-25>
@@ -126,6 +134,6 @@ appendix: references
 | 第4〜5章 | Milewski（関手/自然変換の実装直観）、Fong & Spivak（合成的設計） |
 | 第6章 | Fong & Spivak（普遍性の応用）、型システム入門（合併型/直積型） |
 | 第7章 | Spivak / Fong & Spivak（統合の図式化）、CQL / Functorial Data Migration（スキーマ統合・データ移行）、Pijul / patch theory（差分意味論） |
-| 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、Catlab / GATlab / CatColab、実務の並列/合流設計資料 |
+| 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、Structured / Decorated Cospans、Catlab / GATlab / CatColab、実務の並列/合流設計資料 |
 | 第9章 | FP文献（モナド/効果）、OCaml effects / Koka / Granule、MCP / Agents SDK（tool call と guardrail / tracing の実行境界）、形式手法（不変条件の固定） |
 | 第10章 | GitHub Actions / GitHub Copilot features / Agent Runtime Contract / テスト戦略 / レビュー運用の実務資料（再現可能性を優先） |
