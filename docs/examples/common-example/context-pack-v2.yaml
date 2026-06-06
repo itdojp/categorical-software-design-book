@@ -411,7 +411,7 @@ agent_runtime:
     output:
       - verify_no_secret_exfiltration
       - verify_diagram_and_acceptance_test_ids_are_referenced
-      - require_pii_redaction_before_general_llm
+      - reject_general_llm_without_redaction
     tool:
       - validate_tool_input_schema
       - validate_tool_output_schema
@@ -445,9 +445,11 @@ resource_constraints:
     audit_log: "payloadHash は改竄検知用の例であり、実データを公開しない"
   linear_resources:
     - id: IdempotencyKey
-      rule: "同一 key は同一 scope で一度だけ成功結果へ対応させる"
+      rule:
+        - "同一 key は同一 scope で一度だけ成功結果へ対応させる"
     - id: OneTimePaymentToken
-      rule: "再利用禁止。保存せず、handler 境界で破棄する"
+      rule:
+        - "再利用禁止。保存せず、handler 境界で破棄する"
     - id: payment_authorization_token
       kind: one_time_token
       rule:
