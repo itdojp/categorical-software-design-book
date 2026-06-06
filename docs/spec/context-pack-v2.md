@@ -45,8 +45,8 @@ python3 scripts/validate-context-pack-schema.py --schema docs/spec/context-pack-
 
 機械可読スキーマ（JSON Schema）は次を参照してください。
 
-- [Context Pack v2 JSON Schema]({{ '/spec/context-pack-v2.schema.json' | relative_url }})
-- [Context Pack v1 JSON Schema]({{ '/spec/context-pack-v1.schema.json' | relative_url }})
+- [Context Pack v2 JSON Schema]({{ '/docs/spec/context-pack-v2.schema.json' | relative_url }})
+- [Context Pack v1 JSON Schema]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})
 
 ## 追加フィールド一覧
 

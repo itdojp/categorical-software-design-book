@@ -364,7 +364,7 @@ def validate_context_pack_v2(doc: Any) -> list[ValidationErrorItem]:
 
 
 def detect_context_pack_version(doc: Any) -> int:
-    if isinstance(doc, dict) and doc.get("context_pack_version") == 2:
+    if isinstance(doc, dict) and (doc.get("context_pack_version") == 2 or doc.get("version") == 2):
         return 2
     return 1
 
