@@ -203,7 +203,39 @@ open_systems:
 
 ### views.lenses_or_optics
 
-読み取り view、射影、更新規則を明示します。view の追加が元データの制約や監査条件を破らないかをレビューできるようにします。
+読み取り view、射影、更新規則を明示します。
+view の追加が元データの制約や監査条件を破らないかをレビューできるようにします。
+Lens / Optic として書く場合は、単なる UI mapper ではなく、`get` / `put` / `laws` / `forbidden_updates` を分けます。
+
+```yaml
+views:
+  lenses_or_optics:
+    - id: OrderSummaryView
+      source: Order
+      view: OrderSummaryDTO
+      get:
+        description: "Order から UI 表示用 DTO を作る"
+        preserves:
+          - OrderId
+          - state
+          - auditLineage
+      put:
+        description: "UI/API から許可された変更だけを Order へ戻す"
+        allowed_updates:
+          - displayName
+          - shippingMemo
+      laws:
+        - get_after_put_consistency
+        - put_after_get_no_spurious_change
+      forbidden_updates:
+        - change_payment_authorization_directly
+        - mutate_audit_history
+```
+
+`get` は source から view を作る読み取り方向です。
+`put` は view で許可された差分だけを source へ戻す更新方向です。
+`laws` は往復時に余計な差分を生まないことを確認する規則、`forbidden_updates` は view から直接変えてはいけない source 側の事実です。
+これらは `acceptance_tests`、property-based test、または PR review checklist で確認します。
 
 ### effects
 

@@ -85,6 +85,56 @@ AIにリファクタを任せると、コードの見た目は良くなるが意
 - 監査ログ（AuditEvent）
 - 外部副作用（決済/配送など）
 
+## 第5章補論: 自然変換から Lens / Optic へ
+
+自然変換は、Before と After の対応がすべての操作と整合するかを確認する枠組みです。
+一方、Lens / Optic は、source と view のあいだで「読む」だけでなく、許可された更新を source へ戻す関係を明示します。
+実務では、UI mapper の便利な比喩で終わらせず、`get` / `put` / `laws` / `forbidden_updates` をレビュー対象にします。
+
+| 観点 | 自然変換 | Lens / Optic |
+| --- | --- | --- |
+| 主な問い | Before / After の差分は意味保存か | view への更新を source へ安全に戻せるか |
+| 固定するもの | 対象ごとの成分と可換条件 | `get`、`put`、laws、禁止更新 |
+| 実務例 | リファクタ、互換レイヤ、データ移行 | DTO、read model、UI 編集、設定画面 |
+| 破綻例 | 操作前後で結果が一致しない | view から監査履歴や決済承認を直接書き換える |
+
+代表的な読み方は次の通りです。
+
+- `get`: source から view を作る。例: `Order` から `OrderSummaryDTO` を作る。
+- `put`: view で許可された変更だけを source へ戻す。
+- laws: `get` と `put` が不要な差分を生まないことを確認する規則。
+- `forbidden_updates`: view から直接変えてはいけない source 側の事実。
+
+Context Pack v2 では、次のように `views.lenses_or_optics` へ落とします。
+
+```yaml
+views:
+  lenses_or_optics:
+    - id: OrderSummaryView
+      source: Order
+      view: OrderSummaryDTO
+      get:
+        description: "Order から UI 表示用 DTO を作る"
+      put:
+        description: "UI/API から許可された配送先メモと表示名だけを Order へ戻す"
+        allowed_updates:
+          - displayName
+          - shippingMemo
+      laws:
+        - get_after_put_consistency
+        - put_after_get_no_spurious_change
+      forbidden_updates:
+        - change_payment_authorization_directly
+        - mutate_audit_history
+```
+
+ここで重要なのは、`put` を「何でも戻せる setter」として扱わないことです。
+`OrderSummaryDTO` の編集から `Payment.status` や `AuditEvent` を直接変更できるなら、source / view の境界が壊れています。
+レビューでは、`allowed_updates` と `forbidden_updates` を分け、`laws` を acceptance test や property-based test の観点へ落とします。
+
+Optic の圏論的定式化には profunctor optics などの研究導線があります。
+本書では、詳細な定式化ではなく、[参考文献（Optics / Lenses / Categorical Cybernetics）]({{ '/appendices/references/' | relative_url }}#ref-optics-lenses-categorical-cybernetics)に一次導線を残し、設計レビューで確認できる条件へ限定します。
+
 ## AIエージェントへの引き渡し
 
 AIにリファクタを委任する場合は、自然性を満たすための安全柵を入力として与えます。

@@ -82,6 +82,17 @@ appendix: references
   - graded modal types、linear λ-calculus、resource reasoning の概念参照として使う。
 
 
+## 参考文献（Optics / Lenses / Categorical Cybernetics） {#ref-optics-lenses-categorical-cybernetics}
+
+- Matthew Pickering, Jeremy Gibbons, Nicolas Wu, “Profunctor Optics: Modular Data Accessors”, <https://arxiv.org/abs/1703.10857>
+  - optics を data accessor として扱い、getter / setter 風の素朴な実装を合成可能な first-class accessor へ引き上げる背景として参照する。
+- Bryce Clarke, Derek Elkins, Jeremy Gibbons, Fosco Loregian, Bartosz Milewski, Emily Pillmore, Mario Román, “Profunctor Optics, a Categorical Update”, <https://arxiv.org/abs/2001.07488>
+  - bidirectional data accessor としての optics、mixed / enriched optics への一般化を確認する導線。本書では詳細証明ではなく source / view / get / put / laws の実務境界に使う。
+- Jules Hedges, Riu Rodríguez Sakamoto, “Reinforcement Learning in Categorical Cybernetics”, <https://arxiv.org/abs/2404.02688>
+  - categorical cybernetics と parametrised bidirectional process の研究導線。agent loop へ接続する際の発展的背景として扱い、強化学習の詳細解説には踏み込まない。
+- CyberCat Institute, <https://cybercat.institute/>
+  - categorical cybernetics / applied category theory の研究ネットワーク。公式 About ページでは、optimization、control、intelligence を主対象とし、optics や open games などを道具として扱うことを確認する。
+
 ## 参考文献（Open Systems / Structured Cospans）
 
 - Evan Patterson, “Structured and Decorated Cospans from the Viewpoint of Double Category Theory”, <https://arxiv.org/abs/2304.00447>
@@ -131,9 +142,9 @@ appendix: references
 | 章 | 次に読む候補 |
 | --- | --- |
 | 第2〜3章 | Mac Lane / Awodey / Riehl（基礎）、Milewski（直観） |
-| 第4〜5章 | Milewski（関手/自然変換の実装直観）、Fong & Spivak（合成的設計） |
+| 第4〜5章 | Milewski（関手/自然変換の実装直観）、Fong & Spivak（合成的設計）、Profunctor Optics（Lens / Optic と DTO / view 更新） |
 | 第6章 | Fong & Spivak（普遍性の応用）、型システム入門（合併型/直積型） |
 | 第7章 | Spivak / Fong & Spivak（統合の図式化）、CQL / Functorial Data Migration（スキーマ統合・データ移行）、Pijul / patch theory（差分意味論） |
-| 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、Structured / Decorated Cospans、Catlab / GATlab / CatColab、実務の並列/合流設計資料 |
+| 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、Structured / Decorated Cospans、Optics / Categorical Cybernetics、Catlab / GATlab / CatColab、実務の並列/合流設計資料 |
 | 第9章 | FP文献（モナド/効果）、OCaml effects / Koka / Granule、MCP / Agents SDK（tool call と guardrail / tracing の実行境界）、形式手法（不変条件の固定） |
 | 第10章 | GitHub Actions / GitHub Copilot features / Agent Runtime Contract / テスト戦略 / レビュー運用の実務資料（再現可能性を優先） |
