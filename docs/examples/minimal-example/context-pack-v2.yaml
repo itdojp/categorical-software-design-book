@@ -1,0 +1,126 @@
+# この YAML は Context Pack v2 の最小例の source 管理・local 検証用です。
+# v2 は v1 を置き換えず、AIエージェント実行・データ契約・効果境界・検証証跡を追加する拡張です。
+# 形式と必須項目の正本は `docs/spec/context-pack-v2.md` を参照してください。
+version: 2
+context_pack_version: 2
+name: minimal-example-v2
+
+problem_statement:
+  goals: ["最小の v2 例として成立させる"]
+  non_goals: ["v1 の必須項目を削除しない"]
+
+domain_glossary:
+  terms:
+    - term: Order
+      ja: 注文
+
+objects:
+  - id: Order
+    kind: entity
+    fields: [orderId, state]
+
+morphisms:
+  - id: PlaceOrder
+    input: { orderId: "OrderId" }
+    output: { orderId: "OrderId" }
+    pre: ["Order.state == Draft"]
+    post: ["Order.state == Placed"]
+    failures: ["InvalidState"]
+
+diagrams:
+  - id: D1-order-state
+    statement: "PlaceOrder は Draft のみに適用できる"
+    verification: ["Draft 以外では InvalidState になる"]
+
+constraints: {}
+
+acceptance_tests:
+  - id: AT1-happy-path
+    scenario: Draft の Order に PlaceOrder を適用する
+    expected: ["Order.state == Placed"]
+
+coding_conventions:
+  language: language-agnostic
+  directory: []
+  dependencies: {}
+
+forbidden_changes:
+  - "Diagrams を満たさない変更"
+
+data_contracts:
+  schemas:
+    - id: OrderSchema
+      object: Order
+      fields: [orderId, state]
+  mappings: []
+  migration_verification: []
+
+open_systems:
+  components:
+    - id: OrderService
+      boundary: "注文状態の更新だけを担当する"
+  boundaries:
+    - id: OrderApiBoundary
+      rule: "入力検証を通過した PlaceOrder だけを受け付ける"
+  composition: []
+
+views:
+  lenses_or_optics:
+    - id: OrderStateView
+      source: Order
+      focus: state
+      update_rule: "state 更新は Diagrams と acceptance_tests を破らない範囲に限る"
+
+effects:
+  operations:
+    - id: PersistOrder
+      kind: write
+  handlers:
+    - id: OrderRepository
+      handles: [PersistOrder]
+  effect_safety_notes:
+    - "永続化は PlaceOrder の post 条件と監査可能な結果で確認する"
+
+agent_runtime:
+  allowed_tools:
+    - "local test runner"
+  forbidden_tools:
+    - "production database"
+  guardrails:
+    input_validation:
+      - "Context Pack の必須フィールドが欠落していないこと"
+    output_validation:
+      - "Forbidden changes を破る差分を出力しないこと"
+    tool_invocation:
+      - "許可された local tool だけを使うこと"
+  trace_evidence:
+    required:
+      - "実行した検証コマンド"
+      - "レビューで確認した Diagram id"
+
+resource_constraints:
+  tool_budget:
+    max_tool_calls: 20
+  data_sensitivity:
+    pii: "none"
+    production_data: "prohibited"
+  linear_resources:
+    - id: OneTimeToken
+      rule: "再利用禁止。使用したら trace_evidence に記録する"
+
+change_semantics:
+  allowed_refactors:
+    - "内部実装の名前変更。ただし public contract と Diagram は維持する"
+  forbidden_conflict_resolutions:
+    - "InvalidState を成功扱いに変更すること"
+  merge_invariants:
+    - "D1-order-state と AT1-happy-path が通ること"
+
+formalization_level:
+  metaphor_only:
+    - "Order を Object と呼ぶ説明は設計上の比喩であり、数学的証明ではない"
+  machine_checked: []
+  tested_by_ci:
+    - "AT1-happy-path"
+  reviewed_manually:
+    - "data_contracts と diagrams の対応づけ"

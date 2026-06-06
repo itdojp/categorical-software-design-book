@@ -37,10 +37,10 @@ AIに実装やテストを委任すると、速度は上がる一方で、仕様
 
 本書の圏論的な語彙を実務成果物へ適用する前に、次のゲートで「比喩」と「検証条件」を分離します。
 
-- 用語・記号: Category / Object / Morphism / Diagram / Functor / Natural transformation の表記を揃える。Product / Coproduct / Monoidal category / Monad / Kleisli も、公開トップページ、用語集、Context Pack v1 仕様で確認する。
+- 用語・記号: Category / Object / Morphism / Diagram / Functor / Natural transformation の表記を揃える。Product / Coproduct / Monoidal category / Monad / Kleisli も、公開トップページ、用語集、Context Pack v1/v2 仕様で確認する。
 - 対応づけ: 理論概念をソフトウェア成果物へ写す場合は、元の概念、対応する成果物、保存したい構造を記録する。あわせて、保存しないことと検証方法も同じ箇所に残す。
 - 適用範囲: 本書は厳密な圏論の証明ではなく、AI 実装委任の入力契約とレビュー運用へ落とすための設計語彙を提供する。設計判断を「圏論だから正しい」と断定しない。
-- Context Pack 連動: Objects / Morphisms / Diagrams / Forbidden changes を変更した場合は、関連する成果物も確認する。Context Pack v1 仕様、例題 YAML、テンプレート、受入テスト、レビュー観点の同期を確認する。
+- Context Pack 連動: Objects / Morphisms / Diagrams / Forbidden changes を変更した場合は、関連する成果物も確認する。Context Pack v1/v2 仕様、例題 YAML、テンプレート、受入テスト、レビュー観点の同期を確認する。
 - 関連書分界: 本書は日本語で Context Pack、GitHub/CI、AI委任レビューまで接続する実務運用を担う。`composable-software-design-book` は英語で compositional design / verifiable engineering の全体像を扱う。両者を旧版/新版や単純翻訳として扱わない。
 - Review completion: PR では GitHub Copilot review の本文・inline comment・suggestion を全件確認し、未解決 review thread 0 と CI green を merge 条件にする。
 
@@ -72,7 +72,7 @@ AIに実装やテストを委任すると、速度は上がる一方で、仕様
 ## 前提が足りない場合の補助導線
 
 - 圏論の記法や訳語に不安がある場合は、[第2章 合成の最小コア（対象・射・合成）]({{ '/chapters/chapter02/' | relative_url }})、[用語集（Glossary）]({{ '/glossary/' | relative_url }}), [付録D: クイックリファレンス]({{ '/appendices/desk-reference/' | relative_url }}) を先に参照する
-- Context Pack の仕様だけ先に押さえたい場合は、[第1章 AIエージェント開発の分担モデルと設計成果物]({{ '/chapters/chapter01/' | relative_url }})、[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}), [最小例: minimal-example]({{ '/examples/minimal-example/' | relative_url }}) から入る
+- Context Pack の仕様だけ先に押さえたい場合は、[第1章 AIエージェント開発の分担モデルと設計成果物]({{ '/chapters/chapter01/' | relative_url }})、[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) / [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }}), [最小例: minimal-example]({{ '/examples/minimal-example/' | relative_url }}) から入る
 - 通しの運用像を先に確認したい場合は、[第10章 ケーススタディ（仕様→設計→検証→AI実装）]({{ '/chapters/chapter10/' | relative_url }}) を先に読み、必要になった章へ戻る
 
 ## 所要時間（目安）
@@ -97,7 +97,7 @@ AIに実装やテストを委任すると、速度は上がる一方で、仕様
 | 確認したいこと | 最初に開くページ | 説明が食い違う場合の正本 |
 | --- | --- | --- |
 | 正式な読み順・章立て | このトップページの目次 | 公開トップページの目次（`book-config.json` から生成） |
-| 形式と必須項目 | [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) | 仕様ページ |
+| 形式と必須項目 | [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) / [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }}) | 仕様ページ |
 | 最小の入力例 | [最小例: minimal-example]({{ '/examples/minimal-example/' | relative_url }}) | 例題ページ内の YAML と解説 |
 | 共通例題の通し像 | [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) | 例題ページ内の YAML と解説 |
 | 用語・訳語 | [用語集（Glossary）]({{ '/glossary/' | relative_url }}) | 用語集 |
@@ -210,20 +210,24 @@ graph TD
 - Context Pack、Forbidden changes、レビュー観点は、利用中のリポジトリ規約と監査要件に合わせて再確認してください。
 - 実務適用前に `validate-context-pack*` と `npm run qa` を通し、差分レビューと CI の両方で確認してください。
 
-1. Context Pack v1 仕様を読む: [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})
+1. Context Pack v1/v2 仕様を読む: [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) / [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }})
 2. 最小例（minimal-example）を読む: [最小例: minimal-example]({{ '/examples/minimal-example/' | relative_url }})（例題ページ内の YAML と解説を起点に確認する）
 3. 次に共通例題（注文処理）を読む: [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }})（公開ページ内の入力例・差分・レビュー観点を順に確認する）
 4. Context Pack を検証する（minimal lint + schema validation）:
    - 実行前に、公開ページで見ている版と同じ commit / tag を local checkout していることを確認する
    - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
-   - minimal lint（minimal-example）:
+   - minimal lint（minimal-example v1/v2）:
      `python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml`
-   - minimal lint（common-example）:
+     `python3 scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v2.yaml`
+   - minimal lint（common-example v1/v2）:
      `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
-   - schema validation（minimal-example）:
+     `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v2.yaml`
+   - schema validation（minimal-example v1/v2）:
      `python3 scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v1.yaml`
-   - schema validation（common-example）:
+     `python3 scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v2.yaml`
+   - schema validation（common-example v1/v2）:
      `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
+     `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v2.yaml`
    - 検証スクリプト: リポジトリ同梱の `scripts/validate-context-pack.py` と `scripts/validate-context-pack-schema.py` を使う
 5. （任意）CI相当の主要チェックを一括実行する: `npm run qa`
    - 実行後は、検証レポートと失敗箇所を確認してから差分レビューへ進む（詳細: [第10章]({{ '/chapters/chapter10/' | relative_url }})）
@@ -232,7 +236,7 @@ graph TD
 
 - 用語・訳語を確認するときは [用語集（Glossary）]({{ '/glossary/' | relative_url }}) を参照します。
 - 図版、レビュー前確認項目、症状別の戻り先は [付録D: クイックリファレンス]({{ '/appendices/desk-reference/' | relative_url }}) を起点に確認します。
-- 形式や検証コマンドを確認するときは [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) と [検証コマンド]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands) を参照します。
+- 形式や検証コマンドを確認するときは [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) / [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }}) と各検証コマンドを参照します。
 
 ### 付録の使い分け
 
@@ -253,7 +257,7 @@ graph TD
 ### 版差・更新確認の手順
 
 1. まず公開ページ本文と例題ページ内の YAML を確認し、読者向けに現在公開されている内容を把握します。
-2. Context Pack や最小例の入力仕様を確認したい場合は、まず [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) と [検証コマンド]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands) を確認し、その後に [付録A]({{ '/appendices/templates/' | relative_url }}) と [付録B]({{ '/appendices/prompts/' | relative_url }}) の雛形・入力例を見直します。
+2. Context Pack や最小例の入力仕様を確認したい場合は、まず [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) / [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }}) と各検証コマンドを確認し、その後に [付録A]({{ '/appendices/templates/' | relative_url }}) と [付録B]({{ '/appendices/prompts/' | relative_url }}) の雛形・入力例を見直します。
 3. 用語や図式の意味を確認したい場合は [用語集（Glossary）]({{ '/glossary/' | relative_url }}) と [付録D]({{ '/appendices/desk-reference/' | relative_url }}) を見直します。
 4. 公開本文と開発中の版差を確認したい場合は、[CHANGELOG.md](https://github.com/itdojp/categorical-software-design-book/blob/main/CHANGELOG.md)、[コミット履歴](https://github.com/itdojp/categorical-software-design-book/commits/main/)、[PR 一覧](https://github.com/itdojp/categorical-software-design-book/pulls) を参照します。
 5. 誤植、質問、技術的指摘を送りたい場合は [Issue template](https://github.com/itdojp/categorical-software-design-book/issues/new/choose) を使います。

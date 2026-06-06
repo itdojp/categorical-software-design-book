@@ -107,6 +107,12 @@
         "path": "/spec/context-pack-v1/"
       },
       {
+        "id": "context-pack-v2",
+        "title": "Context Pack v2 仕様",
+        "description": "Agent Runtime・データ契約・効果境界・検証証跡を含む拡張仕様を確認するときに使う。",
+        "path": "/spec/context-pack-v2/"
+      },
+      {
         "id": "minimal-example",
         "title": "最小例: minimal-example",
         "description": "最小の Context Pack と検証結果を確認するときに使う。",

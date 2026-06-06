@@ -1,0 +1,322 @@
+# この YAML は共通例題の Context Pack v2 入力例・local 検証用インスタンスです。
+# v2 は v1 の Objects/Morphisms/Diagrams/Acceptance tests を残したまま、
+# データ契約・効果境界・Agent Runtime・検証証跡を追加する拡張です。
+# 形式と必須項目の正本は docs/spec/context-pack-v2.md、
+# reader-facing な導線は公開の /examples/common-example/ を参照してください。
+version: 2
+context_pack_version: 2
+name: common-example-order-processing-v2
+
+problem_statement:
+  goals:
+    - 注文の作成から出荷までの一連の処理を、境界と不変条件（可換性）で記述できる
+    - 監査ログを「後付け」ではなく契約として扱う
+  non_goals:
+    - 決済事業者・配送事業者の具体実装の詳細化
+    - "高度な最適化（例: 強い整合性を必要としない最適化）"
+
+domain_glossary:
+  terms:
+    - term: Order
+      ja: 注文
+      note: 注文状態（Draft/Placed/Paid/Shipped/Cancelled）を持つ
+    - term: Payment
+      ja: 決済
+      note: 承認/取消/返金などを含む
+    - term: Inventory
+      ja: 在庫
+      note: 引当（Reservation）を中心に扱う
+    - term: Shipment
+      ja: 出荷
+      note: 出荷指示/出荷完了
+    - term: Audit
+      ja: 監査
+      note: 重要操作の追跡可能性（監査証跡）
+
+objects:
+  - id: Order
+    kind: entity
+    states: [Draft, Placed, Paid, Shipped, Cancelled]
+    fields:
+      - orderId
+      - items
+      - totalAmount
+      - state
+  - id: Payment
+    kind: entity
+    fields:
+      - paymentId
+      - orderId
+      - amount
+      - status
+  - id: InventoryReservation
+    kind: entity
+    fields:
+      - reservationId
+      - orderId
+      - items
+      - status
+  - id: Shipment
+    kind: entity
+    fields:
+      - shipmentId
+      - orderId
+      - status
+  - id: AuditEvent
+    kind: event
+    fields:
+      - eventId
+      - occurredAt
+      - actor
+      - action
+      - target
+      - payloadHash
+
+morphisms:
+  - id: CreateOrder
+    input: { items: "OrderItem[]", paymentMethod: "PaymentMethod" }
+    output: { orderId: "OrderId" }
+    pre:
+      - items が空でない
+    post:
+      - Order が Draft で作成される
+      - AuditEvent("CreateOrder") が記録される
+    failures:
+      - ValidationError
+  - id: PlaceOrder
+    input: { orderId: "OrderId" }
+    output: { orderId: "OrderId" }
+    pre:
+      - Order.state == Draft
+    post:
+      - Order.state == Placed
+      - InventoryReservation が作成される（または更新される）
+      - AuditEvent("PlaceOrder") が記録される
+    failures:
+      - NotFound
+      - InvalidState
+      - OutOfStock
+  - id: AuthorizePayment
+    input: { orderId: "OrderId" }
+    output: { paymentId: "PaymentId" }
+    pre:
+      - Order.state == Placed
+      - InventoryReservation.status == Reserved
+    post:
+      - Payment.status == Authorized
+      - Order.state == Paid
+      - AuditEvent("AuthorizePayment") が記録される
+    failures:
+      - PaymentDeclined
+      - InvalidState
+  - id: ShipOrder
+    input: { orderId: "OrderId" }
+    output: { shipmentId: "ShipmentId" }
+    pre:
+      - Order.state == Paid
+    post:
+      - Shipment.status == Shipped
+      - Order.state == Shipped
+      - AuditEvent("ShipOrder") が記録される
+    failures:
+      - InvalidState
+
+diagrams:
+  - id: D1-idempotency-place-order
+    statement: PlaceOrder は同一 orderId に対して冪等である（重複実行で在庫引当や監査が二重計上されない）
+    verification:
+      - 同一リクエストID（または同一 orderId + idempotency key）で2回実行しても InventoryReservation が1つに収束する
+      - AuditEvent が重複記録されない（または重複が識別可能で後段集計が二重化しない）
+  - id: D2-audit-consistency
+    statement: 重要操作（CreateOrder/PlaceOrder/AuthorizePayment/ShipOrder）は必ず監査証跡を残す
+    verification:
+      - 各操作が成功した場合、対応する AuditEvent が存在する
+      - 監査イベントの payloadHash が改竄検知に使える
+  - id: D3-state-transition-safety
+    statement: "状態遷移は単調であり、禁止遷移（例: Shipped → Paid）は起きない"
+    verification:
+      - 受入テストで禁止遷移を試みた場合 InvalidState になる
+
+constraints:
+  security:
+    - 監査イベントは削除不可（論理削除も禁止、訂正は追記で行う）
+    - actor（操作者）を必須にする（匿名操作は不可）
+  operations:
+    - 監査イベントの検索・エクスポート経路を用意する
+    - 検索は occurredAt の期間、actor/action/target でフィルタできる
+    - エクスポートは CSV または JSON を提供し、権限によりアクセス制御される
+
+acceptance_tests:
+  - id: AT1-happy-path
+    scenario: CreateOrder → PlaceOrder → AuthorizePayment → ShipOrder が成功する
+    expected:
+      - Order.state == Shipped
+      - 各操作に対応する AuditEvent が存在する
+  - id: AT2-invalid-transition
+    scenario: Draft の Order に対して ShipOrder を呼ぶ
+    expected:
+      - InvalidState
+  - id: AT3-audit-search-export
+    scenario: 監査イベントを actor/action/target/期間 で検索し、CSV または JSON でエクスポートする
+    expected:
+      - 検索結果に CreateOrder/PlaceOrder/AuthorizePayment/ShipOrder の監査イベントが含まれる
+      - 権限のない actor は検索・エクスポートできない
+
+coding_conventions:
+  language: language-agnostic
+  directory:
+    - "chapters/ (book contents)"
+    - "appendices/ (book contents)"
+    - "docs/ (specs/examples)"
+  dependencies:
+    policy: "追加前にIssueで合意する"
+
+forbidden_changes:
+  - D2-audit-consistency を満たさない実装変更
+  - Order の状態モデル（states）を合意なく変更
+
+
+data_contracts:
+  schemas:
+    - id: OrderSchema
+      object: Order
+      fields: [orderId, items, totalAmount, state]
+      source_of_truth: Order service database
+    - id: AuditEventSchema
+      object: AuditEvent
+      fields: [eventId, occurredAt, actor, action, target, payloadHash]
+      source_of_truth: append-only audit log
+  mappings:
+    - id: OrderToAuditTarget
+      from: Order.orderId
+      to: AuditEvent.target
+      purpose: "注文操作と監査証跡を結び付ける"
+    - id: PaymentToOrder
+      from: Payment.orderId
+      to: Order.orderId
+      purpose: "決済承認が対象注文へ対応することを確認する"
+  migration_verification:
+    - "schema 変更時は orderId / paymentId / shipmentId の対応を fixture で確認する"
+    - "AuditEvent.payloadHash の生成規則を変更する場合は旧イベントとの検証条件を残す"
+
+open_systems:
+  components:
+    - id: OrderService
+      boundary: "Order の状態遷移と注文API"
+    - id: PaymentService
+      boundary: "決済承認・取消。外部決済事業者の詳細は扱わない"
+    - id: InventoryService
+      boundary: "在庫引当と解除"
+    - id: ShippingService
+      boundary: "出荷指示と出荷完了"
+    - id: AuditLog
+      boundary: "重要操作の追記専用証跡"
+  boundaries:
+    - id: ExternalPaymentBoundary
+      rule: "決済事業者APIの詳細を Context Pack 内へ混ぜず、AuthorizePayment の入出力契約に閉じ込める"
+    - id: AuditExportBoundary
+      rule: "監査検索・エクスポートは権限付き read model 経由に限定する"
+  composition:
+    - id: HappyPathComposition
+      sequence: [CreateOrder, PlaceOrder, AuthorizePayment, ShipOrder]
+      invariant: "D2-audit-consistency と D3-state-transition-safety を維持する"
+
+views:
+  lenses_or_optics:
+    - id: OrderLifecycleView
+      source: Order
+      focus: state
+      update_rule: "Draft/Placed/Paid/Shipped/Cancelled の状態遷移だけを変更対象にする"
+    - id: AuditSearchView
+      source: AuditEvent
+      focus: [occurredAt, actor, action, target]
+      update_rule: "検索条件の追加は payloadHash と追記専用制約を変えない"
+
+effects:
+  operations:
+    - id: PersistOrder
+      kind: write
+      target: OrderService
+    - id: ReserveInventory
+      kind: external-call
+      target: InventoryService
+    - id: AppendAuditEvent
+      kind: write-once
+      target: AuditLog
+    - id: ExportAuditEvents
+      kind: read-export
+      target: AuditLog
+  handlers:
+    - id: OrderRepository
+      handles: [PersistOrder]
+    - id: InventoryGateway
+      handles: [ReserveInventory]
+    - id: AuditAppender
+      handles: [AppendAuditEvent]
+    - id: AuditExporter
+      handles: [ExportAuditEvents]
+  effect_safety_notes:
+    - "AppendAuditEvent は成功した重要操作ごとに必ず1回以上観測できること"
+    - "ExportAuditEvents は actor の権限を guardrail と acceptance_tests で確認すること"
+
+agent_runtime:
+  allowed_tools:
+    - "repository read"
+    - "local test runner"
+    - "schema validator"
+  forbidden_tools:
+    - "production database"
+    - "external payment console"
+    - "unredacted PII export"
+  guardrails:
+    input_validation:
+      - "Context Pack v2 schema validation を通す"
+      - "変更要求が goals / non_goals / forbidden_changes と矛盾しないことを確認する"
+    output_validation:
+      - "差分が D1/D2/D3 と acceptance_tests を破っていないこと"
+      - "allowed_tools 以外の利用前提を実装案へ混ぜないこと"
+    tool_invocation:
+      - "外部副作用を伴う tool call は禁止し、必要な場合は人間へ確認を戻す"
+  trace_evidence:
+    required:
+      - "実行した validate-context-pack コマンドと結果"
+      - "PR URL と CI run URL"
+      - "レビューで確認した Diagram id / Acceptance test id"
+
+resource_constraints:
+  tool_budget:
+    max_tool_calls: 40
+    max_ci_minutes: 20
+  data_sensitivity:
+    pii: "顧客氏名・住所・決済情報は例題に含めない。必要な場合は匿名fixtureに置き換える"
+    audit_log: "payloadHash は改竄検知用の例であり、実データを公開しない"
+  linear_resources:
+    - id: IdempotencyKey
+      rule: "同一 key は同一 scope で一度だけ成功結果へ対応させる"
+    - id: OneTimePaymentToken
+      rule: "再利用禁止。保存せず、handler 境界で破棄する"
+
+change_semantics:
+  allowed_refactors:
+    - "OrderService 内部の関数分割。ただし Morphism id と外部契約は維持する"
+    - "AuditSearchView の検索UI改善。ただし AuditEvent の追記専用制約は維持する"
+  forbidden_conflict_resolutions:
+    - "OutOfStock を無視して PlaceOrder を成功扱いにすること"
+    - "監査イベント重複を削除で解決すること"
+  merge_invariants:
+    - "D1-idempotency-place-order を満たすこと"
+    - "D2-audit-consistency を満たすこと"
+    - "D3-state-transition-safety を満たすこと"
+
+formalization_level:
+  metaphor_only:
+    - "サービス境界を Object、API操作を Morphism と呼ぶ説明は設計上の比喩であり、数学的証明ではない"
+  machine_checked: []
+  tested_by_ci:
+    - "AT1-happy-path"
+    - "AT2-invalid-transition"
+    - "AT3-audit-search-export"
+    - "context-pack-v2.schema.json による schema validation"
+  reviewed_manually:
+    - "data_contracts.mappings と diagrams の対応づけ"
+    - "agent_runtime.guardrails が forbidden_tools と resource_constraints を矛盾なく扱うこと"

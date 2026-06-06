@@ -17,7 +17,7 @@ chapter: chapter01
 
 - 人間とAIの責任分界（要件/設計/検証 vs 実装/テスト/リファクタ）を説明できる
 - 「設計成果物＝AIへの入力契約」という前提で、成果物の最小セットを定義できる
-- Context Pack v1 の構造を理解し、最小の入力として作成できる
+- Context Pack v1 の構造を理解し、必要に応じて v2 の Agent Runtime 拡張へ進める
 
 ## 圏論コア（定義・直観・ミニ例）
 
@@ -90,7 +90,7 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 
 ## 設計成果物（テンプレ：表/図式/チェックリスト）
 
-本書の共通例題（注文処理）は [共通例題（Context Pack v1）]({{ '/examples/common-example/' | relative_url }}) を参照。
+本書の共通例題（注文処理）は [共通例題（Context Pack v1/v2）]({{ '/examples/common-example/' | relative_url }}) を参照。v1 は入力契約の最小形、v2 は Agent Runtime・データ契約・効果境界・検証証跡を含む拡張です。
 
 本書でいう「設計成果物」は、AIへ引き渡せる入力契約（Context Pack）として構造化したものです。
 
@@ -104,7 +104,18 @@ AIは実装・テスト生成に強い一方、仕様の曖昧さを「それら
 - Objects: ドメイン上の「型/状態」を中心に、実装で表現すべき対象を列挙したもの
 - Morphisms: Objects を入力/出力として持つ操作（API/ユースケース/関数）を列挙したもの
 - Diagrams: 複数の経路（操作の組合せ）で同じ結果になる、という不変条件
-- Context Pack: 上記を含む入力契約（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})）
+- Context Pack: 上記を含む入力契約（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) / [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }})）
+
+### Context Pack v2 へ進む判断基準
+
+次のいずれかを人間がレビュー対象にしたい場合は、v1 を壊さず v2 へ拡張します。
+
+- AI エージェントが使ってよい tool / 使ってはいけない tool を固定したい。
+- guardrail、trace evidence、PR/CI の証跡を Context Pack 側へ残したい。
+- data contracts、effect handlers、resource constraints、one-time token や PII 制約を同じ入力契約で扱いたい。
+- 圏論語彙を「比喩」「対応づけ」「検証条件」に分け、`formalization_level` で混同を防ぎたい。
+
+この場合の正本は [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }}) と、[共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) の v2 YAML です。
 
 ### 最小Context Pack（例）
 
@@ -158,7 +169,7 @@ forbidden_changes:
 
 ## AIエージェントへの引き渡し（Context Pack/プロンプト/禁止事項）
 
-- Context Pack v1 仕様: [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})
+- Context Pack v1/v2 仕様: [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) / [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }})
 - 共通例題（注文処理）: [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }})
 - 禁止事項: 不変条件（Diagrams）と権限境界を無断変更しない
 
@@ -194,7 +205,7 @@ graph TD
 ## 検証（テスト観点・可換性チェック）
 
 - 不変条件（Diagrams）がテスト観点へ落ちていることを確認する
-- 例: 監査ログ一貫性（D2）が必ず満たされる（[共通例題（Context Pack v1）]({{ '/examples/common-example/' | relative_url }})）
+- 例: 監査ログ一貫性（D2）が必ず満たされる（[共通例題（Context Pack v1/v2）]({{ '/examples/common-example/' | relative_url }})）
 
 検証の観点は次の順で固定します。
 
@@ -208,19 +219,20 @@ graph TD
 
 1. 共通例題（注文処理）の Context Pack を読む: [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }})
 2. 次の追加要件を1つだけ定義する（例: CancelOrder を追加し、監査と状態遷移の安全性を維持）
-3. 追加要件に必要な差分を Context Pack v1 として作る。
-   更新対象は Goals/Non-goals、Objects/Morphisms/Diagrams、Acceptance tests、Forbidden changes である。
+3. 追加要件に必要な差分を Context Pack として作る。
+   - v1 の更新対象は Goals/Non-goals、Objects/Morphisms/Diagrams、Acceptance tests、Forbidden changes である。
+   - Agent Runtime、tool、guardrail、trace evidence、resource constraints まで固定する場合は v2 を使う。
 4. Context Pack を更新したら検証する（編集対象に合わせてパスを置き換える）
    - （初回のみ）`python3 -m pip install -r scripts/requirements-qa.txt`
    - `minimal lint` を実行する。
      - `python3 scripts/validate-context-pack.py <your-context-pack.yaml>`
-     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml` または `docs/examples/common-example/context-pack-v2.yaml`
    - `schema validation` を実行する。
      - `python3 scripts/validate-context-pack-schema.py <your-context-pack.yaml>`
-     - 例: `docs/examples/common-example/context-pack-v1.yaml`
+     - 例: `docs/examples/common-example/context-pack-v1.yaml` または `docs/examples/common-example/context-pack-v2.yaml`
    - （任意）CI 相当の一括チェックとして `npm run qa` を実行する。
    - 検証コマンドの SSOT を確認する。
-     - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)
+     - [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands) / [Context Pack v2 仕様（検証コマンド）]({{ '/spec/context-pack-v2/' | relative_url }}#validation-commands)
    - 注記: `docs/examples/common-example/context-pack-v1.yaml` のような repository 内パスは local 検証用の例です。reader-facing な内容確認は公開ページの [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) を正本として参照します。
 5. 更新した Context Pack をAIに渡し、以下を生成させる
    - 実装スケルトン（モジュール境界を意識）
@@ -229,7 +241,7 @@ graph TD
 6. 人間がレビューし、Forbidden changes と Diagrams を基準に差し戻す
 
 提出物（最小）は次のとおりです。
-- 更新した Context Pack v1（YAML/JSON）
+- 更新した Context Pack v1 または v2（YAML/JSON）
 - 受入テスト（シナリオ＋期待結果）
 - 破壊的変更を避けるための禁止事項（Forbidden changes）
 
