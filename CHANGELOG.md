@@ -6,6 +6,22 @@
 
 ## [Unreleased]
 
+### Added
+
+- [#114](https://github.com/itdojp/categorical-software-design-book/issues/114) の 2026 Applied Category Theory / Agent Runtime 改訂を要約しました。
+  - [#115](https://github.com/itdojp/categorical-software-design-book/issues/115): Context Pack v2 仕様、schema、minimal/common example、v1/v2 validator 自動判定を追加。
+  - [#116](https://github.com/itdojp/categorical-software-design-book/issues/116): CQL / Functorial Data Migration と `data_contracts.migration_verification` を第4章・第7章・第10章・共通例題へ接続。
+  - [#117](https://github.com/itdojp/categorical-software-design-book/issues/117): Agent Runtime Contract、MCP、guardrails、tracing を追加。
+    trace evidence を第1章・第9章・第10章・テンプレート/プロンプトへ反映。
+  - [#118](https://github.com/itdojp/categorical-software-design-book/issues/118): Applied Category Theory 実装カタログ付録を追加。
+    Catlab / GATlab / CatColab / CQL / Pijul / OCaml effects / Koka / Granule の位置づけを章別に整理。
+  - [#119](https://github.com/itdojp/categorical-software-design-book/issues/119): Algebraic Effects / Effect Handlers と Context Pack v2 `effects` を第9章・共通例題・参考文献へ追加。
+  - [#120](https://github.com/itdojp/categorical-software-design-book/issues/120): Structured Cospans / Open Systems と `open_systems` を第8章・第7章補足・共通例題へ追加。
+  - [#121](https://github.com/itdojp/categorical-software-design-book/issues/121): Optics / Lenses / Categorical Cybernetics と `views.lenses_or_optics` を第5章・第8章・第10章へ追加。
+  - [#122](https://github.com/itdojp/categorical-software-design-book/issues/122): Patch Theory / Version Control Semantics と `change_semantics` を第7章・共通例題・クイックリファレンスへ追加。
+  - [#123](https://github.com/itdojp/categorical-software-design-book/issues/123): Graded / Linear Resource Types と `resource_constraints` を第9章・共通例題・クイックリファレンスへ追加。
+  - [#124](https://github.com/itdojp/categorical-software-design-book/issues/124): 章間整合、Context Pack v1/v2、navigation、参考文献、QA の final check を実施。
+
 ### Changed
 
 - [#110](https://github.com/itdojp/categorical-software-design-book/issues/110) に従い、Phase 5 理論・実装接続レビューゲート、関連書分界、Copilot review completion gate を追加しました。
