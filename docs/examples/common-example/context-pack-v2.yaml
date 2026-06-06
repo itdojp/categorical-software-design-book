@@ -186,6 +186,16 @@ data_contracts:
       object: AuditEvent
       fields: [eventId, occurredAt, actor, action, target, payloadHash]
       source_of_truth: append-only audit log
+    - id: LegacyOrderDB
+      role: source
+      object: Order
+      fields: [OrderId, PaymentAuthorization, legacy_internal_status_text]
+      source_of_truth: legacy order database
+    - id: OrderReadModel
+      role: target
+      object: OrderReadModel
+      fields: [OrderId, paymentAuthorizationStatus, auditLineage]
+      source_of_truth: read model projection
   mappings:
     - id: OrderToAuditTarget
       from: Order.orderId
@@ -195,9 +205,25 @@ data_contracts:
       from: Payment.orderId
       to: Order.orderId
       purpose: "決済承認が対象注文へ対応することを確認する"
+    - id: legacy_to_read_model
+      source: LegacyOrderDB
+      target: OrderReadModel
+      preserves:
+        - OrderId
+        - PaymentAuthorization
+        - AuditEvent.lineage
+      does_not_preserve:
+        - legacy_internal_status_text
+      purpose: "旧注文DBから取消・決済確認用のread modelを作る"
   migration_verification:
-    - "schema 変更時は orderId / paymentId / shipmentId の対応を fixture で確認する"
-    - "AuditEvent.payloadHash の生成規則を変更する場合は旧イベントとの検証条件を残す"
+    - type: row_count_invariant
+      expected: "LegacyOrderDB の対象注文数と OrderReadModel の対象行数を照合する"
+    - type: foreign_key_preservation
+      expected: "OrderId を基準に PaymentAuthorization と AuditEvent.lineage が対応する"
+    - type: lineage_trace_check
+      expected: "OrderReadModel.auditLineage から元の AuditEvent へ追跡できる"
+    - type: acceptance_query
+      expected: "取消済み注文の read model に CancelOrder の監査 lineage が残る"
 
 open_systems:
   components:

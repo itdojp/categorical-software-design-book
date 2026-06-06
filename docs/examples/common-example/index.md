@@ -22,7 +22,7 @@ permalink: /examples/common-example/
 
 共通例題の v2 では、既存の `Order / Payment / Inventory / Shipment / Audit` と `D1 / D2 / D3` を保ったまま、次を追加します。
 
-- `data_contracts`: OrderSchema、AuditEventSchema、Order と AuditEvent の対応づけ。
+- `data_contracts`: OrderSchema、AuditEventSchema、LegacyOrderDB、OrderReadModel と、監査 lineage を保った read model 移行検証。
 - `effects`: 永続化、在庫引当、監査ログ追記、監査エクスポートを operation / handler に分離。
 - `agent_runtime`: allowed tools / forbidden tools、guardrails、PR・CI・review の trace evidence。
 - `resource_constraints`: CI 時間、PII、本番データ、冪等性キー、ワンタイム決済トークン。

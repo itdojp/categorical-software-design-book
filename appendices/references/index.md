@@ -51,6 +51,17 @@ appendix: references
 - David I. Spivak, *Category Theory for the Sciences*
 - Brendan Fong & David I. Spivak, *Seven Sketches in Compositionality*
 
+## 参考文献（データ統合 / Functorial Data Migration）
+
+- Categorical Data, “CQL Categorical Databases”, <https://categoricaldata.net/>
+  - CQL の公式サイト。database の querying、combining、migrating、evolving を圏論で扱う open-source 言語/IDE としての位置づけを確認する。
+- Categorical Data, “CQL Tutorial”, <https://categoricaldata.net/cql/tutorial.html>
+  - `Typesides`、`Schemas`、`Instances`、`Mappings`、`Delta and Sigma` の導入を確認する。
+- David I. Spivak, “Functorial Data Migration”, *Information and Computation*, 2013, <https://www.sciencedirect.com/science/article/pii/S0890540112001010>
+  - Categorical Data の papers page から参照されている Functorial Data Migration の論文。データ移行をスキーマ写像から導く考え方の背景として読む。
+- Categorical Data, “Papers”, <https://categoricaldata.net/papers.html>
+  - CQL、Functorial Data Migration、Algebraic Data Integration などの一次導線を確認する。
+
 ## 参考文献（FP/型/意味論・周辺）
 
 - Benjamin C. Pierce, *Types and Programming Languages*
@@ -70,7 +81,7 @@ appendix: references
 | 第2〜3章 | Mac Lane / Awodey / Riehl（基礎）、Milewski（直観） |
 | 第4〜5章 | Milewski（関手/自然変換の実装直観）、Fong & Spivak（合成的設計） |
 | 第6章 | Fong & Spivak（普遍性の応用）、型システム入門（合併型/直積型） |
-| 第7章 | Spivak / Fong & Spivak（統合の図式化） |
+| 第7章 | Spivak / Fong & Spivak（統合の図式化）、CQL / Functorial Data Migration（スキーマ統合・データ移行） |
 | 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、実務の並列/合流設計資料 |
 | 第9章 | FP文献（モナド/効果）、形式手法（不変条件の固定） |
 | 第10章 | GitHub Actions / テスト戦略 / レビュー運用の実務資料（再現可能性を優先） |

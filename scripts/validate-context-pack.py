@@ -287,7 +287,7 @@ def validate_context_pack_v2(doc: Any) -> list[ValidationErrorItem]:
         [
             ("schemas", "array"),
             ("mappings", "array"),
-            ("migration_verification", "str_array"),
+            ("migration_verification", "array"),
         ],
         errors,
     )

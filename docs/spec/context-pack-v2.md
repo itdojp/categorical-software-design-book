@@ -125,7 +125,33 @@ formalization_level:
 
 ### data_contracts
 
-`schemas` には対象とするデータ構造、`mappings` には対応関係、`migration_verification` には移行時の確認条件を書きます。ここでは CQL / Functorial Data Migration の詳細な理論説明は行わず、後続の第7章追加に接続できる設計成果物の受け皿として扱います。
+`schemas` には対象とするデータ構造、`mappings` には対応関係、`migration_verification` には移行時の確認条件を書きます。`schemas` / `mappings` / `migration_verification` は、簡単な文字列の配列でも、`id`、`source`、`target`、`preserves`、`type`、`expected` などを持つ構造化オブジェクトの配列でも構いません。ここでは CQL / Functorial Data Migration の詳細な理論説明は行わず、後続の第7章追加に接続できる設計成果物の受け皿として扱います。
+
+構造化して書く場合の最小例は次のとおりです。
+
+```yaml
+data_contracts:
+  schemas:
+    - id: LegacyOrderDB
+      role: source
+    - id: OrderReadModel
+      role: target
+  mappings:
+    - id: legacy_to_read_model
+      source: LegacyOrderDB
+      target: OrderReadModel
+      preserves:
+        - OrderId
+        - PaymentAuthorization
+        - AuditEvent.lineage
+      does_not_preserve:
+        - legacy_internal_status_text
+  migration_verification:
+    - type: row_count_invariant
+    - type: foreign_key_preservation
+    - type: lineage_trace_check
+    - type: acceptance_query
+```
 
 ### open_systems
 
