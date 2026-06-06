@@ -102,7 +102,7 @@ agent_runtime:
   allowed_tools: [] # 文字列または tool contract オブジェクト
   forbidden_tools: [] # 文字列または禁止理由つきオブジェクト
   guardrails: {} # input / output / tool invocation の検証点
-  trace_evidence: {} # required_spans / artifacts / retention policy
+  trace_evidence: {} # required_spans / required_artifacts / retention_policy
 
 resource_constraints:
   tool_budget: {}
