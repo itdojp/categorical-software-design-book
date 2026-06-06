@@ -89,7 +89,7 @@ appendix: references
 - Koka, “The Koka Programming Language”, <https://koka-lang.github.io/koka/doc/index.html>
   - effect types / handlers を備える研究言語としての公式導線。production 利用の断定を避ける。
 - Granule Project, “The Granule Language”, <https://granule-project.github.io/granule.html>
-  - graded modal types、linear λ-calculus、resource reasoning の概念参照として使う。
+  - graded modal types、linear λ-calculus、resource reasoning の概念参照として使う。第9章では [Graded / Linear Resource Types](#ref-graded-linear-resource-types) へ戻す。
 
 
 ## 参考文献（Optics / Lenses / Categorical Cybernetics） {#ref-optics-lenses-categorical-cybernetics}
@@ -131,6 +131,13 @@ appendix: references
 - Andrew W. Appel, *Modern Compiler Implementation*（意味保存の観点に有用）
 - Paul Hudak ほか, *Haskell* 系入門（モナド/効果の実装直観）
 
+## 参考文献（Graded / Linear Resource Types） {#ref-graded-linear-resource-types}
+
+- Granule Project, “The Granule Language”, <https://granule-project.github.io/granule.html>
+  - linear λ-calculus と graded modal types を組み合わせる研究言語として参照する。
+  - 本書では production 導入の推奨ではなく、tool budget、PII、one-time token の制約を考える補助線として扱う。
+- Granule Project, “Granule GitHub Repository”, <https://github.com/granule-project/granule>
+  - 実装とドキュメントの入口。Context Pack v2 の `resource_constraints` を設計する際の概念参照に留める。
 
 ## 参考文献（Algebraic Effects / Effect Handlers）
 
@@ -156,5 +163,5 @@ appendix: references
 | 第6章 | Fong & Spivak（普遍性の応用）、型システム入門（合併型/直積型） |
 | 第7章 | Spivak / Fong & Spivak（統合の図式化）、CQL / Functorial Data Migration（スキーマ統合・データ移行）、Pijul / patch theory（差分意味論） |
 | 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、Structured / Decorated Cospans、Optics / Categorical Cybernetics、Catlab / GATlab / CatColab、実務の並列/合流設計資料 |
-| 第9章 | FP文献（モナド/効果）、OCaml effects / Koka / Granule、MCP / Agents SDK（tool call と guardrail / tracing の実行境界）、形式手法（不変条件の固定） |
+| 第9章 | FP文献（モナド/効果）、OCaml effects / Koka / Granule、Graded / Linear Resource Types、MCP / Agents SDK（tool call と guardrail / tracing の実行境界）、形式手法（不変条件の固定） |
 | 第10章 | GitHub Actions / GitHub Copilot features / Agent Runtime Contract / テスト戦略 / レビュー運用の実務資料（再現可能性を優先） |

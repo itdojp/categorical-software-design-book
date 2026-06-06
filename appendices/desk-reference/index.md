@@ -101,7 +101,28 @@ appendix: desk-reference
 ここでの Pushout は、GitHub 標準運用の置換ではありません。
 実務上は PR、CI、review thread、Context Pack validation の証跡で採否を判断します。
 
-## 4. 目的別の引き直し方
+## 4. resource constraints の最小メモ
+
+AI agent の tool 実行で予算や機密情報を扱う場合は、[第9章]({{ '/chapters/chapter09/' | relative_url }}) と Context Pack v2 の `resource_constraints` に戻ります。
+
+| 観点 | Context Pack v2 | まず確認すること |
+| --- | --- | --- |
+| tool budget | `tool_budget.max_external_api_calls` / `max_llm_retries` | API 呼び出し回数と retry 回数が上限を超えない |
+| PII | `data_sensitivity.pii.allowed_tools` / `forbidden_tools` | PII は `pii_redactor` など許可 tool だけへ渡す |
+| one-time token | `linear_resources` | `payment_authorization_token` や `password_reset_token` を複製・ログ出力・再利用しない |
+| 実行時検査 | `agent_runtime.guardrails` | resource constraint を超える tool call を実行前に拒否する |
+
+最小チェック。
+
+- `max_external_api_calls` と `max_llm_retries` が明示されている。
+- PII の `allowed_tools` と `forbidden_tools` が分かれている。
+- one-time token に `must_not_duplicate`、`must_not_log`、`must_not_reuse` がある。
+- `agent_runtime.guardrails` が予算超過、PII 未 redaction、token logging を止める。
+
+Graded / linear の語彙は、ここでは資源制約を考える補助線です。
+実務上は Context Pack validation、CI、監査ログ、review で確認します。
+
+## 5. 目的別の引き直し方
 
 迷ったら、まず「いま困っているのが仕様・統合・分業・副作用・運用のどれか」を切り分けると、戻る章を選びやすくなります。
 
@@ -111,12 +132,13 @@ appendix: desk-reference
 - merge / refactor で意味保存が不安定になる: [第7章補論]({{ '/chapters/chapter07/' | relative_url }})
 - 並列化や責務分担で配線が壊れる: [第8章]({{ '/chapters/chapter08/' | relative_url }})
 - 失敗処理・監査・再試行の責務が混ざる: [第9章]({{ '/chapters/chapter09/' | relative_url }})
+- tool budget / PII / one-time token の扱いが曖昧になる: [第9章]({{ '/chapters/chapter09/' | relative_url }})
 - 設計成果物のテンプレートを先に見たい: [付録A: 設計成果物テンプレ集]({{ '/appendices/templates/' | relative_url }})
 - AIレビュー・実装プロンプトを先に見たい: [付録B: AIエージェント用プロンプト集]({{ '/appendices/prompts/' | relative_url }})
 - 次に学ぶ順番や原典を確認したい: [付録C: 参考文献]({{ '/appendices/references/' | relative_url }})
 - ACTの実装・研究候補を章別に引きたい: [付録E: Applied Category Theory 実装カタログ]({{ '/appendices/implementation-catalog/' | relative_url }})
 
-## 5. 症状から引く戻り先
+## 6. 症状から引く戻り先
 
 症状ベースで再参照したい場合は、この表を使って最初の戻り先を決めてください。
 
@@ -153,6 +175,11 @@ appendix: desk-reference
       <td>副作用・再試行・監査が混ざり、レビュー観点がぶれる</td>
       <td><a href="{{ '/chapters/chapter09/' | relative_url }}">第9章</a></td>
       <td>pure core / impure shell、モナド、失敗境界</td>
+    </tr>
+    <tr>
+      <td>tool budget、PII、ワンタイム token の扱いが曖昧になる</td>
+      <td><a href="{{ '/chapters/chapter09/' | relative_url }}">第9章</a></td>
+      <td>resource constraints、guardrails、linear resources</td>
     </tr>
     <tr>
       <td>ACTのツールや研究成果を、どの章の設計課題へ戻すべきか迷う</td>
