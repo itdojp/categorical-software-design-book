@@ -71,6 +71,7 @@ objects:
       - action
       - target
       - payloadHash
+      - lineage
 
 morphisms:
   - id: CreateOrder
@@ -184,7 +185,7 @@ data_contracts:
       source_of_truth: Order service database
     - id: AuditEventSchema
       object: AuditEvent
-      fields: [eventId, occurredAt, actor, action, target, payloadHash]
+      fields: [eventId, occurredAt, actor, action, target, payloadHash, lineage]
       source_of_truth: append-only audit log
     - id: LegacyOrderDB
       role: source

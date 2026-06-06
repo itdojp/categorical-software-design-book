@@ -147,6 +147,9 @@ data_contracts:
       role: source
     - id: OrderReadModel
       role: target
+    - id: AuditEventSchema
+      role: lineage_source
+      fields: [eventId, lineage]
 
   mappings:
     - id: legacy_to_read_model
@@ -166,7 +169,7 @@ data_contracts:
     - type: acceptance_query
 ```
 
-この例では、`legacy_to_read_model` が「何を保存し、何を保存しないか」を明示します。`legacy_internal_status_text` のような旧システム内部の表示用文字列は read model へ持ち込まない一方、`OrderId`、決済承認、監査 lineage は保存対象として扱います。AI に実装や移行スクリプトの案を出させる場合も、ここを勝手に変えさせないことがレビュー境界になります。
+この例では、`legacy_to_read_model` が「何を保存し、何を保存しないか」を明示します。`AuditEvent.lineage` は、共通例題 v2 の `AuditEventSchema` で定義する追跡キーです。`legacy_internal_status_text` のような旧システム内部の表示用文字列は read model へ持ち込まない一方、`OrderId`、決済承認、監査 lineage は保存対象として扱います。AI に実装や移行スクリプトの案を出させる場合も、ここを勝手に変えさせないことがレビュー境界になります。
 
 ### CQL / FDM を使うときの限界
 

@@ -136,6 +136,9 @@ data_contracts:
       role: source
     - id: OrderReadModel
       role: target
+    - id: AuditEventSchema
+      role: lineage_source
+      fields: [eventId, lineage]
   mappings:
     - id: legacy_to_read_model
       source: LegacyOrderDB

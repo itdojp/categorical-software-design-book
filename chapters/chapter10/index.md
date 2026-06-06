@@ -178,6 +178,9 @@ data_contracts:
       role: source
     - id: OrderReadModel
       role: target
+    - id: AuditEventSchema
+      role: lineage_source
+      fields: [eventId, lineage]
 
   mappings:
     - id: legacy_to_read_model
@@ -197,7 +200,7 @@ data_contracts:
     - type: acceptance_query
 ```
 
-この検証例では、`OrderId` を外部キー相当の共通基準として扱い、`PaymentAuthorization` と `AuditEvent.lineage` が read model へ保存されることを確認します。`lineage_trace_check` は、表示用の `OrderReadModel` から元の `CancelOrder` 監査イベントへ戻れることを確認する観点です。`acceptance_query` は、たとえば「取消済み注文を検索したとき、取消理由、取消時刻、監査イベントID、在庫解放状態が揃っていること」を確認します。
+この検証例では、`OrderId` を外部キー相当の共通基準として扱い、`PaymentAuthorization` と `AuditEvent.lineage` が read model へ保存されることを確認します。ここでの `AuditEvent.lineage` は、監査イベントから read model へ引き継ぐ追跡キーです。`lineage_trace_check` は、表示用の `OrderReadModel` から元の `CancelOrder` 監査イベントへ戻れることを確認する観点です。`acceptance_query` は、たとえば「取消済み注文を検索したとき、取消理由、取消時刻、監査イベントID、在庫解放状態が揃っていること」を確認します。
 
 この追加は、BI/分析向けの取消理由集計を本章へ持ち込むものではありません。non-goal を広げず、CancelOrder の運用に必要な read model と監査 lineage の保存条件だけを検証対象にします。
 
