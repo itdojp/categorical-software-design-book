@@ -238,6 +238,7 @@ open_systems:
     - id: PaymentService
       boundary: "決済承認・取消。外部決済事業者の詳細は扱わない"
     - id: PaymentAdapter
+      boundary: "外部決済APIの詳細を隠蔽し、AuthorizePayment / CancelPayment 契約に閉じ込める"
       boundary_in:
         - AuthorizePayment
       boundary_out:

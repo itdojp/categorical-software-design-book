@@ -126,6 +126,7 @@ open_systems:
       shared_interface:
         - OrderId
         - PaymentRequestId
+      rule: "OrderId と PaymentRequestId だけを共有境界として合成する"
   composition:
     - id: OrderPaymentComposition
       shared_boundary:
