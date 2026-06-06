@@ -83,6 +83,7 @@ appendix: desk-reference
 - 設計成果物のテンプレートを先に見たい: [付録A: 設計成果物テンプレ集]({{ '/appendices/templates/' | relative_url }})
 - AIレビュー・実装プロンプトを先に見たい: [付録B: AIエージェント用プロンプト集]({{ '/appendices/prompts/' | relative_url }})
 - 次に学ぶ順番や原典を確認したい: [付録C: 参考文献]({{ '/appendices/references/' | relative_url }})
+- ACTの実装・研究候補を章別に引きたい: [付録E: Applied Category Theory 実装カタログ]({{ '/appendices/implementation-catalog/' | relative_url }})
 
 ## 4. 症状から引く戻り先
 
@@ -121,6 +122,11 @@ appendix: desk-reference
       <td>副作用・再試行・監査が混ざり、レビュー観点がぶれる</td>
       <td><a href="{{ '/chapters/chapter09/' | relative_url }}">第9章</a></td>
       <td>pure core / impure shell、モナド、失敗境界</td>
+    </tr>
+    <tr>
+      <td>ACTのツールや研究成果を、どの章の設計課題へ戻すべきか迷う</td>
+      <td><a href="{{ '/appendices/implementation-catalog/' | relative_url }}">付録E</a></td>
+      <td>CQL、Catlab、GATlab、CatColab、Pijul、OCaml effects、Koka、Granule の使いどころと注意点</td>
     </tr>
     <tr>
       <td>Issue / PR / CI にどう落とすか分からない</td>

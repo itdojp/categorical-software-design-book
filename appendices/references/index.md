@@ -62,6 +62,25 @@ appendix: references
 - Categorical Data, “Papers”, <https://categoricaldata.net/papers.html>
   - CQL、Functorial Data Migration、Algebraic Data Integration などの一次導線を確認する。
 
+## 参考文献（Applied Category Theory 実装・研究カタログ）
+
+- AlgebraicJulia, “Catlab.jl”, <https://github.com/AlgebraicJulia/Catlab.jl>
+  - Juliaで実装された applied / computational category theory のフレームワーク。wiring diagram や monoidal modeling の参照導線として使う。README では、Catlab は theorem prover / proof assistant ではないと明記されている。
+- Owen Lynch, Kris Brown, James Fairbanks, Evan Patterson, “GATlab: Modeling and Programming with Generalized Algebraic Theories”, <https://arxiv.org/abs/2404.04837>
+  - generalized algebraic theories による algebraic specification のDSL。語彙や構造定義を machine-readable にする研究導線として使う。
+- CatColab, <https://catcolab.org/>
+  - collaborative conceptual modeling の実装導線。公式サイトの補足として Topos Institute の CatColab 解説 <https://topos.institute/work/catcolab/> も確認する。
+- Pijul, “Model”, <https://pijul.org/model/>
+  - patch theory、pushout、conflict を、分散バージョン管理の mental model として確認する導線。
+- OCaml, “OCaml 5.0.0 Release Notes”, <https://ocaml.org/releases/5.0.0>
+  - OCaml 5 で導入された effect handlers の公式リリース導線。
+- OCaml Manual, “Language extensions / Effect handlers”, <https://ocaml.org/manual/5.3/effects.html>
+  - OCaml effect handlers の使用上の制約、未処理 effect、線形継続の注意点を確認する。
+- Koka, “The Koka Programming Language”, <https://koka-lang.github.io/koka/doc/index.html>
+  - effect types / handlers を備える研究言語としての公式導線。production 利用の断定を避ける。
+- Granule Project, “The Granule Language”, <https://granule-project.github.io/granule.html>
+  - graded modal types、linear λ-calculus、resource reasoning の概念参照として使う。
+
 ## 参考文献（Agent Runtime / MCP / Guardrails / Tracing）
 
 - Model Context Protocol, “Specification 2025-11-25”, <https://modelcontextprotocol.io/specification/2025-11-25>
@@ -96,7 +115,7 @@ appendix: references
 | 第2〜3章 | Mac Lane / Awodey / Riehl（基礎）、Milewski（直観） |
 | 第4〜5章 | Milewski（関手/自然変換の実装直観）、Fong & Spivak（合成的設計） |
 | 第6章 | Fong & Spivak（普遍性の応用）、型システム入門（合併型/直積型） |
-| 第7章 | Spivak / Fong & Spivak（統合の図式化）、CQL / Functorial Data Migration（スキーマ統合・データ移行） |
-| 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、実務の並列/合流設計資料 |
-| 第9章 | FP文献（モナド/効果）、MCP / Agents SDK（tool call と guardrail / tracing の実行境界）、形式手法（不変条件の固定） |
+| 第7章 | Spivak / Fong & Spivak（統合の図式化）、CQL / Functorial Data Migration（スキーマ統合・データ移行）、Pijul / patch theory（差分意味論） |
+| 第8章 | Fong & Spivak（モノイダル圏/ストリング図式の直観）、Catlab / GATlab / CatColab、実務の並列/合流設計資料 |
+| 第9章 | FP文献（モナド/効果）、OCaml effects / Koka / Granule、MCP / Agents SDK（tool call と guardrail / tracing の実行境界）、形式手法（不変条件の固定） |
 | 第10章 | GitHub Actions / GitHub Copilot features / Agent Runtime Contract / テスト戦略 / レビュー運用の実務資料（再現可能性を優先） |

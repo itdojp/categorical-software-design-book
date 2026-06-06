@@ -77,6 +77,18 @@ graph LR
 同じ構造をマルチエージェントに適用する場合は、`Lint/Unit tests` を「独立な作業（⊗）」として割り当てます。
 合流点（[Merge gate]({{ '/glossary/' | relative_url }}#merge-gate)）では、品質ゲートを満たした成果物だけを次へ渡します。
 
+## 実装カタログへの接続
+
+配線や分業を実装・研究カタログへ接続する場合は、[付録E: Applied Category Theory 実装カタログ]({{ '/appendices/implementation-catalog/' | relative_url }}) を参照します。
+
+| 候補 | 第8章での使いどころ | 注意点 |
+| --- | --- | --- |
+| Catlab.jl | wiring diagram / string diagram / monoidal modeling を計算可能な構造として試す | proof assistant ではない。形式的に検証可能な proof を生成するとは書かない |
+| GATlab | generalized algebraic theories による語彙・interface 定義を考える | 研究導線として扱い、採用前に論文と実装状況を確認する |
+| CatColab | 共同で conceptual model を作り、批評・共有する | maturity、権限、データ感度、公開範囲を先に確認する |
+
+この表は「すぐ導入するツール一覧」ではありません。第8章の設計成果物に戻すための参照地図です。
+
 ## AIエージェントへの引き渡し
 
 マルチエージェント運用では、各エージェントに「自分の入出力」と「合成規則」を明示します。
