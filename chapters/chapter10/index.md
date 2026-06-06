@@ -463,7 +463,7 @@ CI が落ちたときの修正順も、ケーススタディの一部です。
     <tr>
       <td>第5章</td>
       <td>自然変換 / Lens</td>
-      <td>差分レビューで意味保存を確認し、DTO / view 更新は <code>get</code> / <code>put</code> / laws / forbidden updates で検証する</td>
+      <td>差分レビューで意味保存を確認し、DTO / view 更新は <code>get</code> / <code>put</code> / <code>laws</code> / <code>forbidden_updates</code> で検証する</td>
     </tr>
     <tr>
       <td>第6章</td>

@@ -82,7 +82,7 @@ appendix: references
   - graded modal types、linear λ-calculus、resource reasoning の概念参照として使う。
 
 
-## 参考文献（Optics / Lenses / Categorical Cybernetics）
+## 参考文献（Optics / Lenses / Categorical Cybernetics） {#ref-optics-lenses-categorical-cybernetics}
 
 - Matthew Pickering, Jeremy Gibbons, Nicolas Wu, “Profunctor Optics: Modular Data Accessors”, <https://arxiv.org/abs/1703.10857>
   - optics を data accessor として扱い、getter / setter 風の素朴な実装を合成可能な first-class accessor へ引き上げる背景として参照する。

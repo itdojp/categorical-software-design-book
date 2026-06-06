@@ -205,7 +205,7 @@ open_systems:
 
 読み取り view、射影、更新規則を明示します。
 view の追加が元データの制約や監査条件を破らないかをレビューできるようにします。
-Lens / Optic として書く場合は、単なる UI mapper ではなく、`get` / `put` / laws / forbidden updates を分けます。
+Lens / Optic として書く場合は、単なる UI mapper ではなく、`get` / `put` / `laws` / `forbidden_updates` を分けます。
 
 ```yaml
 views:

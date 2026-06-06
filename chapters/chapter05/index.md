@@ -89,7 +89,7 @@ AIにリファクタを任せると、コードの見た目は良くなるが意
 
 自然変換は、Before と After の対応がすべての操作と整合するかを確認する枠組みです。
 一方、Lens / Optic は、source と view のあいだで「読む」だけでなく、許可された更新を source へ戻す関係を明示します。
-実務では、UI mapper の便利な比喩で終わらせず、`get` / `put` / laws / forbidden updates をレビュー対象にします。
+実務では、UI mapper の便利な比喩で終わらせず、`get` / `put` / `laws` / `forbidden_updates` をレビュー対象にします。
 
 | 観点 | 自然変換 | Lens / Optic |
 | --- | --- | --- |
@@ -130,10 +130,10 @@ views:
 
 ここで重要なのは、`put` を「何でも戻せる setter」として扱わないことです。
 `OrderSummaryDTO` の編集から `Payment.status` や `AuditEvent` を直接変更できるなら、source / view の境界が壊れています。
-レビューでは、allowed updates と forbidden updates を分け、laws を acceptance test や property-based test の観点へ落とします。
+レビューでは、`allowed_updates` と `forbidden_updates` を分け、`laws` を acceptance test や property-based test の観点へ落とします。
 
 Optic の圏論的定式化には profunctor optics などの研究導線があります。
-本書では、詳細な定式化ではなく、[参考文献（Optics / Lenses / Categorical Cybernetics）]({{ '/appendices/references/' | relative_url }}#参考文献optics--lenses--categorical-cybernetics)に一次導線を残し、設計レビューで確認できる条件へ限定します。
+本書では、詳細な定式化ではなく、[参考文献（Optics / Lenses / Categorical Cybernetics）]({{ '/appendices/references/' | relative_url }}#ref-optics-lenses-categorical-cybernetics)に一次導線を残し、設計レビューで確認できる条件へ限定します。
 
 ## AIエージェントへの引き渡し
 

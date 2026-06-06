@@ -146,12 +146,12 @@ open_systems:
 
 Lens / Optic は、第8章の配線図式では feedback loop を説明する補助線になります。
 `get` は source から agent が観測する view を作り、`put` は agent / UI が許可された差分だけを source へ戻します。
-agent loop へ接続する場合も、更新経路を自由な setter として扱わず、loop の戻り口に laws と forbidden updates を置きます。
+agent loop へ接続する場合も、更新経路を自由な setter として扱わず、loop の戻り口に `laws` と `forbidden_updates` を置きます。
 
 | loop の段階 | Lens / Optic で固定するもの | 検証観点 |
 | --- | --- | --- |
 | observe | `get` が作る view | 表示用 DTO が source の監査・権限条件を落としていないか |
-| decide | view 上の許可更新 | agent が forbidden updates を提案していないか |
+| decide | view 上の許可更新 | agent が `forbidden_updates` を提案していないか |
 | act / update | `put` が source へ戻す差分 | `get_after_put_consistency` と監査追跡が保たれるか |
 
 Categorical cybernetics は、optimization や control を optics などの道具で扱う発展的な研究導線です。

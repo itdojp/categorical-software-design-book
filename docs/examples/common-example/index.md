@@ -24,7 +24,7 @@ permalink: /examples/common-example/
 
 - `data_contracts`: OrderSchema、AuditEventSchema、LegacyOrderDB、OrderReadModel と、監査 lineage を保った read model 移行検証。
 - `open_systems`: `OrderService` と `PaymentAdapter` を shared boundary で合成し、孤立した支払要求や監査欠落を防ぐ。
-- `views.lenses_or_optics`: `OrderSummaryView` の `get` / `put` / laws / forbidden updates を固定し、DTO / view 更新が決済承認や監査履歴を直接変えないことを確認する。
+- `views.lenses_or_optics`: `OrderSummaryView` の `get` / `put` / `laws` / `forbidden_updates` を固定し、DTO / view 更新が決済承認や監査履歴を直接変えないことを確認する。
 - `effects`: 永続化、在庫引当、監査ログ追記、監査エクスポートを operation / handler に分離。特に `ReserveInventory` は本番 handler と test handler を分ける。
 - `agent_runtime`: tool contract 形式の allowed tools / forbidden tools、input / output / tool invocation guardrails、PR・CI・review の trace evidence。
 - `resource_constraints`: CI 時間、PII、本番データ、冪等性キー、ワンタイム決済トークン。
