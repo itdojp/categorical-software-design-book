@@ -25,7 +25,10 @@ except ImportError:
 
 
 ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_SCHEMA = ROOT / "docs/spec/context-pack-v1.schema.json"
+DEFAULT_SCHEMA_BY_VERSION = {
+    1: ROOT / "docs/spec/context-pack-v1.schema.json",
+    2: ROOT / "docs/spec/context-pack-v2.schema.json",
+}
 
 
 def _is_simple_key(key: str) -> bool:
@@ -66,24 +69,32 @@ def load_schema(schema_path: Path) -> Any:
         return json.load(f)
 
 
+def detect_context_pack_version(doc: Any) -> int:
+    if isinstance(doc, dict) and (doc.get("context_pack_version") == 2 or doc.get("version") == 2):
+        return 2
+    return 1
+
+
 def main(argv: list[str]) -> int:
-    parser = argparse.ArgumentParser(description="Validate Context Pack v1 YAML/JSON with JSON Schema.")
+    parser = argparse.ArgumentParser(description="Validate Context Pack v1/v2 YAML/JSON with JSON Schema.")
     parser.add_argument("file", help="Target file path (.yaml/.yml/.json)")
     parser.add_argument(
         "--schema",
-        default=str(DEFAULT_SCHEMA),
-        help=f"Schema file path (default: {DEFAULT_SCHEMA})",
+        default=None,
+        help="Schema file path (default: auto-detect from context_pack_version; v1 when omitted)",
     )
     args = parser.parse_args(argv)
 
     file_path = Path(args.file)
-    schema_path = Path(args.schema)
 
     try:
         doc = load_document(file_path)
     except Exception as e:
         print(f"❌ Failed to load: {file_path}: {e}", file=sys.stderr)
         return 2
+
+    context_pack_version = detect_context_pack_version(doc)
+    schema_path = Path(args.schema) if args.schema else DEFAULT_SCHEMA_BY_VERSION[context_pack_version]
 
     try:
         schema = load_schema(schema_path)
@@ -106,7 +117,7 @@ def main(argv: list[str]) -> int:
             print(f"- {path}: {message}", file=sys.stderr)
         return 1
 
-    print(f"✅ Schema validation passed: {file_path}")
+    print(f"✅ Schema validation passed: {file_path} (Context Pack v{context_pack_version}, schema: {schema_path})")
     return 0
 
 

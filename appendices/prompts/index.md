@@ -5,11 +5,11 @@ appendix: prompts
 
 # 付録B: AIエージェント用プロンプト集
 
-本書の章末演習で、そのまま利用できるプロンプト例です。前提として、AIに渡す入力契約は Context Pack v1（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})）を想定します。
+本書の章末演習で、そのまま利用できるプロンプト例です。前提として、AIに渡す入力契約は Context Pack v1（[Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})）を基本とします。tool call、guardrail、trace evidence、resource constraints まで固定する場合は Context Pack v2（[Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }})）を使います。
 用語の定義を引き直すときは [用語集（Glossary）]({{ '/glossary/' | relative_url }}) を、
 差し戻し観点や戻り先を引き直すときは [付録D: クイックリファレンス](../../appendices/desk-reference/) を参照してください。
 
-注記: 本付録は補助資料です。説明が食い違う場合は、まず [公開トップページの「確認したいこと別の正本」]({{ '/' | relative_url }}#確認したいこと別の正本) を参照してください。形式と必須項目は [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})、実行手順は [検証コマンド]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)、語義は [用語集（Glossary）]({{ '/glossary/' | relative_url }})、版差は [CHANGELOG](https://github.com/itdojp/categorical-software-design-book/blob/main/CHANGELOG.md) を確認します。
+注記: 本付録は補助資料です。説明が食い違う場合は、まず [公開トップページの「確認したいこと別の正本」]({{ '/' | relative_url }}#確認したいこと別の正本) を参照してください。形式と必須項目は [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) / [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }})、実行手順は各仕様の検証コマンド、語義は [用語集（Glossary）]({{ '/glossary/' | relative_url }})、版差は [CHANGELOG](https://github.com/itdojp/categorical-software-design-book/blob/main/CHANGELOG.md) を確認します。
 
 ## 共通ルール（先頭に付ける）
 
@@ -24,6 +24,18 @@ appendix: prompts
 出力要件:
 - 参照した Context Pack の要素（Morphism id / Diagram id 等）を明記して追跡可能にする
 - 重要な判断は根拠（どの契約に基づくか）を示す
+```
+
+
+## Agent Runtime を含む v2 追加ルール
+
+Context Pack v2 を渡す場合は、次を共通ルールに追加します。
+
+```text
+Context Pack v2 の agent_runtime / effects / resource_constraints を必ず確認せよ。
+allowed_tools にない tool は使わない。forbidden_tools にある tool は提案もしない。
+ツール実行、CI、レビュー、差し戻し理由は trace_evidence として記録できる形で出力せよ。
+formalization_level.metaphor_only の項目を、CI済み・機械検証済みの主張として扱ってはいけない。
 ```
 
 ## 実装

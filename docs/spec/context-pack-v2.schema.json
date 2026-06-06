@@ -1,0 +1,585 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://itdojp.github.io/categorical-software-design-book/spec/context-pack-v2.schema.json",
+  "title": "Context Pack v2",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "version",
+    "name",
+    "problem_statement",
+    "domain_glossary",
+    "objects",
+    "morphisms",
+    "diagrams",
+    "constraints",
+    "acceptance_tests",
+    "coding_conventions",
+    "forbidden_changes",
+    "context_pack_version",
+    "data_contracts",
+    "open_systems",
+    "views",
+    "effects",
+    "agent_runtime",
+    "resource_constraints",
+    "change_semantics",
+    "formalization_level"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 2
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "problem_statement": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "goals",
+        "non_goals"
+      ],
+      "properties": {
+        "goals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "non_goals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "domain_glossary": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "terms"
+      ],
+      "properties": {
+        "terms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+              "term",
+              "ja"
+            ],
+            "properties": {
+              "term": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ja": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "kind"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "states": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "morphisms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "input",
+          "output",
+          "pre",
+          "post",
+          "failures"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "input": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "output": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "pre": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "post": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "failures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "diagrams": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "statement",
+          "verification"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "verification": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "acceptance_tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "scenario",
+          "expected"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scenario": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "coding_conventions": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "language",
+        "directory",
+        "dependencies"
+      ],
+      "properties": {
+        "language": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "forbidden_changes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "context_pack_version": {
+      "type": "integer",
+      "const": 2
+    },
+    "data_contracts": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "schemas",
+        "mappings",
+        "migration_verification"
+      ],
+      "properties": {
+        "schemas": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "mappings": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "migration_verification": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "open_systems": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "components",
+        "boundaries",
+        "composition"
+      ],
+      "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "boundaries": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "composition": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "views": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "lenses_or_optics"
+      ],
+      "properties": {
+        "lenses_or_optics": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "effects": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "operations",
+        "handlers",
+        "effect_safety_notes"
+      ],
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "handlers": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "effect_safety_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "agent_runtime": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "allowed_tools",
+        "forbidden_tools",
+        "guardrails",
+        "trace_evidence"
+      ],
+      "properties": {
+        "allowed_tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "forbidden_tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "guardrails": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "trace_evidence": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "resource_constraints": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "tool_budget",
+        "data_sensitivity",
+        "linear_resources"
+      ],
+      "properties": {
+        "tool_budget": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "data_sensitivity": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "linear_resources": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "object",
+                "additionalProperties": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "change_semantics": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "allowed_refactors",
+        "forbidden_conflict_resolutions",
+        "merge_invariants"
+      ],
+      "properties": {
+        "allowed_refactors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "forbidden_conflict_resolutions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "merge_invariants": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "formalization_level": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "metaphor_only",
+        "machine_checked",
+        "tested_by_ci",
+        "reviewed_manually"
+      ],
+      "properties": {
+        "metaphor_only": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "machine_checked": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "tested_by_ci": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "reviewed_manually": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "description": "Context Pack v1 core plus AI agent runtime, data contracts, effect boundaries, guardrails, trace evidence, resource constraints, change semantics, and formalization level."
+}

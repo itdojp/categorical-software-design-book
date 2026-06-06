@@ -29,6 +29,8 @@ resources:
     path: "/glossary/"
   - title: "Context Pack v1 仕様"
     path: "/spec/context-pack-v1/"
+  - title: "Context Pack v2 仕様"
+    path: "/spec/context-pack-v2/"
   - title: "最小例: minimal-example"
     path: "/examples/minimal-example/"
   - title: "共通例題: 注文処理"

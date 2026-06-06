@@ -10,6 +10,8 @@ permalink: /spec/context-pack-v1/
 
 注記: このページは Context Pack の形式と必須項目の正本です。章立てや読み順の reader-facing な正本は公開トップページの目次を参照してください。
 
+互換性注記: Context Pack v2 は v1 の置換ではなく拡張です。既存の v1 YAML はそのまま維持し、Agent Runtime、data contracts、effect handler、guardrails、trace evidence、resource constraints までレビュー対象にする場合だけ [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }}) を参照してください。
+
 ## 目的
 
 - AIに委任する範囲（実装/テスト/リファクタ）を明確化する
@@ -21,7 +23,7 @@ permalink: /spec/context-pack-v1/
 Context Pack は YAML/JSON のいずれでもよいが、レビュー容易性のため YAML を推奨します。
 
 機械可読スキーマ（JSON Schema）は次を参照してください。
-- [JSON Schema]({{ '/spec/context-pack-v1.schema.json' | relative_url }})
+- [JSON Schema]({{ '/docs/spec/context-pack-v1.schema.json' | relative_url }})
 
 ### 検証コマンド {#validation-commands}
 
@@ -46,6 +48,8 @@ python3 scripts/validate-context-pack-schema.py docs/examples/common-example/con
 ```
 
 minimal lint と schema validation は目的が異なるため、併用を推奨します。
+
+注記: `scripts/validate-context-pack.py` と `scripts/validate-context-pack-schema.py` は v1/v2 を扱います。`context_pack_version: 2` がある YAML では v2 仕様・スキーマを使い、指定がない既存 YAML では v1 として検証します。
 
 - minimal lint: 書きやすさ・レビュー容易性を優先し、必須キー/型、ID重複、参照整合など運用上の破綻を早期に検知する
 - schema validation: 公開している JSON Schema と成果物のドリフト（仕様準拠）を機械的に検知する（参照整合や重複などの横断チェックは対象外）

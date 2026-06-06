@@ -250,18 +250,22 @@ AI 出力は「それらしく見える」だけでは通しません。
 
 ## CI で何を検知するか
 
-このリポジトリでは、文書 QA と `Context Pack` 検証を CI に組み込んでいます。
+このリポジトリでは、文書 QA と `Context Pack` v1/v2 検証を CI に組み込んでいます。
 通しケースでは、どの失敗をどのゲートが拾うかを分けて理解することが重要です。
 
 - `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml`
-  - 必須項目不足、ID 重複、最小構造の崩れを検知する
+  - v1 の必須項目不足、ID 重複、最小構造の崩れを検知する
+- `python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v2.yaml`
+  - v2 の data_contracts、agent_runtime、effects、resource_constraints などの欠落を検知する
 - `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml`
   - `Context Pack v1` のスキーマ逸脱を検知する
+- `python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v2.yaml`
+  - `Context Pack v2` のスキーマ逸脱を検知する
 - `npm run qa`
   - リンク、構造、Unicode、textlint、rendered HTML を含む主要チェックをまとめて実行する
 - Diagram / Acceptance test 由来のテスト（別リポジトリで動かす想定の例）
 
-注記: `docs/examples/common-example/context-pack-v1.yaml` のような repository 内パスは local 検証用の例です。reader-facing な内容確認は公開ページの [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) を正本として参照します。
+注記: `docs/examples/common-example/context-pack-v1.yaml` / `context-pack-v2.yaml` のような repository 内パスは local 検証用の例です。reader-facing な内容確認は公開ページの [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) を正本として参照します。
   - 例題アプリ側の CI で、`D2`、`D4`、`AT4`、`AT5` がコード差分で壊れていないかを検知する（この book リポジトリの `.github/workflows/ci.yml` では実行していない）
 
 CI が落ちたときの修正順も、ケーススタディの一部です。
@@ -355,10 +359,12 @@ CI が落ちたときの修正順も、ケーススタディの一部です。
    ```bash
    python3 -m pip install -r scripts/requirements-qa.txt  # 初回のみ
    python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v1.yaml
+   python3 scripts/validate-context-pack.py docs/examples/common-example/context-pack-v2.yaml
    python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml
+   python3 scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v2.yaml
    npm run qa  # 任意
    ```
-   注記: ここで使う `docs/examples/common-example/context-pack-v1.yaml` は local 検証例です。reader-facing な内容確認は公開ページの [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) を正本として参照します。
+   注記: ここで使う `docs/examples/common-example/context-pack-v1.yaml` / `context-pack-v2.yaml` は local 検証例です。reader-facing な内容確認は公開ページの [共通例題: 注文処理]({{ '/examples/common-example/' | relative_url }}) を正本として参照します。
 5. AI へ渡す prompt と、差し戻し条件を 3 行で書く
 
 ### 演習2: レビュー観点を PR コメントとして書く

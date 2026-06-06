@@ -14,11 +14,11 @@ appendix: templates
 
 このスケルトンは「着手用」の最小形です。まずは `scripts/validate-context-pack.py` の minimal lint（必須フィールド/型/ID重複/参照整合の簡易検証）で破綻を早期検知し、内容が具体化した段階で schema validation（JSON Schema による仕様準拠チェック）も通します。
 
-検証コマンドの詳細は [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands) を参照してください。
+検証コマンドの詳細は [Context Pack v1 仕様（検証コマンド）]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands) と [Context Pack v2 仕様（検証コマンド）]({{ '/spec/context-pack-v2/' | relative_url }}#validation-commands) を参照してください。
 
 注意: schema validation はプレースホルダ（例: `name: <project-or-example-name>`）を具体値へ置換した段階で通す想定です。
 
-注記: 本付録は reader-facing な雛形集です。説明が食い違う場合は、まず [公開トップページの「確認したいこと別の正本」]({{ '/' | relative_url }}#確認したいこと別の正本) を参照してください。形式と必須項目は [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }})、実行手順は [検証コマンド]({{ '/spec/context-pack-v1/' | relative_url }}#validation-commands)、語義は [用語集（Glossary）]({{ '/glossary/' | relative_url }})、版差は [CHANGELOG](https://github.com/itdojp/categorical-software-design-book/blob/main/CHANGELOG.md) を確認します。
+注記: 本付録は reader-facing な雛形集です。説明が食い違う場合は、まず [公開トップページの「確認したいこと別の正本」]({{ '/' | relative_url }}#確認したいこと別の正本) を参照してください。形式と必須項目は [Context Pack v1 仕様]({{ '/spec/context-pack-v1/' | relative_url }}) / [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }})、実行手順は各仕様の検証コマンド、語義は [用語集（Glossary）]({{ '/glossary/' | relative_url }})、版差は [CHANGELOG](https://github.com/itdojp/categorical-software-design-book/blob/main/CHANGELOG.md) を確認します。
 
 ```yaml
 version: 1
@@ -49,6 +49,74 @@ coding_conventions:
 
 forbidden_changes:
   - "<forbidden change>"
+```
+
+## Context Pack v2（Agent Runtime 拡張スケルトン）
+
+AI エージェントの tool call、guardrail、trace evidence、データ契約、効果境界までレビュー対象にする場合は v2 を使います。v2 は v1 の必須項目を削除しない拡張です。詳細は [Context Pack v2 仕様]({{ '/spec/context-pack-v2/' | relative_url }}) を参照してください。
+
+```yaml
+version: 2
+context_pack_version: 2
+name: <project-or-example-name>
+
+problem_statement:
+  goals: []
+  non_goals: []
+
+domain_glossary:
+  terms: []
+
+objects: []
+morphisms: []
+diagrams: []
+constraints: {}
+acceptance_tests: []
+coding_conventions:
+  language: language-agnostic
+  directory: []
+  dependencies: {}
+forbidden_changes: []
+
+data_contracts:
+  schemas: []
+  mappings: []
+  migration_verification: []
+
+open_systems:
+  components: []
+  boundaries: []
+  composition: []
+
+views:
+  lenses_or_optics: []
+
+effects:
+  operations: []
+  handlers: []
+  effect_safety_notes: []
+
+agent_runtime:
+  allowed_tools: []
+  forbidden_tools: []
+  guardrails: {}
+  trace_evidence: {}
+
+resource_constraints:
+  tool_budget: {}
+  data_sensitivity: {}
+  linear_resources: []
+
+change_semantics:
+  allowed_refactors: []
+  forbidden_conflict_resolutions: []
+  merge_invariants: []
+
+formalization_level:
+  metaphor_only: []
+  machine_checked: []
+  tested_by_ci: []
+  reviewed_manually: []
 ```
 
 ## 理論・実装接続レビューゲート（Phase 5）

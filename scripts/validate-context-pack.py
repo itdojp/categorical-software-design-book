@@ -8,7 +8,7 @@ import json
 import os
 import sys
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Optional
 
 try:
     import yaml
@@ -30,6 +30,10 @@ def _is_non_empty_str(v: Any) -> bool:
 
 def _is_str_list(v: Any) -> bool:
     return isinstance(v, list) and all(_is_non_empty_str(x) for x in v)
+
+
+def _is_list(v: Any) -> bool:
+    return isinstance(v, list)
 
 
 def _expect(cond: bool, path: str, message: str, errors: list[ValidationErrorItem]) -> None:
@@ -237,8 +241,136 @@ def validate_context_pack_v1(doc: Any) -> list[ValidationErrorItem]:
     return errors
 
 
+def _expect_object_with_required_keys(
+    doc: dict[str, Any],
+    key: str,
+    required: list[tuple[str, str]],
+    errors: list[ValidationErrorItem],
+) -> Optional[dict[str, Any]]:
+    value = doc.get(key)
+    _expect(isinstance(value, dict), f"$.{key}", f"{key} はオブジェクトである必要があります", errors)
+    if not isinstance(value, dict):
+        return None
+
+    for child, kind in required:
+        path = f"$.{key}.{child}"
+        child_value = value.get(child)
+        if kind == "array":
+            _expect(_is_list(child_value), path, f"{child} は配列である必要があります", errors)
+        elif kind == "str_array":
+            _expect(_is_str_list(child_value), path, f"{child} は文字列配列である必要があります", errors)
+        elif kind == "object":
+            _expect(isinstance(child_value, dict), path, f"{child} はオブジェクトである必要があります", errors)
+        else:
+            raise ValueError(f"Unknown validation kind: {kind}")
+    return value
+
+
+def validate_context_pack_v2(doc: Any) -> list[ValidationErrorItem]:
+    errors = validate_context_pack_v1(doc)
+
+    _expect(isinstance(doc, dict), "$", "トップレベルはオブジェクト（dict）である必要があります", errors)
+    if not isinstance(doc, dict):
+        return errors
+
+    _expect(doc.get("version") == 2, "$.version", "v2 では version は 2 である必要があります", errors)
+    _expect(
+        doc.get("context_pack_version") == 2,
+        "$.context_pack_version",
+        "context_pack_version は 2 である必要があります",
+        errors,
+    )
+
+    _expect_object_with_required_keys(
+        doc,
+        "data_contracts",
+        [
+            ("schemas", "array"),
+            ("mappings", "array"),
+            ("migration_verification", "str_array"),
+        ],
+        errors,
+    )
+    _expect_object_with_required_keys(
+        doc,
+        "open_systems",
+        [
+            ("components", "array"),
+            ("boundaries", "array"),
+            ("composition", "array"),
+        ],
+        errors,
+    )
+    _expect_object_with_required_keys(
+        doc,
+        "views",
+        [("lenses_or_optics", "array")],
+        errors,
+    )
+    _expect_object_with_required_keys(
+        doc,
+        "effects",
+        [
+            ("operations", "array"),
+            ("handlers", "array"),
+            ("effect_safety_notes", "str_array"),
+        ],
+        errors,
+    )
+    _expect_object_with_required_keys(
+        doc,
+        "agent_runtime",
+        [
+            ("allowed_tools", "str_array"),
+            ("forbidden_tools", "str_array"),
+            ("guardrails", "object"),
+            ("trace_evidence", "object"),
+        ],
+        errors,
+    )
+    _expect_object_with_required_keys(
+        doc,
+        "resource_constraints",
+        [
+            ("tool_budget", "object"),
+            ("data_sensitivity", "object"),
+            ("linear_resources", "array"),
+        ],
+        errors,
+    )
+    _expect_object_with_required_keys(
+        doc,
+        "change_semantics",
+        [
+            ("allowed_refactors", "str_array"),
+            ("forbidden_conflict_resolutions", "str_array"),
+            ("merge_invariants", "str_array"),
+        ],
+        errors,
+    )
+    _expect_object_with_required_keys(
+        doc,
+        "formalization_level",
+        [
+            ("metaphor_only", "str_array"),
+            ("machine_checked", "str_array"),
+            ("tested_by_ci", "str_array"),
+            ("reviewed_manually", "str_array"),
+        ],
+        errors,
+    )
+
+    return errors
+
+
+def detect_context_pack_version(doc: Any) -> int:
+    if isinstance(doc, dict) and (doc.get("context_pack_version") == 2 or doc.get("version") == 2):
+        return 2
+    return 1
+
+
 def main(argv: list[str]) -> int:
-    parser = argparse.ArgumentParser(description="Validate Context Pack v1 YAML/JSON (minimal lint).")
+    parser = argparse.ArgumentParser(description="Validate Context Pack v1/v2 YAML/JSON (minimal lint).")
     parser.add_argument("file", help="Target file path (.yaml/.yml/.json)")
     args = parser.parse_args(argv)
 
@@ -248,14 +380,18 @@ def main(argv: list[str]) -> int:
         print(f"❌ Failed to load: {args.file}: {e}", file=sys.stderr)
         return 2
 
-    errors = validate_context_pack_v1(doc)
+    context_pack_version = detect_context_pack_version(doc)
+    if context_pack_version == 2:
+        errors = validate_context_pack_v2(doc)
+    else:
+        errors = validate_context_pack_v1(doc)
     if errors:
-        print(f"❌ Invalid Context Pack v1: {args.file}", file=sys.stderr)
+        print(f"❌ Invalid Context Pack v{context_pack_version}: {args.file}", file=sys.stderr)
         for item in errors:
             print(f"- {item.path}: {item.message}", file=sys.stderr)
         return 1
 
-    print(f"✅ Context Pack v1 is valid: {args.file}")
+    print(f"✅ Context Pack v{context_pack_version} is valid: {args.file}")
     return 0
 
 
