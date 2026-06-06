@@ -390,22 +390,33 @@ agent_runtime:
       effect: ReadRepo
       input_schema_ref: schemas/ContextPackPath.json
       output_schema_ref: schemas/ValidationResult.json
+    - name: pii_redactor
+      protocol: local
+      effect: TransformText
+      input_schema_ref: schemas/RedactionInput.json
+      output_schema_ref: schemas/RedactionOutput.json
+      postconditions:
+        - pii_fields_redacted_unless_allowed
   forbidden_tools:
     - direct_sql_write
     - shell_without_sandbox
     - network_call_to_unregistered_endpoint
     - unredacted_pii_export
+    - general_llm_without_redaction
   guardrails:
     input:
       - reject_cross_tenant_request
       - require_context_pack_validation_before_tool_plan
+      - verify_external_api_call_budget_remaining
     output:
       - verify_no_secret_exfiltration
       - verify_diagram_and_acceptance_test_ids_are_referenced
+      - reject_general_llm_without_redaction
     tool:
       - validate_tool_input_schema
       - validate_tool_output_schema
       - require_human_approval_for_write_effects
+      - enforce_resource_constraints_before_tool_call
   trace_evidence:
     required_spans:
       - llm_generation
@@ -422,14 +433,35 @@ resource_constraints:
   tool_budget:
     max_tool_calls: 40
     max_ci_minutes: 20
+    max_external_api_calls: 3
+    max_llm_retries: 2
   data_sensitivity:
-    pii: "顧客氏名・住所・決済情報は例題に含めない。必要な場合は匿名fixtureに置き換える"
+    pii:
+      policy: "顧客氏名・住所・決済情報は例題に含めない。必要な場合は匿名fixtureに置き換える"
+      allowed_tools:
+        - pii_redactor
+      forbidden_tools:
+        - general_llm_without_redaction
     audit_log: "payloadHash は改竄検知用の例であり、実データを公開しない"
   linear_resources:
     - id: IdempotencyKey
-      rule: "同一 key は同一 scope で一度だけ成功結果へ対応させる"
+      rule:
+        - "同一 key は同一 scope で一度だけ成功結果へ対応させる"
     - id: OneTimePaymentToken
-      rule: "再利用禁止。保存せず、handler 境界で破棄する"
+      rule:
+        - "再利用禁止。保存せず、handler 境界で破棄する"
+    - id: payment_authorization_token
+      kind: one_time_token
+      rule:
+        - must_not_duplicate
+        - must_not_log
+        - must_not_reuse
+    - id: password_reset_token
+      kind: one_time_token
+      rule:
+        - must_not_duplicate
+        - must_not_log
+        - must_not_reuse
 
 change_semantics:
   allowed_refactors:
@@ -463,4 +495,7 @@ formalization_level:
   reviewed_manually:
     - "data_contracts.mappings と diagrams の対応づけ"
     - "agent_runtime.guardrails が forbidden_tools と resource_constraints を矛盾なく扱うこと"
+    - "resource_constraints.tool_budget が外部API呼び出し回数と LLM retry 回数を制限していること"
+    - "resource_constraints.data_sensitivity.pii の allowed_tools / forbidden_tools が guardrails と整合していること"
+    - "linear_resources の one-time token が複製・ログ出力・再利用禁止として扱われていること"
     - "change_semantics.forbidden_conflict_resolutions が forbidden_changes を merge / refactor レビューへ具体化していること"

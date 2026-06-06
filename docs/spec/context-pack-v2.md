@@ -332,7 +332,42 @@ agent_runtime:
 
 ### resource_constraints
 
-`tool_budget` は tool call 回数や CI 時間などの予算、`data_sensitivity` は PII・本番データ・監査ログの扱い、`linear_resources` はワンタイムトークンや冪等性キーなど再利用してはいけない資源を記録します。
+`tool_budget` は tool call 回数、外部 API 呼び出し回数、LLM retry 回数、CI 時間などの予算です。
+`data_sensitivity` は PII、本番データ、監査ログの扱いです。
+`linear_resources` は、ワンタイムトークンや冪等性キーなど再利用してはいけない資源です。
+
+`resource_constraints` はポリシーを記録する場所です。
+`agent_runtime.guardrails` は、そのポリシーを tool 実行の前後で検査・拒否する場所です。
+たとえば `max_external_api_calls` は予算であり、4回目を拒否する実装は guardrail です。
+PII を扱える tool の一覧は `data_sensitivity` に置き、実行時の redaction / rejection は guardrail に置きます。
+
+```yaml
+resource_constraints:
+  tool_budget:
+    max_external_api_calls: 3
+    max_llm_retries: 2
+
+  data_sensitivity:
+    pii:
+      allowed_tools:
+        - pii_redactor
+      forbidden_tools:
+        - general_llm_without_redaction
+
+  linear_resources:
+    - id: payment_authorization_token
+      kind: one_time_token
+      rule:
+        - must_not_duplicate
+        - must_not_log
+        - must_not_reuse
+    - id: password_reset_token
+      kind: one_time_token
+      rule:
+        - must_not_duplicate
+        - must_not_log
+        - must_not_reuse
+```
 
 ### change_semantics
 
