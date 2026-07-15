@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPORT_DIR="$ROOT/qa-reports"
 BOOK_FORMATTER_DIR="$ROOT/book-formatter"
 BOOK_FORMATTER_REMOTE_URL="${BOOK_FORMATTER_REMOTE_URL:-https://github.com/itdojp/book-formatter.git}"
-BOOK_FORMATTER_REF="${BOOK_FORMATTER_REF:-da2a49e7d2dcd9e1fa885e910c458130fe8d73a4}"
+BOOK_FORMATTER_REF="${BOOK_FORMATTER_REF:-69eb5c12f5a750b65614bc9bbbc3d7abd5aa6f6c}"
 
 die() {
   local msg="$1"
