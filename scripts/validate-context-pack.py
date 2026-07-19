@@ -316,6 +316,104 @@ def _expect_object_with_required_keys(
     return value
 
 
+def _is_non_empty_rule(value: Any) -> bool:
+    return _is_non_empty_str(value) or (isinstance(value, list) and len(value) > 0 and _is_str_list(value))
+
+
+def _validate_v2_structured_entries(doc: dict[str, Any], errors: list[ValidationErrorItem]) -> None:
+    """Semantic lint for the intentionally shallow v2 structured-entry contract."""
+
+    def entries(section: str, field: str) -> list[Any]:
+        section_value = doc.get(section)
+        if not isinstance(section_value, dict):
+            return []
+        value = section_value.get(field)
+        return value if isinstance(value, list) else []
+
+    def require_string(item: dict[str, Any], key: str, path: str) -> None:
+        _expect(_is_non_empty_str(item.get(key)), f"{path}.{key}", f"{key} は空でない文字列である必要があります", errors)
+
+    id_only_fields = [
+        ("data_contracts", "schemas"),
+        ("open_systems", "components"),
+        ("open_systems", "boundaries"),
+        ("open_systems", "composition"),
+    ]
+    for section, field in id_only_fields:
+        for index, item in enumerate(entries(section, field)):
+            path = f"$.{section}.{field}[{index}]"
+            if _is_non_empty_str(item):
+                continue
+            _expect(isinstance(item, dict), path, "非空文字列または構造化オブジェクトである必要があります", errors)
+            if isinstance(item, dict):
+                require_string(item, "id", path)
+
+    for index, item in enumerate(entries("data_contracts", "mappings")):
+        path = f"$.data_contracts.mappings[{index}]"
+        if _is_non_empty_str(item):
+            continue
+        _expect(isinstance(item, dict), path, "非空文字列またはmappingオブジェクトである必要があります", errors)
+        if isinstance(item, dict):
+            require_string(item, "id", path)
+            endpoints = (
+                _is_non_empty_str(item.get("source")) and _is_non_empty_str(item.get("target"))
+            ) or (_is_non_empty_str(item.get("from")) and _is_non_empty_str(item.get("to")))
+            _expect(endpoints, path, "source/targetまたはfrom/toの非空endpointが必要です", errors)
+
+    for index, item in enumerate(entries("data_contracts", "migration_verification")):
+        path = f"$.data_contracts.migration_verification[{index}]"
+        if _is_non_empty_str(item):
+            continue
+        _expect(isinstance(item, dict), path, "非空文字列またはverificationオブジェクトである必要があります", errors)
+        if isinstance(item, dict):
+            require_string(item, "type", path)
+
+    for index, item in enumerate(entries("views", "lenses_or_optics")):
+        path = f"$.views.lenses_or_optics[{index}]"
+        if _is_non_empty_str(item):
+            continue
+        _expect(isinstance(item, dict), path, "非空文字列またはview/opticオブジェクトである必要があります", errors)
+        if isinstance(item, dict):
+            require_string(item, "id", path)
+            require_string(item, "source", path)
+            focus = item.get("focus")
+            has_view_or_focus = _is_non_empty_str(item.get("view")) or _is_non_empty_str(focus) or (
+                isinstance(focus, list) and len(focus) > 0 and _is_str_list(focus)
+            )
+            _expect(has_view_or_focus, path, "非空のviewまたはfocusが必要です", errors)
+
+    for index, item in enumerate(entries("effects", "operations")):
+        path = f"$.effects.operations[{index}]"
+        if _is_non_empty_str(item):
+            continue
+        _expect(isinstance(item, dict), path, "非空文字列またはeffect operationオブジェクトである必要があります", errors)
+        if isinstance(item, dict):
+            require_string(item, "id", path)
+            require_string(item, "kind", path)
+
+    for index, item in enumerate(entries("effects", "handlers")):
+        path = f"$.effects.handlers[{index}]"
+        if _is_non_empty_str(item):
+            continue
+        _expect(isinstance(item, dict), path, "非空文字列またはeffect handlerオブジェクトである必要があります", errors)
+        if isinstance(item, dict):
+            require_string(item, "id", path)
+            handles = item.get("handles")
+            has_operation = _is_non_empty_str(item.get("operation")) or (
+                isinstance(handles, list) and len(handles) > 0 and _is_str_list(handles)
+            )
+            _expect(has_operation, path, "非空のoperationまたはhandlesが必要です", errors)
+
+    for index, item in enumerate(entries("resource_constraints", "linear_resources")):
+        path = f"$.resource_constraints.linear_resources[{index}]"
+        if _is_non_empty_str(item):
+            continue
+        _expect(isinstance(item, dict), path, "非空文字列またはlinear resourceオブジェクトである必要があります", errors)
+        if isinstance(item, dict):
+            require_string(item, "id", path)
+            _expect(_is_non_empty_rule(item.get("rule")), f"{path}.rule", "ruleは非空文字列または非空文字列配列である必要があります", errors)
+
+
 def validate_context_pack_v2(doc: Any) -> list[ValidationErrorItem]:
     errors = validate_context_pack_v1(doc)
 
@@ -409,6 +507,8 @@ def validate_context_pack_v2(doc: Any) -> list[ValidationErrorItem]:
         ],
         errors,
     )
+
+    _validate_v2_structured_entries(doc, errors)
 
     return errors
 

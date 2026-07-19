@@ -107,6 +107,7 @@ python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/com
 python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/minimal-example/context-pack-v1.yaml"
 python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/common-example/context-pack-v2.yaml"
 python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/minimal-example/context-pack-v2.yaml"
+python3 "$ROOT/scripts/check-context-pack-v2-schema-regressions.py"
 python3 "$ROOT/scripts/check-context-pack-minimal-example-sync.py"
 python3 "$ROOT/scripts/check-placeholders.py"
 python3 "$ROOT/scripts/check-invalid-markdown-links.py"

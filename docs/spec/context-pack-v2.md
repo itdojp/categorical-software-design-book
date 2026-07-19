@@ -121,6 +121,40 @@ formalization_level:
   reviewed_manually: []
 ```
 
+## JSON Schemaの拘束範囲
+
+配列要素は、簡潔な非空文字列または構造化オブジェクトで記述できます。
+構造化オブジェクトを選んだ場合、`{}` は有効な設計成果物として扱いません。
+JSON Schemaは次の最低契約を検査します。
+
+| 構造化要素 | 最低契約 |
+| --- | --- |
+| `data_contracts.schemas[]` | `id` |
+| `data_contracts.mappings[]` | `id`と、`source` / `target`または`from` / `to` |
+| `data_contracts.migration_verification[]` | `type` |
+| `open_systems.components[]` / `boundaries[]` / `composition[]` | `id` |
+| `views.lenses_or_optics[]` | `id`、`source`と、`view`または`focus` |
+| `effects.operations[]` | `id`、`kind` |
+| `effects.handlers[]` | `id`と、`operation`または非空の`handles` |
+| `resource_constraints.linear_resources[]` | `id`と、非空文字列または非空配列の`rule` |
+
+このschemaは意図的にshallowです。
+JSON Schemaは、次の意味的な整合を検証しません。
+
+- mapping endpointが既知のschemaを参照するか
+- handlerが既知のoperationを処理するか
+- viewの更新則やlinear resourceのruleが業務要件を満たすか
+
+構造と最低識別子はJSON Schemaで確認します。
+必須値とfield組合せはsemantic lintで確認します。
+設計上の意味と圏論的な対応づけは、`formalization_level.reviewed_manually`に記録したレビューで確認します。
+
+既存例の互換性とempty object拒否は、次の回帰検査で確認します。
+
+```bash
+python3 scripts/check-context-pack-v2-schema-regressions.py
+```
+
 ## フィールドの書き方
 
 ### data_contracts

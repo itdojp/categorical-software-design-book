@@ -53,7 +53,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Validate Context Pack v1 (minimal lint + schema)
+      - name: Validate Context Pack v1/v2 (minimal lint + schema)
         run: |
           pip install -r scripts/requirements-qa.txt
           python scripts/check-metadata-consistency.py
@@ -61,6 +61,11 @@ jobs:
           python scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v1.yaml
           python scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v1.yaml
           python scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v1.yaml
+          python scripts/validate-context-pack.py docs/examples/common-example/context-pack-v2.yaml
+          python scripts/validate-context-pack.py docs/examples/minimal-example/context-pack-v2.yaml
+          python scripts/validate-context-pack-schema.py docs/examples/common-example/context-pack-v2.yaml
+          python scripts/validate-context-pack-schema.py docs/examples/minimal-example/context-pack-v2.yaml
+          python scripts/check-context-pack-v2-schema-regressions.py
           python scripts/check-context-pack-minimal-example-sync.py
           python scripts/check-placeholders.py
           python scripts/check-invalid-markdown-links.py

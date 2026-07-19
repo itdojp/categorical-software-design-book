@@ -1,0 +1,27 @@
+[
+  {
+    "name": "mapping with one endpoint",
+    "path": ["data_contracts", "mappings"],
+    "value": {"id": "partial_mapping", "source": "OrderSchema"}
+  },
+  {
+    "name": "view with object focus",
+    "path": ["views", "lenses_or_optics"],
+    "value": {"id": "invalid_focus", "source": "Order", "focus": {}}
+  },
+  {
+    "name": "view with numeric view",
+    "path": ["views", "lenses_or_optics"],
+    "value": {"id": "invalid_view", "source": "Order", "view": 123}
+  },
+  {
+    "name": "effect handler with empty handles",
+    "path": ["effects", "handlers"],
+    "value": {"id": "empty_handler", "handles": []}
+  },
+  {
+    "name": "linear resource with empty rule",
+    "path": ["resource_constraints", "linear_resources"],
+    "value": {"id": "empty_rule", "rule": []}
+  }
+]
