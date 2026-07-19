@@ -1,0 +1,42 @@
+[
+  {
+    "name": "data contract schema",
+    "path": ["data_contracts", "schemas"]
+  },
+  {
+    "name": "data contract mapping",
+    "path": ["data_contracts", "mappings"]
+  },
+  {
+    "name": "migration verification",
+    "path": ["data_contracts", "migration_verification"]
+  },
+  {
+    "name": "open-system component",
+    "path": ["open_systems", "components"]
+  },
+  {
+    "name": "open-system boundary",
+    "path": ["open_systems", "boundaries"]
+  },
+  {
+    "name": "open-system composition",
+    "path": ["open_systems", "composition"]
+  },
+  {
+    "name": "view or optic",
+    "path": ["views", "lenses_or_optics"]
+  },
+  {
+    "name": "effect operation",
+    "path": ["effects", "operations"]
+  },
+  {
+    "name": "effect handler",
+    "path": ["effects", "handlers"]
+  },
+  {
+    "name": "linear resource",
+    "path": ["resource_constraints", "linear_resources"]
+  }
+]

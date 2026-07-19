@@ -26,6 +26,219 @@
     "change_semantics",
     "formalization_level"
   ],
+  "$defs": {
+    "structuredEntryWithId": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "Shallow structured entry contract: an id is required; domain semantics remain a semantic-lint or review concern."
+    },
+    "mappingEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "source",
+            "target"
+          ]
+        },
+        {
+          "required": [
+            "from",
+            "to"
+          ]
+        }
+      ],
+      "description": "A mapping identifies itself and declares either source/target or from/to endpoints."
+    },
+    "migrationVerificationEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "A migration verification entry declares its verification type."
+    },
+    "viewOrOpticEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "source"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "view": {
+          "type": "string",
+          "minLength": 1
+        },
+        "focus": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "view"
+          ]
+        },
+        {
+          "required": [
+            "focus"
+          ]
+        }
+      ],
+      "description": "A view/optic identifies its source and declares either a view or focus."
+    },
+    "effectOperationEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "An effect operation identifies the operation and its effect kind."
+    },
+    "effectHandlerEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "handles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "operation"
+          ]
+        },
+        {
+          "required": [
+            "handles"
+          ]
+        }
+      ],
+      "description": "An effect handler identifies itself and declares an operation or non-empty handles list."
+    },
+    "linearResourceEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "rule"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          ]
+        }
+      },
+      "description": "A linear resource identifies itself and provides at least one usage rule."
+    }
+  },
   "properties": {
     "version": {
       "type": "integer",
@@ -282,8 +495,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/structuredEntryWithId"
               }
             ]
           }
@@ -297,8 +509,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/mappingEntry"
               }
             ]
           }
@@ -312,8 +523,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/migrationVerificationEntry"
               }
             ]
           }
@@ -338,8 +548,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/structuredEntryWithId"
               }
             ]
           }
@@ -353,8 +562,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/structuredEntryWithId"
               }
             ]
           }
@@ -368,8 +576,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/structuredEntryWithId"
               }
             ]
           }
@@ -392,8 +599,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/viewOrOpticEntry"
               }
             ]
           }
@@ -418,8 +624,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/effectOperationEntry"
               }
             ]
           }
@@ -433,8 +638,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/effectHandlerEntry"
               }
             ]
           }
@@ -566,8 +770,7 @@
                 "minLength": 1
               },
               {
-                "type": "object",
-                "additionalProperties": true
+                "$ref": "#/$defs/linearResourceEntry"
               }
             ]
           }
