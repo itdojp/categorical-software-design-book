@@ -68,6 +68,11 @@ jobs:
       - name: Check navigation drift
         run: npm run check:navigation
 
+      - name: Check associativity wording
+        run: |
+          node scripts/check-associativity-wording.js
+          node scripts/check-associativity-wording.js --self-test
+
       - name: Setup Pages
         uses: actions/configure-pages@v6
 
