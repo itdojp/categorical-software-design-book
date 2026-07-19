@@ -23,7 +23,7 @@ chapter: chapter09
 
 ## 圏論コア（定義・直観・ミニ例）
 
-モナド（Monad）とクライスリ（Kleisli）は、効果（IO/DB/例外/リトライ等）を含む計算を合成可能にするための枠組みです。本章では、厳密な公理よりも設計上の直観を優先します。
+モナド（Monad）とクライスリ（Kleisli）は、効果（IO/DB/例外/リトライ等）を含む計算を合成可能にするための枠組みです。本章では形式証明までは行いませんが、設計上の直観を支える3つのlawを先に明示します。
 
 - 効果付きの型: `M A`（例: `Result<A, E>`, `Task<A>`, `IO<A>`）
 - 効果付きの射（クライスリ射）: `A → M B`
@@ -40,15 +40,58 @@ chapter: chapter09
 ```ts
 type Result<A, E> = { ok: true; value: A } | { ok: false; error: E };
 
+const unit = <A, E = never>(value: A): Result<A, E> => ({ ok: true, value });
+
+const bind = <A, B, E>(
+  result: Result<A, E>,
+  next: (value: A) => Result<B, E>,
+): Result<B, E> => (result.ok ? next(result.value) : result);
+
 const kleisliCompose =
   <A, B, C, E>(f: (a: A) => Result<B, E>, g: (b: B) => Result<C, E>) =>
-  (a: A): Result<C, E> => {
-    const rb = f(a);
-    return rb.ok ? g(rb.value) : rb;
-  };
+  (a: A): Result<C, E> => bind(f(a), g);
 
 // h = kleisliCompose(f, g) （= g ∘ f）
 ```
+
+### Resultで確認する3つのlaw
+
+ここで関数の等しさは、同じ入力に対して同じ`Ok`または`Err`を返すことを意味します。
+`unit`は値を`Result`へ持ち上げるだけで、ログ、DBアクセス、リトライなどの効果を追加しません。
+`f: A → Result<B, E>`、`g: B → Result<C, E>`、`k: C → Result<D, E>`とすると、
+Kleisli compositionは次の3条件を満たします。
+
+#### 左単位律（left identity）
+
+`kleisliCompose(unit, f)(a) = f(a)`
+
+値を`unit`で持ち上げてから`f`へ渡しても、`f`を直接適用した結果と同じです。
+
+#### 右単位律（right identity）
+
+`kleisliCompose(f, unit)(a) = f(a)`
+
+`f`の結果を効果のない`unit`へ渡しても、成功値と失敗値は変わりません。
+
+#### 結合律（associativity）
+
+`kleisliCompose(kleisliCompose(f, g), k) = kleisliCompose(f, kleisliCompose(g, k))`
+
+括弧を付け替えても、`f`→`g`→`k`の適用順と最初に発生した失敗の伝播は変わりません。
+結合律が許すのは再結合であり、`f`、`g`、`k`の順序交換ではありません。
+
+既存の`Result`例を具体化します。`parseQuantity`を`f`、`reserveInventory`を`g`、
+`authorizePayment`を`k`とし、有限fixtureを手計算すると次の結果になります。
+
+| 入力 | `f` | `g` | `k` | lawの確認 |
+| --- | --- | --- | --- | --- |
+| `"2"` | `Ok(2)` | `Ok(Reserved(2))` | `Ok(Authorized(2))` | 直接適用、`unit`追加、どちらの括弧でも同じ成功値 |
+| `"0"` | `Err(InvalidQuantity)` | 未実行 | 未実行 | left/right identityでも同じ失敗、結合位置に依存せず前段失敗を伝播 |
+| `"4"` | `Ok(4)` | `Err(OutOfStock)` | 未実行 | どちらの括弧でも在庫失敗を返し、後段を実行しない |
+| `"3"` | `Ok(3)` | `Ok(Reserved(3))` | `Err(PaymentDeclined)` | どちらの括弧でも同じ後段失敗 |
+
+この確認は`scripts/check-monad-laws.js`でも同じfixtureに対して実行します。
+形式証明の代替ではありませんが、本文の式と実行例が乖離する回帰を検出できます。
 
 直観は次のとおりです。
 
@@ -135,13 +178,16 @@ Model Context Protocol（MCP）は、LLM アプリケーションと外部デー
 | --- | --- |
 | `A` | tool input schema |
 | `B` | tool output schema |
-| `M` | 外部世界との相互作用、失敗、権限、監査、非決定性 |
+| `M` | 外部世界との相互作用、失敗、権限、監査、非決定性を表す設計上の文脈 |
 | Kleisli composition | tool call chain / workflow |
-| unit | 純粋値を effect context へ持ち上げる |
-| bind | 前段 tool 結果を次段 tool へ渡す |
-| law violation | retry、重複実行、副作用漏れ、監査欠落、非 idempotent 実行 |
+| unit | 効果を増やさず、検証済みの値をruntime contractへ持ち上げる操作に対応づける |
+| bind | 前段toolの成功結果だけを次段toolへ渡し、失敗を短絡する操作に対応づける |
+| law | runtimeを再構成しても出力・効果・trace契約が変わらないかを見る検証観点 |
 
-この対応で重要なのは、tool call chain を「便利な手順」ではなく、合成される効果としてレビューすることです。`get_order` の出力を `cancel_order` に渡す場合、`tenant_id`、権限、`Order.state`、idempotency key、監査イベントが保存されなければ、Kleisli 合成の直観は破綻します。
+この表は**設計上の対応づけ（比喩）**であり、任意のagent runtimeが数学的にMonadであるという証明ではありません。
+検証対象は、再構成後の出力、tool実行回数、権限、idempotency key、retry境界、監査イベント、traceです。
+各項目が定めた契約と一致することを確認します。`get_order`の出力を`cancel_order`に渡す場合、
+`tenant_id`、権限、`Order.state`、idempotency key、監査イベントが保存されなければ、Kleisli合成の直観は破綻します。
 
 ```yaml
 agent_runtime:
@@ -192,20 +238,23 @@ agent_runtime:
 
 OpenAI Agents SDK は、Agents、tools、handoffs、guardrails、tracing などの primitives を提供する実装例です。公式ドキュメントでは、guardrails は input / output / tool invocation の検証点として説明され、tracing は generation、function tool call、guardrail、handoff などを span として記録します（[Agents SDK Guardrails](https://openai.github.io/openai-agents-python/guardrails/)、[Agents SDK Tracing](https://openai.github.io/openai-agents-python/tracing/)）。ただし、本書では特定 SDK に閉じません。OpenAI Agents SDK、GitHub Copilot agent、Codex などは、Agent Runtime Contract を実装・運用する具体例として扱います。
 
-### law violation をレビュー観点へ落とす
+### lawから観測可能なruntime symptomへ落とす
 
-Kleisli の law をここで証明する必要はありません。実務では、破綻を次のレビュー観点へ落とします。
+実務では、数学的な関数等価性をそのまま主張せず、runtime contract上の観測項目へ変換します。
 
-- retry:
-  - 同じ `idempotency_key` で二重取消が起きないか。
-- 重複実行:
-  - tool call が再実行されても監査イベントが二重集計されないか。
-- 副作用漏れ:
-  - `get_order` のような read tool が write を行っていないか。
-- 監査欠落:
-  - `cancel_order` 成功時に `tool_call` と `guardrail_result` の trace が残るか。
-- 非 idempotent 実行:
-  - retry policy が bounded で、失敗時の再実行条件が明示されているか。
+| law | 対応づける変更 | 検証条件 | violationで観測されるsymptom |
+| --- | --- | --- | --- |
+| left identity | 入力を効果のないadapterで包んでからtoolへ渡す | adapter有無でtool入力、出力、実行回数、権限判定、traceが同じ | adapterがDB/toolを呼ぶ、監査が二重化する、tenant束縛が変わる |
+| right identity | chain末尾へ効果のないpass-throughを追加する | 成功/失敗、状態、監査イベント、idempotency keyが変わらない | `Err`が成功へ変換される、余分なwriteが起きる、監査やidempotency keyが失われる |
+| associativity | `f`→`g`→`k`の順序を保ったままworkflowの括弧だけを付け替える | 両構成でtool call列、最初の失敗、retry回数、出力、traceが同じ | retry範囲が変わる、toolが重複実行される、失敗後に後段が走る、traceが欠落する |
+
+したがって、レビューとproperty testでは少なくとも次を観測します。
+
+- 同じ`idempotency_key`で二重取消・二重監査が起きない。
+- read toolが隠れたwriteを行わず、失敗後に後段toolを呼ばない。
+- workflowの再グループ化でretry policyの条件・回数・backoff・timeoutが変わらない。
+- `cancel_order`成功/失敗の両方で`tool_call`と`guardrail_result`のtraceが契約どおり残る。
+- toolの順序交換はlawの検証に含めず、必要なら別の業務仕様として検証する。
 
 
 ## 第9章補論: Monad から Algebraic Effects へ

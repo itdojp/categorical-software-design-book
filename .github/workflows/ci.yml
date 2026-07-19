@@ -73,6 +73,11 @@ jobs:
           node scripts/check-associativity-wording.js
           node scripts/check-associativity-wording.js --self-test
 
+      - name: Check Monad laws
+        run: |
+          node scripts/check-monad-laws.js
+          node scripts/check-monad-laws.js --self-test
+
       - name: Setup Pages
         uses: actions/configure-pages@v6
 
