@@ -7,6 +7,9 @@ BOOK_FORMATTER_DIR="$ROOT/book-formatter"
 BOOK_FORMATTER_REMOTE_URL="${BOOK_FORMATTER_REMOTE_URL:-https://github.com/itdojp/book-formatter.git}"
 BOOK_FORMATTER_REF="${BOOK_FORMATTER_REF:-69eb5c12f5a750b65614bc9bbbc3d7abd5aa6f6c}"
 
+# Keep every relative path used by downstream validators anchored to the repository.
+cd "$ROOT"
+
 die() {
   local msg="$1"
   echo "❌ $msg" >&2
@@ -107,6 +110,8 @@ python3 "$ROOT/scripts/validate-context-pack-schema.py" "$ROOT/docs/examples/min
 python3 "$ROOT/scripts/check-context-pack-minimal-example-sync.py"
 python3 "$ROOT/scripts/check-placeholders.py"
 python3 "$ROOT/scripts/check-invalid-markdown-links.py"
+node "$ROOT/scripts/check-associativity-wording.js"
+node "$ROOT/scripts/check-associativity-wording.js" --self-test
 echo "==> Building rendered HTML (Jekyll)"
 if ! command -v bundle >/dev/null 2>&1; then
   die "Bundler is required for rendered HTML checks. Install Ruby/Bundler and run bundle install first."
