@@ -3,6 +3,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const { isDeepStrictEqual } = require('node:util');
 
 const ROOT = path.resolve(__dirname, '..');
 const CHAPTER_PATH = path.join(ROOT, 'chapters/chapter09/index.md');
@@ -76,7 +77,7 @@ function kleisliCompose(first, second) {
 }
 
 function equalResult(left, right) {
-  return JSON.stringify(left) === JSON.stringify(right);
+  return isDeepStrictEqual(left, right);
 }
 
 function parseQuantity(input) {
@@ -154,14 +155,19 @@ function verifyResultLaws(unitFunction = unit) {
 
 function validateText(chapter, glossary) {
   const failures = [];
+  const normalizedChapter = chapter.replace(/\r\n?/g, '\n').replace(/\s+/g, ' ').trim();
+  const normalizedGlossary = glossary.replace(/\r\n?/g, '\n').replace(/\s+/g, ' ').trim();
   for (const [description, marker] of REQUIRED_CHAPTER_MARKERS) {
-    if (!chapter.includes(marker)) failures.push(`Chapter 9不足: ${description}`);
+    const normalizedMarker = marker.replace(/\s+/g, ' ').trim();
+    if (!normalizedChapter.includes(normalizedMarker)) failures.push(`Chapter 9不足: ${description}`);
   }
   for (const [description, marker] of CONTEXTUAL_CHAPTER_MARKERS) {
-    if (!chapter.includes(marker)) failures.push(`Chapter 9不整合: ${description}`);
+    const normalizedMarker = marker.replace(/\s+/g, ' ').trim();
+    if (!normalizedChapter.includes(normalizedMarker)) failures.push(`Chapter 9不整合: ${description}`);
   }
   for (const marker of REQUIRED_GLOSSARY_MARKERS) {
-    if (!glossary.includes(marker)) failures.push(`Glossary不足: ${marker}`);
+    const normalizedMarker = marker.replace(/\s+/g, ' ').trim();
+    if (!normalizedGlossary.includes(normalizedMarker)) failures.push(`Glossary不足: ${marker}`);
   }
   return failures;
 }
@@ -169,6 +175,17 @@ function validateText(chapter, glossary) {
 function selfTest(chapter, glossary) {
   if (validateText(chapter, glossary).length > 0) {
     throw new Error('自己テスト失敗: 現行本文の必須契約を読み取れません');
+  }
+
+  const reformattedChapter = chapter
+    .replace(/\n/g, '\r\n')
+    .replace('- `f: A → Result<B, E>`\r\n- `g: B → Result<C, E>`', '- `f: A → Result<B, E>`\r\n\r\n- `g: B → Result<C, E>`');
+  if (validateText(reformattedChapter, glossary).length > 0) {
+    throw new Error('自己テスト失敗: CRLFまたは意味を変えない改行を許容できません');
+  }
+
+  if (!equalResult(ok({ first: 1, second: 2 }), ok({ second: 2, first: 1 }))) {
+    throw new Error('自己テスト失敗: object key順だけが異なるResultを構造的に比較できません');
   }
 
   const associativityMarker = REQUIRED_CHAPTER_MARKERS.find(([description]) =>
