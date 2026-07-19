@@ -411,7 +411,7 @@ def _validate_v2_structured_entries(doc: dict[str, Any], errors: list[Validation
         _expect(isinstance(item, dict), path, "非空文字列またはlinear resourceオブジェクトである必要があります", errors)
         if isinstance(item, dict):
             require_string(item, "id", path)
-            _expect(_is_non_empty_rule(item.get("rule")), f"{path}.rule", "ruleは非空文字列または非空文字列配列である必要があります", errors)
+            _expect(_is_non_empty_rule(item.get("rule")), f"{path}.rule", "rule は非空文字列または非空文字列配列である必要があります", errors)
 
 
 def validate_context_pack_v2(doc: Any) -> list[ValidationErrorItem]:
