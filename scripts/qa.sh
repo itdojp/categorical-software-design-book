@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPORT_DIR="$ROOT/qa-reports"
 BOOK_FORMATTER_DIR="$ROOT/book-formatter"
 BOOK_FORMATTER_REMOTE_URL="${BOOK_FORMATTER_REMOTE_URL:-https://github.com/itdojp/book-formatter.git}"
-BOOK_FORMATTER_REF="${BOOK_FORMATTER_REF:-69eb5c12f5a750b65614bc9bbbc3d7abd5aa6f6c}"
+BOOK_FORMATTER_REF="${BOOK_FORMATTER_REF:-cff9fcf8bae31140f07b358d314fc64173cb7013}"
 
 # Keep every relative path used by downstream validators anchored to the repository.
 cd "$ROOT"
