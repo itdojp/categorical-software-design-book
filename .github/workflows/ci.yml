@@ -95,6 +95,9 @@ jobs:
           source: ./
           destination: ./_site
 
+      - name: Reviewed search integration after Liquid rendering
+        run: python3 scripts/check-search-asset.py --built-site _site
+
       - name: Check rendered HTML regressions
         run: python scripts/check-rendered-html.py --site-root _site
 

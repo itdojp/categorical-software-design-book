@@ -126,6 +126,7 @@ fi
   bundle exec jekyll build
 )
 
+python3 "$ROOT/scripts/check-search-asset.py" --built-site "$ROOT/_site"
 python3 "$ROOT/scripts/check-rendered-html.py" --site-root "$ROOT/_site"
 
 echo "✅ QA complete. Reports: $REPORT_DIR"
