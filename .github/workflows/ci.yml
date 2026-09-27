@@ -83,6 +83,9 @@ jobs:
           node scripts/check-monad-laws.js
           node scripts/check-monad-laws.js --self-test
 
+      - name: Reviewed DOM-safe search asset contract
+        run: python3 scripts/check-search-asset.py --self-test
+
       - name: Setup Pages
         uses: actions/configure-pages@v6
 

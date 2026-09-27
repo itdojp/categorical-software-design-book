@@ -115,6 +115,7 @@ node "$ROOT/scripts/check-associativity-wording.js"
 node "$ROOT/scripts/check-associativity-wording.js" --self-test
 node "$ROOT/scripts/check-monad-laws.js"
 node "$ROOT/scripts/check-monad-laws.js" --self-test
+python3 "$ROOT/scripts/check-search-asset.py" --self-test
 echo "==> Building rendered HTML (Jekyll)"
 if ! command -v bundle >/dev/null 2>&1; then
   die "Bundler is required for rendered HTML checks. Install Ruby/Bundler and run bundle install first."
