@@ -7,7 +7,7 @@ on:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
-  BOOK_FORMATTER_REF: 'cf3f75ee9b1e200e4b6cece23501cb9c83170ec7'
+  BOOK_FORMATTER_REF: 'd29b4f2b50a1f15f3c2262b7c73ede90a8c54edd'
 
 jobs:
   qa:
